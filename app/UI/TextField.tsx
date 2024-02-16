@@ -46,11 +46,11 @@ const TextField: React.FC<props> = ({dark = false}) => {
                                           }),
                                           input: (provided) => ({
                                               ...provided,
-                                              color: "white"
+                                              color: `${dark ? "black" : "white"}`
                                           }),
                                           placeholder: (provided) => ({
                                               ...provided,
-                                              color: "white"
+                                              color: `${dark ? "black" : "white"}`
                                           }),
                                           dropdownIndicator: (provided) => ({
                                               ...provided,
