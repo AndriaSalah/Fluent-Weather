@@ -1,4 +1,4 @@
-##This project is still a work in progress , and currently on hold till i find some free time to continue working on it
+# This project is still a work in progress , and currently on hold till i find some free time to continue working on it
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
