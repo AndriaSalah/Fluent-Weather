@@ -3,6 +3,7 @@ import GooglePlacesAutocomplete, {geocodeByPlaceId} from 'react-google-places-au
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/app/Stores";
 import {setGeocodeData} from "@/app/Stores/GeocodeSlice";
+import {resetLocationPointer} from "@/app/Stores/utilsSlice";
 
 interface props {
     dark?: boolean
@@ -12,7 +13,6 @@ interface props {
 const TextField: React.FC<props> = ({dark = false}) => {
     const dispatch = useDispatch()
 
-
     function handleSelect(place: any) {
         geocodeByPlaceId(place.value.place_id)
             .then(results => {
@@ -20,6 +20,7 @@ const TextField: React.FC<props> = ({dark = false}) => {
                     address: results[0].formatted_address,
                     location: results[0].geometry.location.toJSON()
                 }))
+                dispatch(resetLocationPointer())
             })
     }
 
@@ -29,7 +30,7 @@ const TextField: React.FC<props> = ({dark = false}) => {
                                   selectProps={{
                                       onChange: handleSelect,
                                       classNames: {
-                                          container: (state) => ((state.isFocused ? "w-2/3" : "w-[35%]") + " duration-300 "),
+                                          container: (state) => ((state.isFocused ? "w-2/3" : "w-[40%]") + " duration-300 "),
                                           control: () => "rounded-card",
                                           menu: () => "rounded-card",
                                           menuList: () => "text-black"

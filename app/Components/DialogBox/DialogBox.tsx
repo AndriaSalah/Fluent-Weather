@@ -42,7 +42,7 @@ export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
     return (
         <>
             <dialog ref={dialog}
-                    className={"w-1/2 h-1/3 border-0 rounded-card shadow-2xl p-6 backdrop:bg-transparent backdrop:backdrop-blur-sm"}>
+                    className={"w-1/2 h-3/5 border-0 rounded-card shadow-2xl p-6 backdrop:bg-transparent backdrop:backdrop-blur-sm"}>
                 {props.message && <h1 className={"text-4xl"}>{props.message}</h1>}
                 <form className={"flex flex-col justify-center gap-5 items-center text-center flex-1 h-2/3"} onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     {props.children}

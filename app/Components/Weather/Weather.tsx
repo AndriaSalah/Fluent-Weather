@@ -11,13 +11,13 @@ const variants = {
 }
 const Weather = () => {
 
-    const toggle = useSelector((state: RootState) => state.utils.expand)
+    const {expand , locationPointer} = useSelector((state: RootState) => state.utils)
     const geocodeData = useSelector((state:RootState) => state.geocode )
 
     return (
         <section className={`flex w-full h-full flex-col gap-56 p-6`}>
             <div className={"flex justify-between items-center"}>
-                <h1 className={"text-4xl font-light text-center"}>{geocodeData ? geocodeData.address:"nope"}</h1>
+                <h1 className={"text-4xl font-light text-center"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"nope"}</h1>
                 <div className={" w-1/4 flex items-center gap-5 justify-end "}>
                   <TextField/>
                     <button className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"} ><FaLocationDot /></button>

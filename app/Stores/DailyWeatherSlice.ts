@@ -41,9 +41,9 @@ const dailyWeatherSlice = createSlice({
 const {updateDailyWeather} = dailyWeatherSlice.actions
 export default dailyWeatherSlice
 
-export const getDailyWeather = () => {
+export const getDailyWeather = (latitude : number , longitude : number ) => {
     const options: string[] = ["temperature_2m_max", "temperature_2m_min", "uv_index_max", "wind_speed_10m_max", "rain_sum"]
-    const API_URL: string = `https://api.open-meteo.com/v1/forecast?latitude=30.1938086&longitude=31.4601614&daily=${options.toString()}&timezone=auto`
+    const API_URL: string = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=${options.toString()}&timezone=auto`
     return async (dispatch: Dispatch) => {
         const getDailyData = async () => {
             const response = await fetch(API_URL)

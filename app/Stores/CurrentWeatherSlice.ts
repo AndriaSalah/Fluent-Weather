@@ -48,9 +48,9 @@ const CurrentWeatherSlice = createSlice({
 const {updateWeather} = CurrentWeatherSlice.actions
 export default CurrentWeatherSlice
 
-export const getCurrentWeather =  ()=>{
+export const getCurrentWeather =  (latitude : number , longitude : number) =>{
     const options : string[] = ["temperature_2m","relative_humidity_2m","apparent_temperature","is_day","wind_speed_10m","precipitation","weather_code","rain","snowfall"]
-    const API_URL : string = `https://api.open-meteo.com/v1/forecast?latitude=30.1938086&longitude=31.4601614&current=${options.toString()}&timezone=auto`
+    const API_URL : string = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=${options.toString()}&timezone=auto`
     return async (dispatch:Dispatch)=>{
         const getCurrentData = async ()=>{
             const response  = await fetch(API_URL)
