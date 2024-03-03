@@ -1,9 +1,15 @@
 import React from 'react';
+import {useSelector} from "react-redux";
+import {RootState} from "@/app/Stores";
 
-const SunMoon = () => {
+interface props {
+    isDay : number
+}
+const SunMoon :React.FC<props> = ({isDay}) => {
+
     return (
         <>
-            <div className={"rounded-[50%] bg-amber-400 absolute -z-10 aspect-square h-full animate-hover"}></div>
+            <div className={`rounded-[50%] ${isDay ? "bg-amber-400" : "bg-yellow-100"} absolute -z-10 aspect-square h-full animate-hover`}></div>
         </>
     );
 };

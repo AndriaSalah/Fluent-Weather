@@ -30,7 +30,7 @@ const TextField: React.FC<props> = ({dark = false}) => {
                                   selectProps={{
                                       onChange: handleSelect,
                                       classNames: {
-                                          container: (state) => ((state.isFocused ? "w-2/3" : "w-[40%]") + " duration-300 "),
+                                          container: (state) => ((state.isFocused ? "w-4/6" : "w-[10rem]") + " duration-300 "),
                                           control: () => "rounded-card",
                                           menu: () => "rounded-card",
                                           menuList: () => "text-black"
