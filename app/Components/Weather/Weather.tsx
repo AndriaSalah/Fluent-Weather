@@ -46,10 +46,10 @@ const Weather  = () => {
         }
     };
     return (
-        <section className={`flex w-full h-full flex-col gap-20 md:gap-56 p-6 relative z-10`}>
+        <section className={`flex w-full h-svh flex-col gap-20 md:gap-56 p-6 relative z-10`}>
             <header className={"flex max-md:flex-col max-md:gap-5 justify-between items-center "}>
                 <h1 className={"max-md:text-center max-md:w-full w-2/3 text-4xl font-light"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"nope"}</h1>
-                <div className={" max-md:w-full w-1/3 flex items-center gap-5 justify-center md:justify-end "}>
+                <div className={"max-md:w-full w-1/3 flex items-center gap-5 justify-center md:justify-end "}>
                   <TextField/>
                     <button onClick={checkLocationPermission} className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"} ><FaLocationDot /></button>
                 </div>
