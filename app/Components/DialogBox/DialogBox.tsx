@@ -1,5 +1,6 @@
 import React, {forwardRef, ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
 import TextField from "@/app/UI/TextField";
+import UnderlinedText from "@/app/UI/UnderlinedText";
 
 interface Props {
     children?: ReactNode;
@@ -44,12 +45,12 @@ export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
     return (
         <>
             <dialog ref={dialog}
-                    className={"w-full h-2/3 md:w-1/2 md:h-1/2 rounded-card shadow-2xl  py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
-                {props.message && <h1 className={"ml-4 text-4xl"}>{props.message}</h1>}
-                <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex flex-1 h-2/3 duration-700 "}
+                    className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                {props.message && <UnderlinedText text={props.message} header={true}/>}
+                <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
                       onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
-                        <p className={"text-lg"}>{"Let's start by searching for a place"}</p>
+                        <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
                         <TextField dark={true}/>
                         <button className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?</button>
                     </div>
@@ -58,7 +59,7 @@ export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
                         <input type={'text'} placeholder={"Enter your name here"} className={"outline-0 border-2 border-blue-400 rounded-3xl p-2 text-center max-md:w-3/5 focus-within:max-md:w-4/5 w-1/3 focus-within:w-1/2 duration-300"} />
                     </div>
                 </form>
-                <div className={"flex justify-around "}>
+                <div className={"flex h-1/4 justify-around items-center "}>
                     <button onClick={goToNext} className={buttonStyles} id={"submit"} type="button">Next</button>
                     <button onClick={cancelHandler} className={buttonStyles} id={"cancel"} type="button">Cancel</button>
                 </div>
