@@ -21,7 +21,7 @@ const DataGraph = () => {
         console.log(Daily_Data[0])
     }
     return (
-        <div className={"flex-1 w-full p-4 "} onClick={log}>
+        <div className={"h-2/6 md:h-1/2 w-full p-1 md:p-4 "} onClick={log}>
             <ResponsiveContainer className={" bg-[#FFFFFF7F] rounded-xl backdrop-blur-3xl"}>
                     <AreaChart data={Daily_Data}
                                margin={{top: 45, right: 45, left: 20, bottom: 45}}>

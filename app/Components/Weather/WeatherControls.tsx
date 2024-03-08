@@ -35,21 +35,21 @@ const WeatherControls = () => {
         locationPointer - 1 < 0 ? dispatch(updateLeftButton(false)) : dispatch(updateLeftButton(true))
     }, [dispatch, locationPointer, savedLocations]);
     return (
-        <div className={"flex items-center justify-center gap-20 relative h-[20svh]"}>
+        <div className={"flex items-center justify-center gap-10 md:gap-20 relative h-[13rem] md:h-[20svh]"}>
             <SunMoon isDay={isDay}/>
-            <div className={"w-[5rem]"}>
+            <div className={"w-[3rem] flex-shrink-0"}>
             <button onClick={()=>{
                 console.log("clicked button")
                 decreaseLocationPointer()
                 console.log(weather)
-            }} className={`text-7xl ${!leftButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowLeft /></button>
+            }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowLeft /></button>
             </div>
-            <h2 className={`text-5xl font-medium ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
-            <div className={"w-[5rem]"}>
+            <h2 className={`text-5xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
+            <div className={"w-[3rem] flex-shrink-0 "}>
             <button onClick={()=>{
                 console.log("clicked button")
                 increaseLocationPointer()
-            }} className={`text-7xl ${!rightButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowRight /></button>
+            }} className={`text-5xl md:text-7xl ${!rightButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowRight /></button>
             </div>
         </div>
     );

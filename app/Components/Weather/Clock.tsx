@@ -30,7 +30,7 @@ const Clock = () => {
     }, [timeZone]);
     return (
        <>
-           <h2 className={"text-center text-7xl"}>{currentTime}</h2>
+           <h2 className={"text-center text-6xl md:text-8xl font-extralight"}>{currentTime}</h2>
        </>
     );
 };

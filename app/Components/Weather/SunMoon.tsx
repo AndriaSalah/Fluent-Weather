@@ -9,7 +9,7 @@ const SunMoon :React.FC<props> = ({isDay}) => {
 
     return (
         <>
-            <div className={`rounded-[50%] ${isDay ? "bg-amber-400" : "bg-yellow-100"} absolute -z-10 aspect-square h-full animate-hover`}></div>
+            <div className={`rounded-[50%] ${isDay ? "bg-amber-400" : "bg-yellow-100"} blur-sm absolute -z-10 aspect-square h-full animate-hover`}></div>
         </>
     );
 };

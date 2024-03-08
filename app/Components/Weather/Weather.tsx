@@ -46,15 +46,15 @@ const Weather  = () => {
         }
     };
     return (
-        <section className={`flex w-full h-full flex-col gap-56 p-6`}>
-            <header className={"flex justify-between items-center"}>
-                <h1 className={" w-2/3 text-4xl font-light"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"nope"}</h1>
-                <div className={"w-1/3 flex items-center gap-5 justify-end "}>
+        <section className={`flex w-full h-full flex-col gap-20 md:gap-56 p-6 relative z-10`}>
+            <header className={"flex max-md:flex-col max-md:gap-5 justify-between items-center "}>
+                <h1 className={"max-md:text-center max-md:w-full w-2/3 text-4xl font-light"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"nope"}</h1>
+                <div className={" max-md:w-full w-1/3 flex items-center gap-5 justify-center md:justify-end "}>
                   <TextField/>
                     <button onClick={checkLocationPermission} className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"} ><FaLocationDot /></button>
                 </div>
             </header>
-            <div className={"flex flex-col gap-10"}>
+            <div className={"flex flex-col max-md:gap-8 gap-14 "}>
                 <WeatherControls/>
                 <h2 className={"text-center text-3xl"}>Sunny</h2>
                 <Clock/>
