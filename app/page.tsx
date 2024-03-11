@@ -8,16 +8,17 @@ import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {RootState, useAppDispatch} from "@/app/Stores";
-import DialogBox, {DialogHandles} from "@/app/Components/DialogBox/DialogBox";
+import GreetingDialog, {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import TextField from "@/app/UI/TextField";
 import {loadFromLocalStorage} from "@/app/Stores/GeocodeSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
+import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 
 
 export default function Home() {
     const greetingDialog = useRef<DialogHandles>(null)
+    const gpsDialog = useRef<DialogHandles>(null)
     const dispatch = useAppDispatch()
     const savedLocations = useSelector((state: RootState) => state.geocode)
     const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
@@ -52,12 +53,12 @@ export default function Home() {
 
     return (
         <>
-            <DialogBox message={"Hello!"} onSubmit={() => {
-            }} ref={greetingDialog}/>
+            <GreetingDialog openGpsDialog={()=> {gpsDialog.current?.openDialog()}} message={"Hello!"} onSubmit={() => {}} ref={greetingDialog}/>
+            <GpsDialog message={"GPS"} ref={gpsDialog}/>
             <main className={`w-full h-[100vh] bg-no-repeat bg-cover bg-night`}>
                 <span
                     className={`block w-full h-screen absolute bg-black ${isDay ? "bg-opacity-0" : "bg-opacity-55"} `}/>
-                <Weather/>
+                <Weather openGpsDialog={()=> {gpsDialog.current?.openDialog()}}/>
                 <WeatherData/>
                 <button
                     onClick={clickHandler}

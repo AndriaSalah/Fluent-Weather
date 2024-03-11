@@ -9,6 +9,7 @@ interface Props {
     children?: ReactNode;
     message?: string;
     onSubmit: Function
+    openGpsDialog: () => void
 }
 
 export interface DialogHandles {
@@ -18,7 +19,7 @@ export interface DialogHandles {
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/4"
 
-export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
+export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next,setNext] = useState(false)
     const locations = useSelector((state:RootState)=> state.geocode.length)
@@ -92,7 +93,7 @@ export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
                         <TextField dark={true}/>
-                        <button className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?</button>
+                        <button type={"button"} onClick={props.openGpsDialog} className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?</button>
                     </div>
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center "}>
                         <p className={"text-lg w-4/6"}>Okay now tell me what should I call you :D</p>
@@ -108,6 +109,6 @@ export const DialogBox = forwardRef<DialogHandles, Props>((props, ref) => {
         </>
     )
 })
-DialogBox.displayName = "DialogBox"
+GreetingDialog.displayName = "DialogBox"
 
-export default DialogBox;
+export default GreetingDialog;
