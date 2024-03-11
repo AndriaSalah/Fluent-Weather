@@ -13,7 +13,7 @@ import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import TextField from "@/app/UI/TextField";
 import {loadFromLocalStorage} from "@/app/Stores/GeocodeSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
-import {toggleExpansion} from "@/app/Stores/utilsSlice";
+import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
     const savedLocations = useSelector((state: RootState) => state.geocode)
     const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
     const toggle = useSelector((state: RootState) => state.utils.expand);
-
+    const firstTime = useSelector((state : RootState) => state.utils.firstTime)
     function clickHandler() {
         dispatch(toggleExpansion());
         console.log("clicked");
@@ -30,8 +30,9 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(loadFromLocalStorage());
-        greetingDialog.current?.openDialog();
-    }, [dispatch]);
+        dispatch(hydrateUserFromLocal())
+        firstTime && greetingDialog.current?.openDialog();
+    }, [dispatch,firstTime]);
 
     useEffect(() => {
         const init = (lat: number, lng: number) => {

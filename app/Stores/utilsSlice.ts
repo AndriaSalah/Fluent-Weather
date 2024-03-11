@@ -2,11 +2,13 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 
 export type utils = {
-    expand: boolean;
-    selectedOption: string;
-    locationPointer: number;
-    leftButtonEnabled: boolean;
-    rightButtonEnabled: boolean;
+    expand: boolean,
+    selectedOption: string,
+    locationPointer: number,
+    leftButtonEnabled: boolean,
+    rightButtonEnabled: boolean,
+    name:string,
+    firstTime:boolean
 };
 type buttons = {}
 const initialState: utils = {
@@ -14,7 +16,9 @@ const initialState: utils = {
     selectedOption: "temp",
     locationPointer: 0,
     leftButtonEnabled: true,
-    rightButtonEnabled: true
+    rightButtonEnabled: true,
+    name:"",
+    firstTime:false
 };
 const utilsSlice = createSlice({
     name: "utils",
@@ -41,9 +45,26 @@ const utilsSlice = createSlice({
         },
         updateRightButton : (state: utils, actions: PayloadAction<boolean>) => {
             state.rightButtonEnabled = actions.payload
+        },
+        setName : (state: utils , actions : PayloadAction<string>) => {
+            localStorage.setItem("name",actions.payload)
+            state.name = actions.payload
+        },
+        setFirstTime : (state :utils , action :PayloadAction<boolean>) => {
+            state.firstTime = action.payload
+            localStorage.setItem("firstTime",JSON.stringify(action.payload))
         }
     },
 });
+
+export const hydrateUserFromLocal = () =>{
+    return async (dispatch:Dispatch) => {
+        let Username: string = localStorage.getItem("name") ?? ""
+        let firstTime: boolean = JSON.parse(localStorage.getItem("firstTime") ?? "true")
+        dispatch(setName(Username))
+        dispatch(setFirstTime(firstTime))
+    }
+}
 
 
 export const {
@@ -52,7 +73,9 @@ export const {
     decLocationPointer,
     resetLocationPointer,
     updateLeftButton,
-    updateRightButton
+    updateRightButton,
+    setName,
+    setFirstTime
 } = utilsSlice.actions;
 
 export default utilsSlice;
