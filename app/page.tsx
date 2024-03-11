@@ -1,7 +1,4 @@
 "use client"
-import Image from "next/image";
-import pic1 from "@/public/pikb28.jpg";
-import pic2 from "@/public/pikb29-test.jpg";
 import Weather from "./Components/Weather/Weather";
 import WeatherData from "./Components/WeatherData/WeatherData";
 import React, {useEffect, useRef, useState} from "react";
@@ -22,8 +19,8 @@ export default function Home() {
     const dispatch = useAppDispatch()
     const savedLocations = useSelector((state: RootState) => state.geocode)
     const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
-    const toggle = useSelector((state: RootState) => state.utils.expand);
-    const firstTime = useSelector((state : RootState) => state.utils.firstTime)
+    const {expand,firstTime} = useSelector((state: RootState) => state.utils);
+
     function clickHandler() {
         dispatch(toggleExpansion());
         console.log("clicked");
@@ -64,7 +61,7 @@ export default function Home() {
                     onClick={clickHandler}
                     className={`h-10 w-10 text-white backdrop-blur-3xl rounded-[50%] text-5xl flex items-center z-30
          fixed bottom-2 right-[50vw] translate-x-1/2 md:hidden 
-         ${toggle ? "-rotate-90 bg-black bg-opacity-50 " : "rotate-90 bg-white bg-opacity-50 "}  duration-300`}>
+         ${expand ? "-rotate-90 bg-black bg-opacity-50 " : "rotate-90 bg-white bg-opacity-50 "}  duration-300`}>
                     <MdOutlineKeyboardArrowLeft/>
                 </button>
             </main>

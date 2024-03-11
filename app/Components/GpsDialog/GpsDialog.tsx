@@ -4,6 +4,7 @@ import Image from "next/image";
 import locationImage from "@/public/img.png"
 import {GeocodeCords} from "@/app/Stores/GeocodeSlice";
 import {useAppDispatch} from "@/app/Stores";
+import {setGpsState} from "@/app/Stores/StatsSlice";
 
 
 interface Props {
@@ -58,6 +59,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     // User has granted permission
                     const {latitude, longitude} = position.coords;
                     dispatch(GeocodeCords(latitude,longitude))
+                    dispatch(setGpsState(true))
                     dialog.current?.close()
                 },
                 (error) => {

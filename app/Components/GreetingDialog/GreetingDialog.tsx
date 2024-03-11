@@ -23,6 +23,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next,setNext] = useState(false)
     const locations = useSelector((state:RootState)=> state.geocode.length)
+    const gpsState = useSelector((state:RootState)=> state.stats.gpsState)
     const dispatch = useAppDispatch()
     const [showError , setShowError]= useState(false)
     const [errorMsg , setErrorMessage]= useState("")
@@ -88,7 +89,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
             <dialog ref={dialog}
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 {props.message && <UnderlinedText text={props.message} header={true}/>}
-                <form onSubmitCapture={(event:React.FormEvent<FormElement>)=>handleNameSubmit(event)} style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
+                <form onSubmitCapture={(event:React.FormEvent<FormElement>)=>handleNameSubmit(event)} style={{transform:gpsState? "translateX(-100%)" : next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
                       onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>

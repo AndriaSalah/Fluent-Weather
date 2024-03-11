@@ -4,19 +4,22 @@ import CurrentWeatherSlice, {CurrentWeather} from "@/app/Stores/CurrentWeatherSl
 import DailyWeatherSlice, {FormattedDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {useDispatch} from "react-redux";
 import GeocodeSlice, {locationData} from "@/app/Stores/GeocodeSlice";
+import StatsSlice, {statsSlice} from "@/app/Stores/StatsSlice";
 
 export type RootState= {
   utils: utils,
   currentWeather: CurrentWeather,
   dailyWeather: FormattedDailyWeather[],
-  geocode: locationData[]
+  geocode: locationData[],
+  stats: statsSlice,
 }
 export const store = configureStore({
   reducer: {
     utils: utilsSlice.reducer,
     currentWeather : CurrentWeatherSlice.reducer,
     dailyWeather : DailyWeatherSlice.reducer,
-    geocode :  GeocodeSlice.reducer
+    geocode :  GeocodeSlice.reducer,
+    stats: StatsSlice.reducer
   },
 });
 
