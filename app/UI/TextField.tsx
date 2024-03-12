@@ -17,6 +17,7 @@ const TextField: React.FC<props> = ({dark = false}) => {
         geocodeByPlaceId(place.value.place_id)
             .then(results => {
                 dispatch(setGeocodeData({
+                    placeID:results[0].place_id,
                     address: results[0].formatted_address,
                     location: results[0].geometry.location.toJSON()
                 }))
