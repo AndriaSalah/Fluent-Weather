@@ -10,7 +10,7 @@ import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 
 const WeatherControls = () => {
     const savedLocations = useSelector((state:RootState) => state.geocode)
-    const {locationPointer, leftButtonEnabled , rightButtonEnabled} = useSelector((state:RootState) => state.utils )
+    const {locationPointer, leftButtonEnabled , rightButtonEnabled , firstTime} = useSelector((state:RootState) => state.utils )
     const weather = useSelector((state:RootState) => state.currentWeather)
     const isDay = useSelector((state:RootState)=> state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
@@ -25,7 +25,7 @@ const WeatherControls = () => {
     }
 
     useEffect(() => {
-        if(savedLocations.length > 0) {
+        if(savedLocations.length > 0 && !firstTime) {
             const lat = savedLocations[locationPointer].location.lat
             const lng = savedLocations[locationPointer].location.lng
             dispatch(getCurrentWeather(lat!, lng!))

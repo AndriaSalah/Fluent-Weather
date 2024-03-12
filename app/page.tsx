@@ -11,6 +11,7 @@ import {loadFromLocalStorage} from "@/app/Stores/GeocodeSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
+import {hydrateInitialLocationState} from "@/app/Stores/FlagsSlice";
 
 
 export default function Home() {
@@ -23,12 +24,12 @@ export default function Home() {
 
     function clickHandler() {
         dispatch(toggleExpansion());
-        console.log("clicked");
     }
 
     useEffect(() => {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
+        dispatch(hydrateInitialLocationState())
         firstTime && greetingDialog.current?.openDialog();
     }, [dispatch,firstTime]);
 
@@ -39,20 +40,21 @@ export default function Home() {
                 dispatch(getDailyWeather(lat, lng));
             }
         };
-        if (savedLocations.length > 0) {
+        if (savedLocations.length > 0 && !firstTime) {
+
             const lat = savedLocations[0].location.lat!;
             const lng = savedLocations[0].location.lng!;
             init(lat, lng);
         }
 
-    }, [dispatch, savedLocations]);
+    }, [dispatch, savedLocations,firstTime]);
 
 
     return (
         <>
             <GreetingDialog openGpsDialog={()=> {gpsDialog.current?.openDialog()}} message={"Hello!"} onSubmit={() => {}} ref={greetingDialog}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
-            <main className={`w-full h-[100vh] bg-no-repeat bg-cover bg-night`}>
+            <main className={`w-full h-[100vh] bg-no-repeat bg-cover ${isDay? "bg-day" : "bg-night"}`}>
                 <span
                     className={`block w-full h-screen absolute bg-black ${isDay ? "bg-opacity-0" : "bg-opacity-55"} `}/>
                 <Weather openGpsDialog={()=> {gpsDialog.current?.openDialog()}}/>

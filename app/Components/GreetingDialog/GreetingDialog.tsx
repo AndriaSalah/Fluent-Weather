@@ -4,6 +4,9 @@ import UnderlinedText from "@/app/UI/UnderlinedText";
 import {RootState, useAppDispatch} from "@/app/Stores";
 import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
 import {useSelector} from "react-redux";
+import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
+import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
+import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 
 interface Props {
     children?: ReactNode;
@@ -22,8 +25,8 @@ const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-o
 export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next,setNext] = useState(false)
-    const locations = useSelector((state:RootState)=> state.geocode.length)
-    const gpsState = useSelector((state:RootState)=> state.stats.gpsState)
+    const locations = useSelector((state:RootState)=> state.geocode)
+    const initialLocationState = useSelector((state:RootState)=> state.stats.initialLocationState)
     const dispatch = useAppDispatch()
     const [showError , setShowError]= useState(false)
     const [errorMsg , setErrorMessage]= useState("")
@@ -68,9 +71,13 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         }
     }
     const goToNext =  (e:React.MouseEvent<HTMLButtonElement>) => {
-        if(locations !== 0) {
+        if(locations.length !== 0) {
             setNext(true)
             setShowError(false)
+            const {lat,lng} =locations[0].location
+            dispatch(getCurrentWeather(lat!,lng!))
+            dispatch(getDailyWeather(lat!,lng!))
+            dispatch(setInitialLocationState(true))
             e.currentTarget.innerText="Finish"
         }
         else {
@@ -84,12 +91,13 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         setErrorMessage(message)
         setShowError(true)
     }
+    console.log(initialLocationState)
     return (
         <>
             <dialog ref={dialog}
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 {props.message && <UnderlinedText text={props.message} header={true}/>}
-                <form onSubmitCapture={(event:React.FormEvent<FormElement>)=>handleNameSubmit(event)} style={{transform:gpsState? "translateX(-100%)" : next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
+                <form onSubmitCapture={(event:React.FormEvent<FormElement>)=>handleNameSubmit(event)} style={{transform:initialLocationState? "translateX(-100%)" : next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
                       onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
