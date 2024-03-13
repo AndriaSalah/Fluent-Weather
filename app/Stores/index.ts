@@ -11,7 +11,7 @@ export type RootState= {
   currentWeather: CurrentWeather,
   dailyWeather: FormattedDailyWeather[],
   geocode: locationData[],
-  stats: flagsSlice,
+  flags: flagsSlice,
 }
 export const store = configureStore({
   reducer: {
@@ -19,7 +19,7 @@ export const store = configureStore({
     currentWeather : CurrentWeatherSlice.reducer,
     dailyWeather : DailyWeatherSlice.reducer,
     geocode :  GeocodeSlice.reducer,
-    stats: StatsSlice.reducer
+    flags: StatsSlice.reducer
   },
 });
 

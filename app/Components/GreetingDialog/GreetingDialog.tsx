@@ -1,4 +1,5 @@
-import React, {forwardRef, ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
+"use client"
+import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
 import TextField from "@/app/UI/TextField";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import {RootState, useAppDispatch} from "@/app/Stores";
@@ -26,7 +27,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next, setNext] = useState(false)
     const locations = useSelector((state: RootState) => state.geocode)
-    const initialLocationState = useSelector((state: RootState) => state.stats.initialLocationState)
+    const initialLocationState = useSelector((state: RootState) => state.flags.initialLocationState)
     const dispatch = useAppDispatch()
     const [showError, setShowError] = useState(false)
     const [errorMsg, setErrorMessage] = useState("")
@@ -94,7 +95,6 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         setErrorMessage(message)
         setShowError(true)
     }
-    console.log(initialLocationState)
     return (
         <>
             <dialog ref={dialog}

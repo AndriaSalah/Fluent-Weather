@@ -17,7 +17,8 @@ const StatsSlice = createSlice({
             state.initialLocationState = action.payload
             localStorage.setItem("initialLocationState",JSON.stringify(state.initialLocationState))
         },
-        setLoading : (state : flagsSlice , action :PayloadAction<boolean>) => {
+        Loading : (state : flagsSlice , action :PayloadAction<boolean>) => {
+            console.log("loading" + action.payload )
             state.loading = action.payload
         }
     }
@@ -31,7 +32,7 @@ export const hydrateInitialLocationState = ()=>{
 }
 export const {
     setInitialLocationState,
-    setLoading
+    Loading
 } = StatsSlice.actions
 
 export default StatsSlice

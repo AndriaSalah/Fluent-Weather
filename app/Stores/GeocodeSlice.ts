@@ -2,6 +2,7 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import exp from "constants";
 import {json} from "stream/consumers";
 import {useFormatAddress} from "@/app/Utils/useFormatAddress";
+import {Loading} from "@/app/Stores/FlagsSlice";
 
 export type locationData = {
     placeID: string
@@ -40,7 +41,7 @@ const GeocodeSlice = createSlice({
                     localStorage.setItem("locations", JSON.stringify(newLocationsData));
                     return newLocationsData;
                 }
-                return state; // If the location already exists, return the current state
+                return state;
             },
             hydrateGeocodeData: (state: locationData[], action: PayloadAction<locationData[]>) => {
                 return action.payload
@@ -59,7 +60,7 @@ export const GeocodeCords = (lat: number, lng: number) => {
     return async (dispatch: Dispatch) => {
         const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
         const formatAddress = useFormatAddress
-        console.log(URL_Reverse)
+        dispatch(Loading(true))
         const fetchGeolocationData = async () => {
             const response = await fetch(URL_Reverse)
             if (!response.ok) return console.log("error fetching data")
@@ -76,7 +77,7 @@ export const GeocodeCords = (lat: number, lng: number) => {
         } catch (e) {
             console.log(e)
         }
-
+        dispatch(Loading(false))
     }
 }
 
