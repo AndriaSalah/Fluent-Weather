@@ -1,0 +1,38 @@
+@mixin cloud{
+  position: absolute;
+  width: 23rem;
+  height: 15rem;
+  object-fit: cover;
+  z-index: 3;
+  transition-duration: 0.25s;
+}
+.clouds{
+  overflow-x: clip;
+  width: 100%;
+  .cloud1{
+    @include cloud;
+    bottom: 50vh;
+    right: -8rem;
+    animation: cloud-anim 4s infinite alternate ease-in-out ;
+    animation-delay: 1s;
+  }
+  .cloud2{
+    animation: cloud-anim 5s infinite alternate ease-in-out ;
+    @include cloud;
+    bottom: 43vh;
+    left: -5rem;
+  }
+  @keyframes cloud-anim {
+    100%{
+      transform: translatey(2vh);
+    }
+  }
+
+  @media (max-width: 1100px) {
+  .clouds {
+    .cloud1 {
+      bottom: 55vh;
+    }
+  }
+  }
+}

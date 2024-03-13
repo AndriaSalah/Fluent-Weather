@@ -1,4 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {Loading} from "@/app/Stores/FlagsSlice";
+import weather from "@/app/Components/Weather/Weather";
 
 export type currentWeatherData ={
         time: string,
@@ -12,9 +14,16 @@ export type currentWeatherData ={
         rain: number,
         snowfall: number
 }
+export type weatherEffects = {
+    level:number,
+    type:"cloud" | "rain" | "snow"
+}
 export type CurrentWeather = {
     timezone: string,
-    current: currentWeatherData
+    current: currentWeatherData,
+    cloudLevel:number,
+    rainLevel:number,
+    snowLevel:number
 }
 
 const initialState : CurrentWeather = {
@@ -31,6 +40,9 @@ const initialState : CurrentWeather = {
         rain: 0,
         snowfall: 0
     },
+    cloudLevel:0,
+    rainLevel:0,
+    snowLevel:0
 
 }
 
@@ -42,10 +54,26 @@ const CurrentWeatherSlice = createSlice({
             state.current = action.payload.current
             state.timezone = action.payload.timezone
         },
+        setWeatherEffects : (state:CurrentWeather , action:PayloadAction<weatherEffects>) => {
+            state.rainLevel = 0
+            state.cloudLevel = 0
+            state.snowLevel = 0
+            switch (action.payload.type){
+                case "rain":
+                    state.rainLevel = action.payload.level
+                    return
+                case "cloud":
+                    state.cloudLevel = action.payload.level
+                    return
+                case "snow":
+                    state.snowLevel = action.payload.level
+                    return;
+            }
+        }
     },
 });
 
-const {updateWeather} = CurrentWeatherSlice.actions
+export const {updateWeather , setWeatherEffects} = CurrentWeatherSlice.actions
 export default CurrentWeatherSlice
 
 export const getCurrentWeather =  (latitude : number , longitude : number) =>{
@@ -57,7 +85,6 @@ export const getCurrentWeather =  (latitude : number , longitude : number) =>{
             if (!response.ok) return console.log("error fetching data")
             return await response.json()
         }
-
         try {
             const CurrentWeather : CurrentWeather = await getCurrentData()
             dispatch(updateWeather(CurrentWeather))
@@ -65,6 +92,7 @@ export const getCurrentWeather =  (latitude : number , longitude : number) =>{
         catch (e){
             console.log(e)
         }
+
     }
 
 }

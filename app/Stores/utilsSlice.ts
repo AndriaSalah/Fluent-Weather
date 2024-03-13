@@ -10,7 +10,7 @@ export type utils = {
     name:string,
     firstTime:boolean
 };
-type buttons = {}
+
 const initialState: utils = {
     expand: false,
     selectedOption: "temp",

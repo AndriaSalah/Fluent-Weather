@@ -62,7 +62,7 @@ const TextField: React.FC<props> = ({dark = false}) => {
                                           }),
                                           singleValue:(provided) => ({
                                              ...provided,
-                                              color:"white",
+                                              color:dark? "black":"white",
                                               opacity:0.65
                                           })
 

@@ -1,0 +1,48 @@
+
+.RainWrapper{
+  width: 100%;
+  height: 100svh;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}
+
+.rain {
+  background: white;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.7) 100%);
+  height: 50px;
+  position: absolute;
+  width: 2.5px;
+}
+
+$rain: 270;
+
+@for $i from 1 through $rain {
+  $top: (random(50) + 50) * 1%;
+  $left: random(100) * 1%;
+  $opacity: (random(30) + 30) * 0.01;
+  $delay: random(20) - 1s;
+
+  .rain:nth-of-type(#{$i}) {
+    animation-name: rain-#{$i};
+    animation-delay: $delay;
+    animation-duration: random(6) + 4s;
+    animation-iteration-count: infinite;
+    left: $left;
+    opacity: $opacity;
+    top: -$top;
+  }
+
+  @Keyframes rain-#{$i} {
+    from {
+      left: $left;
+      opacity: $opacity;
+      top: -$top;
+    }
+    to {
+      opacity: 0;
+      top: $top + 40%;
+    }
+  }
+}
+

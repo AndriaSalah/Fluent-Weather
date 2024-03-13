@@ -26,14 +26,13 @@ const WeatherControls = () => {
 
     useEffect(() => {
         if(savedLocations.length > 0 && !firstTime) {
-            const lat = savedLocations[locationPointer].location.lat
-            const lng = savedLocations[locationPointer].location.lng
+            const {lat,lng} = savedLocations[locationPointer].location
             dispatch(getCurrentWeather(lat!, lng!))
             dispatch(getDailyWeather(lat!, lng!))
         }
         locationPointer + 1 > savedLocations.length -1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
         locationPointer - 1 < 0 ? dispatch(updateLeftButton(false)) : dispatch(updateLeftButton(true))
-    }, [dispatch, locationPointer, savedLocations]);
+    }, [dispatch, firstTime, locationPointer, savedLocations]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>
@@ -44,7 +43,7 @@ const WeatherControls = () => {
                 console.log(weather)
             }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowLeft /></button>
             </div>
-            <h2 className={`text-5xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
+            <h2 className={`text-6xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
             <div className={"w-[3rem] flex-shrink-0 "}>
             <button onClick={()=>{
                 console.log("clicked button")
