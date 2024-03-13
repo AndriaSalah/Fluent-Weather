@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import exp from "constants";
 import {json} from "stream/consumers";
+import {useFormatAddress} from "@/app/Utils/useFormatAddress";
 
 export type locationData = {
     placeID: string
@@ -57,6 +58,7 @@ export const loadFromLocalStorage = () => {
 export const GeocodeCords = (lat: number, lng: number) => {
     return async (dispatch: Dispatch) => {
         const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+        const formatAddress = useFormatAddress
         console.log(URL_Reverse)
         const fetchGeolocationData = async () => {
             const response = await fetch(URL_Reverse)
@@ -65,9 +67,10 @@ export const GeocodeCords = (lat: number, lng: number) => {
         }
         try {
             const locationData :GeocodeReturn = await fetchGeolocationData()
+            const formattedAddress = formatAddress(locationData.results[0].formatted_address)
             dispatch(setGeocodeData({
                 placeID: locationData.results[0].place_id,
-                address:locationData.results[0].formatted_address,
+                address:formattedAddress,
                 location:locationData.results[0].geometry.location
             }))
         } catch (e) {

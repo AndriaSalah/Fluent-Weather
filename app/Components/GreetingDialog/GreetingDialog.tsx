@@ -20,16 +20,17 @@ export interface DialogHandles {
     closeDialog: () => void;
 }
 
-const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/4"
+const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
 export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
-    const [next,setNext] = useState(false)
-    const locations = useSelector((state:RootState)=> state.geocode)
-    const initialLocationState = useSelector((state:RootState)=> state.stats.initialLocationState)
+    const [next, setNext] = useState(false)
+    const locations = useSelector((state: RootState) => state.geocode)
+    const initialLocationState = useSelector((state: RootState) => state.stats.initialLocationState)
     const dispatch = useAppDispatch()
-    const [showError , setShowError]= useState(false)
-    const [errorMsg , setErrorMessage]= useState("")
+    const [showError, setShowError] = useState(false)
+    const [errorMsg, setErrorMessage] = useState("")
+
     interface FormElements extends HTMLFormControlsCollection {
         name: HTMLInputElement
     }
@@ -37,6 +38,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     interface FormElement extends HTMLFormElement {
         readonly elements: FormElements
     }
+
     useImperativeHandle(ref, () => ({
             openDialog() {
                 dialog.current && dialog.current.showModal()
@@ -57,37 +59,38 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-    const handleNameSubmit = (e:React.FormEvent<FormElement>)=> {
+    const handleNameSubmit = (e: React.FormEvent<FormElement>) => {
         e.preventDefault()
-        let name : string = e.currentTarget.elements.name.value
-        if(name !== ""){
-            dispatch(setName(name))
-            dispatch(setFirstTime(false))
-            setShowError(false)
-            cancelHandler()
-        }
-        else{
+        let name: string = e.currentTarget.elements.name.value
+        if (name !== "") {
+            if (name.length > 10) error("Enter a name shorter than 10 characters")
+            else {
+                dispatch(setName(name))
+                dispatch(setFirstTime(false))
+                setShowError(false)
+                cancelHandler()
+            }
+        } else {
             error("Please enter a name")
         }
     }
-    const goToNext =  (e:React.MouseEvent<HTMLButtonElement>) => {
-        if(locations.length !== 0) {
+    const goToNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (locations.length !== 0) {
             setNext(true)
             setShowError(false)
-            const {lat,lng} =locations[0].location
-            dispatch(getCurrentWeather(lat!,lng!))
-            dispatch(getDailyWeather(lat!,lng!))
+            const {lat, lng} = locations[0].location
+            dispatch(getCurrentWeather(lat!, lng!))
+            dispatch(getDailyWeather(lat!, lng!))
             dispatch(setInitialLocationState(true))
-            e.currentTarget.innerText="Finish"
-        }
-        else {
+            e.currentTarget.innerText = "Finish"
+        } else {
             error("Please select a location")
         }
     }
     const cancelHandler = () => {
         dialog.current?.close()
     }
-    const error = (message : string) =>{
+    const error = (message: string) => {
         setErrorMessage(message)
         setShowError(true)
     }
@@ -97,22 +100,29 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
             <dialog ref={dialog}
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 {props.message && <UnderlinedText text={props.message} header={true}/>}
-                <form onSubmitCapture={(event:React.FormEvent<FormElement>)=>handleNameSubmit(event)} style={{transform:initialLocationState? "translateX(-100%)" : next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
+                <form onSubmitCapture={(event: React.FormEvent<FormElement>) => handleNameSubmit(event)}
+                      style={{transform: initialLocationState ? "translateX(-100%)" : next ? "translateX(-100%)" : ""}}
+                      className={"flex  h-3/4 duration-700 "}
                       onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
                         <TextField dark={true}/>
-                        <button type={"button"} onClick={props.openGpsDialog} className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?</button>
+                        <button type={"button"} onClick={props.openGpsDialog}
+                                className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
+                        </button>
+                        <div className={"h-1/4 w-full grid place-items-center"}>
+                            <button onClick={goToNext} className={buttonStyles} type={"button"}>Next</button>
+                        </div>
                     </div>
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center "}>
                         <p className={"text-lg w-4/6"}>Okay now tell me what should I call you :D</p>
-                        <input type={'text'} name={"name"} placeholder={"Enter your name here"} className={"outline-0 border-2 border-blue-400 rounded-3xl p-2 text-center max-md:w-3/5 focus-within:max-md:w-4/5 w-1/3 focus-within:w-1/2 duration-300"} />
-                        <button type={"submit"}>Save this name ?</button>
+                        <input type={'text'} name={"name"} placeholder={"Enter your name here"}
+                               className={"outline-0 border-2 border-blue-400 rounded-3xl p-2 text-center max-md:w-3/5 focus-within:max-md:w-4/5 w-1/3 focus-within:w-1/2 duration-300"}/>
+                        <button className={buttonStyles} type={"submit"}>Save this name</button>
                     </div>
                 </form>
-                <div className={"flex flex-col h-1/4 justify-around items-center "}>
-                    <h3 className={`${showError ? "visible":"invisible"} text-red-400`}>{errorMsg}</h3>
-                    <button onClick={goToNext} className={buttonStyles} id={"submit"} type="submit">Next</button>
+                <div className={"flex justify-around items-center text-center "}>
+                    <h3 className={`${showError ? "visible" : "invisible"} text-red-400`}>{errorMsg}</h3>
                 </div>
             </dialog>
         </>

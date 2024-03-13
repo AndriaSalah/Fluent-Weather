@@ -17,7 +17,7 @@ export interface DialogHandles {
     closeDialog: () => void;
 }
 
-const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/4"
+const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
 export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
@@ -84,10 +84,10 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                 {props.message && <UnderlinedText text={props.message} header={true}/>}
                 <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
-                        <h2 className={"w-4/5"}>In order to detect your current location , we need access to the location permission from your browser</h2>
+                        <h2 className={"w-4/5"}>In order to detect your current location , we need access to your location data from your browser</h2>
                     </div>
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
-                        <h2 className={"w-4/5"}>By pressing the button below, the browser will ask you for the permission , please press allow</h2>
+                        <h2 className={"w-4/5"}>By continuing, the browser will ask you for a permission to let us access to your location data , please press allow</h2>
                         <Image src={locationImage} alt={"example of the location permission"}/>
                     </div>
                 </form>
