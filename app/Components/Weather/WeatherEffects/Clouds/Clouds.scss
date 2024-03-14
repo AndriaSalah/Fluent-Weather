@@ -1,12 +1,15 @@
 @mixin cloud{
   opacity: 90%;
-  filter:blur(3px);
+  filter:blur(2px);
   position: absolute;
   object-fit: cover;
   z-index: 0;
   transition-duration: 0.25s;
 }
 .clouds{
+  animation-delay: 2s;
+  animation: initial-animation 2.5s forwards alternate ease-in-out ;
+  opacity: 0;
   overflow-x: clip;
   width: 100%;
   height: 100%;
@@ -33,6 +36,11 @@
   @keyframes cloud-anim {
     100%{
       transform: translatey(2vh);
+    }
+  }
+  @keyframes initial-animation {
+    100%{
+      opacity: 1;
     }
   }
 

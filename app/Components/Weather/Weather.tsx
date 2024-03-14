@@ -26,6 +26,7 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
     const [weatherDescription ,setWeatherDescription] = useState<string>("...")
     const [weatherIcon ,setWeatherIcon] = useState<React.ReactElement>()
     const {name} = useSelector((state:RootState) => state.utils)
+    const {transition} = useSelector((state:RootState) => state.flags)
     const {weather_code ,is_day} = useSelector((state:RootState) => state.currentWeather.current)
     const {snowLevel ,rainLevel,cloudLevel} = useSelector((state:RootState) => state.currentWeather)
     const dispatch = useAppDispatch()
@@ -220,7 +221,7 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
             <Snow isSnowy={snowLevel}/>
             <Clouds isCloudy={cloudLevel}/>
             <WeatherHeader openGpsDialog={openGpsDialog}/>
-            <div className={"flex flex-col max-md:gap-8 gap-14 "}>
+            <div className={`flex flex-col max-md:gap-8 gap-14 ${transition? "opacity-0" : "opacity-100"} duration-100 `}>
                 <WeatherControls/>
                 <div className={"z-10"}>
                     <p className={"text-center text-lg"}>Hello <b>{name}</b> {"today's weather is,"}</p>

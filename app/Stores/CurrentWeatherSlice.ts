@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {Loading} from "@/app/Stores/FlagsSlice";
+import {loading} from "@/app/Stores/FlagsSlice";
 import weather from "@/app/Components/Weather/Weather";
 import {lab} from "d3-color";
 

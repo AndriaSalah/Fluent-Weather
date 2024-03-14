@@ -27,7 +27,7 @@ const WeatherData = () => {
       <button
         onClick={clickHandler}
         className={`h-10 w-10 text-white bg-white bg-opacity-50 backdrop-blur-3xl rounded-[50%] text-5xl flex items-center
-         fixed max-md:hidden md:-left-[3rem] 
+         fixed max-md:hidden md:-left-[3.5rem] 
          ${toggle && "md:rotate-180" } duration-300`}>
         <MdOutlineKeyboardArrowLeft />
       </button>
