@@ -1,7 +1,7 @@
 "use client"
 import Weather from "./Components/Weather/Weather";
 import WeatherData from "./Components/WeatherData/WeatherData";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "@/app/Stores";
 import GreetingDialog, {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
@@ -12,12 +12,14 @@ import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 import {hydrateInitialLocationState, toggleTransition} from "@/app/Stores/FlagsSlice";
 
 
-let transitionTimer : any
+
 
 export default function Home() {
+    const [transitionTimer, setTransitionTimer] = useState<any>(null);
     const greetingDialog = useRef<DialogHandles>(null)
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
+    const savedLocations = useSelector((state: RootState) => state.geocode)
     const {expand,firstTime ,locationPointer} = useSelector((state: RootState) => state.utils);
     const {loading , transition} = useSelector((state: RootState) => state.flags);
     const dispatch = useAppDispatch()
@@ -34,24 +36,27 @@ export default function Home() {
     }, [dispatch,firstTime]);
 
     useEffect(() => {
-        console.log(transitionTimer)
-        if(!transitionTimer){
-        dispatch(toggleTransition())
-        transitionTimer = setTimeout(()=> dispatch(toggleTransition()),700)
-        return ()=> {
-            clearTimeout(transitionTimer)
-            transitionTimer = null
+        if (!transitionTimer) {
+            console.log('invoked');
+            dispatch(toggleTransition());
+            setTransitionTimer(setTimeout(() => {
+                dispatch(toggleTransition());
+                setTransitionTimer(null);
+            }, 700));
         }
-        }
-    }, [dispatch,locationPointer]);
+        return () => {
+            clearTimeout(transitionTimer);
+            setTransitionTimer(null);
+        };
+    }, [dispatch,isDay , savedLocations , locationPointer]);
 
     return (
         <>
             <GreetingDialog openGpsDialog={()=> {gpsDialog.current?.openDialog()}} message={"Hello!"} onSubmit={() => {}} ref={greetingDialog}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
-            <main className={`w-full h-[100svh] bg-no-repeat bg-cover ${transition? "bg-black" : isDay? "bg-day" : "bg-night"} duration-100`}>
+            <main className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay? "bg-day" : "bg-night"} duration-100`}>
                 <span
-                    className={`block w-full h-screen absolute bg-black ${transition ? "opacity-100" : isDay ? "bg-opacity-10" : "bg-opacity-55"} duration-300`}/>
+                    className={`block w-full h-screen absolute bg-black ${transition ? "opacity-100" : isDay ? "bg-opacity-10" : "bg-opacity-55"} duration-700`}/>
                 {loading? <p>loading</p> :  <div>
                     <Weather openGpsDialog={() => gpsDialog.current?.openDialog()}/>
                     <WeatherData/>

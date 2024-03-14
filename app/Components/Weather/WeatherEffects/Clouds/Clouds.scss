@@ -7,8 +7,8 @@
   transition-duration: 0.25s;
 }
 .clouds{
-  animation-delay: 2s;
-  animation: initial-animation 2.5s forwards alternate ease-in-out ;
+  animation: initial-animation 2.5s forwards ease-in-out ;
+  animation-delay: 1.5s;
   opacity: 0;
   overflow-x: clip;
   width: 100%;

@@ -8,6 +8,7 @@ import {decLocationPointer, incLocationPointer, updateLeftButton, updateRightBut
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 
+
 const WeatherControls = () => {
     const savedLocations = useSelector((state:RootState) => state.geocode)
     const {locationPointer, leftButtonEnabled , rightButtonEnabled , firstTime} = useSelector((state:RootState) => state.utils )
@@ -27,8 +28,10 @@ const WeatherControls = () => {
     useEffect(() => {
         if(savedLocations.length > 0 && !firstTime) {
             const {lat,lng} = savedLocations[locationPointer].location
-            dispatch(getCurrentWeather(lat!, lng!))
-            dispatch(getDailyWeather(lat!, lng!))
+            setTimeout(()=>{
+                dispatch(getCurrentWeather(lat!, lng!))
+                dispatch(getDailyWeather(lat!, lng!))
+            },400)
         }
         locationPointer + 1 > savedLocations.length -1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
         locationPointer - 1 < 0 ? dispatch(updateLeftButton(false)) : dispatch(updateLeftButton(true))
@@ -43,7 +46,7 @@ const WeatherControls = () => {
                 console.log(weather)
             }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowLeft /></button>
             </div>
-            <h2 className={`text-6xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
+            <h2 className={`text-5xl md:text-6xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
             <div className={"w-[3rem] flex-shrink-0 "}>
             <button onClick={()=>{
                 console.log("clicked button")

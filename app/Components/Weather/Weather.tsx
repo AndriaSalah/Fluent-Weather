@@ -208,7 +208,7 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
                 setWeatherIcon(<FaCloudBolt/>)
                 break
             default:
-                setWeatherDescription("getting weather data")
+                setWeatherDescription("...")
         }
     }, [dispatch, is_day, weather_code])
 
@@ -221,7 +221,7 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
             <Snow isSnowy={snowLevel}/>
             <Clouds isCloudy={cloudLevel}/>
             <WeatherHeader openGpsDialog={openGpsDialog}/>
-            <div className={`flex flex-col max-md:gap-8 gap-14 ${transition? "opacity-0" : "opacity-100"} duration-100 `}>
+            <div className={`flex flex-col max-md:gap-8 gap-14 ${transition? "opacity-0" : "opacity-100"} duration-500 ease-in-out `}>
                 <WeatherControls/>
                 <div className={"z-10"}>
                     <p className={"text-center text-lg"}>Hello <b>{name}</b> {"today's weather is,"}</p>

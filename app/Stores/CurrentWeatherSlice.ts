@@ -11,7 +11,7 @@ export type currentWeatherData ={
         is_day: number,
         wind_speed_10m: number,
         precipitation: number,
-        weather_code: number,
+        weather_code: number|null,
         rain: number,
         snowfall: number
 }
@@ -37,7 +37,7 @@ const initialState : CurrentWeather = {
         is_day: 0,
         wind_speed_10m: 0,
         precipitation: 0,
-        weather_code: 0,
+        weather_code: null,
         rain: 0,
         snowfall: 0
     },

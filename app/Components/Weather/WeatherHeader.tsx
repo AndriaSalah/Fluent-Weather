@@ -44,7 +44,7 @@ const WeatherHeader : React.FC<props> = ({openGpsDialog}) => {
 
     return (
         <header className={"flex max-md:flex-col max-md:gap-5 justify-between items-center "}>
-            <h1 className={"max-md:text-center max-md:w-full w-2/3 text-4xl font-light"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"nope"}</h1>
+            <h1 className={"max-md:text-center max-md:w-full w-2/3 text-4xl font-light"}>{geocodeData.length !== 0 ? geocodeData[locationPointer].address:"..."}</h1>
             <div className={"max-md:w-full w-1/3 flex items-center gap-5 justify-center md:justify-end "}>
                 <TextField/>
                 <button onClick={checkLocationPermission} className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"} ><FaLocationDot /></button>
