@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {Loading} from "@/app/Stores/FlagsSlice";
 import weather from "@/app/Components/Weather/Weather";
+import {lab} from "d3-color";
 
 export type currentWeatherData ={
         time: string,
@@ -16,7 +17,7 @@ export type currentWeatherData ={
 }
 export type weatherEffects = {
     level:number,
-    type:"cloud" | "rain" | "snow"
+    type:"cloud" | "rain" | "snow" | "reset"
 }
 export type CurrentWeather = {
     timezone: string,
@@ -55,9 +56,6 @@ const CurrentWeatherSlice = createSlice({
             state.timezone = action.payload.timezone
         },
         setWeatherEffects : (state:CurrentWeather , action:PayloadAction<weatherEffects>) => {
-            state.rainLevel = 0
-            state.cloudLevel = 0
-            state.snowLevel = 0
             switch (action.payload.type){
                 case "rain":
                     state.rainLevel = action.payload.level
@@ -67,13 +65,18 @@ const CurrentWeatherSlice = createSlice({
                     return
                 case "snow":
                     state.snowLevel = action.payload.level
-                    return;
+                    return
             }
+        },
+        resetWeatherEffects : (state:CurrentWeather) =>{
+            state.snowLevel = 0
+            state.rainLevel = 0
+            state.cloudLevel = 0
         }
     },
 });
 
-export const {updateWeather , setWeatherEffects} = CurrentWeatherSlice.actions
+export const {updateWeather , setWeatherEffects,resetWeatherEffects} = CurrentWeatherSlice.actions
 export default CurrentWeatherSlice
 
 export const getCurrentWeather =  (latitude : number , longitude : number) =>{

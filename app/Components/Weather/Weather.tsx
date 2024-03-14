@@ -13,7 +13,7 @@ import {
     FaSun,
     FaCloudSun, FaMoon, FaCloudMoon, FaCloudSunRain, FaCloudMoonRain
 } from "react-icons/fa6";
-import {setWeatherEffects} from "@/app/Stores/CurrentWeatherSlice";
+import {resetWeatherEffects, setWeatherEffects} from "@/app/Stores/CurrentWeatherSlice";
 import {Rain} from "@/app/Components/Weather/WeatherEffects/Rain/Rain";
 import {Snow} from "@/app/Components/Weather/WeatherEffects/Snow/Snow";
 import Clouds from "@/app/Components/Weather/WeatherEffects/Clouds/Clouds";
@@ -30,7 +30,7 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
     const {snowLevel ,rainLevel,cloudLevel} = useSelector((state:RootState) => state.currentWeather)
     const dispatch = useAppDispatch()
     const updateWeatherDescription = useCallback(() => {
-       
+        dispatch(resetWeatherEffects())
         switch (weather_code) {
             case 0:
                 setWeatherDescription("clear Sky")
@@ -215,14 +215,14 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
         updateWeatherDescription()
     }, [updateWeatherDescription]);
     return (
-        <section className={`flex w-full h-svh flex-col gap-20 md:gap-56 p-6 relative z-10`}>
-            <Rain isRaining={9}/>
-            <Snow isSnowy={0}/>
-            <Clouds isCloudy={0}/>
+        <section className={`flex w-full h-svh flex-col gap-20 md:gap-56 p-6 relative z-10 `}>
+            <Rain isRaining={rainLevel}/>
+            <Snow isSnowy={snowLevel}/>
+            <Clouds isCloudy={cloudLevel}/>
             <WeatherHeader openGpsDialog={openGpsDialog}/>
             <div className={"flex flex-col max-md:gap-8 gap-14 "}>
                 <WeatherControls/>
-                <div>
+                <div className={"z-10"}>
                     <p className={"text-center text-lg"}>Hello <b>{name}</b> {"today's weather is,"}</p>
                     <h2 className={"flex items-center justify-center gap-5 text-center text-3xl"}>{weatherDescription} {weatherIcon}</h2>
                 </div>
