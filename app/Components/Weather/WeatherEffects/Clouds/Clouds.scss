@@ -18,7 +18,7 @@
     height: 15rem;
     @include cloud;
     bottom: 50vh;
-    right: 30%;
+    right: 35%;
     animation: cloud-anim 4s infinite alternate ease-in-out ;
     animation-delay: 1s;
   }
@@ -28,7 +28,7 @@
     animation: cloud-anim 5s infinite alternate ease-in-out ;
     @include cloud;
     bottom: 43vh;
-    left: 26%;
+    left: 28%;
   }
   @keyframes cloud-anim {
     100%{
