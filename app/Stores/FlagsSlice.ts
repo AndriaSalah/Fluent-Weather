@@ -9,7 +9,7 @@ export type flagsSlice = {
 const initialState : flagsSlice = {
     initialLocationState:false,
     loading:false,
-    transition:true
+    transition:false
 }
 const StatsSlice = createSlice({
     name:"Stats",
