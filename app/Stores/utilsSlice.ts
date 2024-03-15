@@ -1,9 +1,10 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
+export type options = "Temp" | "Wind" | "Rain" | "UV"
 
-export type utils = {
+export type utils ={
     expand: boolean,
-    selectedOption: string,
+    selectedOption : options
     locationPointer: number,
     leftButtonEnabled: boolean,
     rightButtonEnabled: boolean,
@@ -13,7 +14,7 @@ export type utils = {
 
 const initialState: utils = {
     expand: false,
-    selectedOption: "temp",
+    selectedOption: "Temp",
     locationPointer: 0,
     leftButtonEnabled: true,
     rightButtonEnabled: true,
@@ -28,8 +29,8 @@ const utilsSlice = createSlice({
             state.expand = !state.expand;
             console.log(state.expand)
         },
-        changeSelectedOption: (state: utils, actions: PayloadAction<utils>) => {
-            state.selectedOption = actions.payload.selectedOption
+        changeSelectedOption: (state: utils, actions: PayloadAction<options>) => {
+            state.selectedOption = actions.payload
         },
         incLocationPointer: (state: utils) => {
             state.locationPointer++
@@ -69,6 +70,7 @@ export const hydrateUserFromLocal = () =>{
 
 export const {
     toggleExpansion,
+    changeSelectedOption,
     incLocationPointer,
     decLocationPointer,
     resetLocationPointer,

@@ -76,7 +76,11 @@ const CurrentWeatherSlice = createSlice({
     },
 });
 
-export const {updateWeather , setWeatherEffects,resetWeatherEffects} = CurrentWeatherSlice.actions
+export const {
+    updateWeather ,
+    setWeatherEffects,
+    resetWeatherEffects
+} = CurrentWeatherSlice.actions
 export default CurrentWeatherSlice
 
 export const getCurrentWeather =  (latitude : number , longitude : number) =>{
