@@ -12,8 +12,8 @@ const Colors = {
     Gradient_min: "#5C9CE5",
     Gradient_start : "#464545",
     Tick_color: 'black',
-    StrokeColor_1 : "#5C9CE5",
-    StrokeColor_2 : "#ea8282"
+    StrokeColor_min : "#5C9CE5",
+    StrokeColor_max : "#ea8282"
 }
 type dataKeys = "temp_min" | "uv" | "wind_speed" | "rain"
 const DataGraph = () => {
@@ -34,18 +34,18 @@ const DataGraph = () => {
                     :SelectedOption === "Rain" && setDataKey("rain")
     }, [SelectedOption]);
     return (
-        <div className={"h-2/6 md:h-1/2 w-full p-1 md:p-4 "} onClick={log}>
-            <Dropdown defaultOption={"Temp"} options={["Temp","Wind","Rain","UV"]} onChange={onDropDownChange} />
+        <div className={"grid gap-1 max-sm:h-[38%] md:h-1/2 w-full p-1 md:p-4 "}>
+            <Dropdown defaultOption={"Temp"} options={["Temp", "Wind", "Rain", "UV"]} onChange={onDropDownChange}/>
             <ResponsiveContainer className={" bg-[#FFFFFF7F] rounded-xl backdrop-blur-3xl"}>
                     <AreaChart data={Daily_Data}
-                               margin={{top: 45, right: 45, left: 20, bottom: 45}}>
+                               margin={{top: 35, right: 35, left: 15, bottom: 30}}>
                         <defs>
                             <linearGradient id="colorMin" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="10%" stopColor={Colors.Gradient_max} stopOpacity={0.9}/>
+                                <stop offset="10%" stopColor={Colors.Gradient_min} stopOpacity={0.9}/>
                                 <stop offset="95%" stopColor={Colors.Gradient_start} stopOpacity={0.3}/>
                             </linearGradient>
                             <linearGradient id="colorMax" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="10%" stopColor={Colors.Gradient_min} stopOpacity={0.9}/>
+                                <stop offset="10%" stopColor={Colors.Gradient_max} stopOpacity={0.9}/>
                                 <stop offset="95%" stopColor={Colors.Gradient_start} stopOpacity={0.3}/>
                             </linearGradient>
                         </defs>
@@ -62,11 +62,11 @@ const DataGraph = () => {
                         />
                         <CartesianGrid strokeLinecap={"round"} stroke={"black"} opacity={0.1}/>
                         <Tooltip content={<ChartTooltip selectedOption={SelectedOption}/>}/>
+                        {SelectedOption === "Temp" &&  <Area type="monotone" dataKey={"temp_max"} stroke={Colors.StrokeColor_max} fillOpacity={0.8}
+                                                             fill="url(#colorMax)"/>}
                         <Area type="monotone" dataKey={dataKey}
-                              stroke={Colors.StrokeColor_1} fillOpacity={0.8}
+                              stroke={Colors.StrokeColor_min} fillOpacity={0.8}
                               fill="url(#colorMin)"/>
-                        {SelectedOption === "Temp" &&  <Area type="monotone" dataKey={"temp_max"} stroke={Colors.StrokeColor_2} fillOpacity={0.8}
-                               fill="url(#colorMax)"/>}
                     </AreaChart>
             </ResponsiveContainer>
         </div>

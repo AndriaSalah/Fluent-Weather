@@ -38,14 +38,14 @@ const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange}) => 
         onChange(selectedOption) : onChange(defaultOption)
     }, [defaultOption, onChange, selectedOption]);
     return (
-        <div ref={SelectRef} className={"max-w-[45%] relative select-none"}>
-        <div className={"w-full flex-grow flex bg-white text-black p-2 rounded-2xl relative items-center gap-2"} onClick={handleClick}>
-            <p className={"text-xs w-20 whitespace-nowrap overflow-hidden overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
+        <div className={"w-full grid place-items-end relative select-none"}>
+        <div ref={SelectRef} className={"w-[7rem] flex-grow flex bg-white text-black p-2 rounded-lg bg-opacity-65 relative items-center justify-around"} onClick={handleClick}>
+            <p className={"text-md w-20 whitespace-nowrap overflow-hidden overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
             <FaAngleDown />
         </div>
-            <div className="Dropdown w-full flex flex-col gap-1 absolute bg-white top-10 z-20 p-2 border-2 border-white border-opacity-25 rounded-lg"
+            <div className="Dropdown w-[7rem]  flex flex-col gap-1 absolute bg-white mt-1 top-full z-20 py-1 border-2 border-white border-opacity-25 rounded-lg duration-300"
                 style={styles}>
-                {options.map((option,index) => <p className={"rounded-lg text-base flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis py-1 px-2 hover:bg-gray-300"} key={index} onClick={()=>setOption(option)}>{option}</p>)}
+                {options.map((option,index) => <p className={"rounded-lg text-base flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis py-1 px-2 hover:bg-blue-200 duration-300"} key={index} onClick={()=>setOption(option)}>{option}</p>)}
             </div>
         </div>
     );
