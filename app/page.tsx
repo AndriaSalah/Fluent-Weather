@@ -27,7 +27,6 @@ export default function Home() {
     function clickHandler() {
         dispatch(toggleExpansion());
     }
-
     useEffect(() => {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
@@ -61,7 +60,7 @@ export default function Home() {
         <>
             <GreetingDialog openGpsDialog={()=> {gpsDialog.current?.openDialog()}} message={"Hello!"} onSubmit={() => {}} ref={greetingDialog}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
-            <main className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay? "bg-day" : "bg-night"} duration-100`}>
+            <main className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay? "bg-day" : "bg-night"} duration-100 relative overflow-clip`}>
                 <span
                     className={`block w-full h-screen absolute bg-black ${transition ? "opacity-100" : isDay ? "bg-opacity-10" : "bg-opacity-55"} duration-700`}/>
                     <Weather openGpsDialog={() => gpsDialog.current?.openDialog()}/>
