@@ -9,7 +9,7 @@ import {loadFromLocalStorage} from "@/app/Stores/GeocodeSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
-import {hydrateInitialLocationState, toggleTransition} from "@/app/Stores/FlagsSlice";
+import {hydrateInitialLocationState, setLoading, toggleTransition} from "@/app/Stores/FlagsSlice";
 
 
 
@@ -36,13 +36,20 @@ export default function Home() {
     }, [dispatch,firstTime]);
 
     useEffect(() => {
+        const animate = (delay:number) =>{
+            setTransitionTimer(setTimeout(() => {
+                dispatch(toggleTransition(false));
+                setTransitionTimer(null);
+            }, delay));
+        }
+        if(loading){
+            dispatch(setLoading(false))
+            animate(500)
+        }
         if (!transitionTimer) {
             console.log('invoked');
-            dispatch(toggleTransition());
-            setTransitionTimer(setTimeout(() => {
-                dispatch(toggleTransition());
-                setTransitionTimer(null);
-            }, 700));
+            dispatch(toggleTransition(true));
+            animate(700)
         }
         return () => {
             clearTimeout(transitionTimer);
@@ -57,7 +64,6 @@ export default function Home() {
             <main className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay? "bg-day" : "bg-night"} duration-100`}>
                 <span
                     className={`block w-full h-screen absolute bg-black ${transition ? "opacity-100" : isDay ? "bg-opacity-10" : "bg-opacity-55"} duration-700`}/>
-                {loading? <p>loading</p> :  <div>
                     <Weather openGpsDialog={() => gpsDialog.current?.openDialog()}/>
                     <WeatherData/>
                     <button
@@ -67,7 +73,6 @@ export default function Home() {
          ${expand ? "-rotate-90 bg-black bg-opacity-50 " : "rotate-90 bg-white bg-opacity-50 "}  duration-200`}>
                         <MdOutlineKeyboardArrowLeft/>
                     </button>
-                </div>}
             </main>
         </>
     );

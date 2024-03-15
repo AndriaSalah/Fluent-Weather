@@ -19,8 +19,8 @@ const config: Config = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-                "night": "url('../public/pikb29-test.jpg')",
-                "day": "url('../public/pikb28.jpg')"
+                "night": "url('../public/night.webp')",
+                "day": "url('../public/day.webp')"
             },
             backgroundColor: {
                 "autocomplete": "background-color:transparent !important"

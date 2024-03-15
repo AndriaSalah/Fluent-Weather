@@ -14,9 +14,10 @@ import {
     FaCloudSun, FaMoon, FaCloudMoon, FaCloudSunRain, FaCloudMoonRain
 } from "react-icons/fa6";
 import {resetWeatherEffects, setWeatherEffects} from "@/app/Stores/CurrentWeatherSlice";
+import Clouds from "@/app/Components/Weather/WeatherEffects/Clouds/Clouds";
 import {Rain} from "@/app/Components/Weather/WeatherEffects/Rain/Rain";
 import {Snow} from "@/app/Components/Weather/WeatherEffects/Snow/Snow";
-import Clouds from "@/app/Components/Weather/WeatherEffects/Clouds/Clouds";
+
 
 interface props {
     openGpsDialog: () => void

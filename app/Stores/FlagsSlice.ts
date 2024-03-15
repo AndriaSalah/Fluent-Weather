@@ -8,8 +8,8 @@ export type flagsSlice = {
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
-    loading:false,
-    transition:false
+    loading:true,
+    transition:true
 }
 const StatsSlice = createSlice({
     name:"Stats",
@@ -19,12 +19,12 @@ const StatsSlice = createSlice({
             state.initialLocationState = action.payload
             localStorage.setItem("initialLocationState",JSON.stringify(state.initialLocationState))
         },
-        loading : (state : flagsSlice , action :PayloadAction<boolean>) => {
-            console.log("loading" + action.payload )
+        setLoading : (state : flagsSlice , action :PayloadAction<boolean>) => {
+            console.log("setLoading" + action.payload )
             state.loading = action.payload
         },
-        toggleTransition : (state : flagsSlice) =>{
-            state.transition = !state.transition
+        toggleTransition : (state : flagsSlice , action : PayloadAction<boolean>) =>{
+            state.transition = action.payload
             console.log(state.transition)
         }
 
@@ -39,7 +39,7 @@ export const hydrateInitialLocationState = ()=>{
 }
 export const {
     setInitialLocationState,
-    loading,
+    setLoading,
     toggleTransition
 } = StatsSlice.actions
 
