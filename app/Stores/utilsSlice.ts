@@ -2,24 +2,26 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
 
-export type utils ={
+export type utils = {
     expand: boolean,
-    selectedOption : options
+    locationListIsOpen: boolean
+    selectedOption: options
     locationPointer: number,
     leftButtonEnabled: boolean,
     rightButtonEnabled: boolean,
-    name:string,
-    firstTime:boolean
+    name: string,
+    firstTime: boolean
 };
 
 const initialState: utils = {
     expand: false,
+    locationListIsOpen:false,
     selectedOption: "Temp",
     locationPointer: 0,
     leftButtonEnabled: true,
     rightButtonEnabled: true,
-    name:"",
-    firstTime:false
+    name: "",
+    firstTime: false
 };
 const utilsSlice = createSlice({
     name: "utils",
@@ -38,28 +40,34 @@ const utilsSlice = createSlice({
         decLocationPointer: (state: utils) => {
             state.locationPointer--
         },
+        setLocationPointer:(state:utils , action:PayloadAction<number>)=>{
+            state.locationPointer = action.payload
+        },
         resetLocationPointer: (state: utils) => {
             state.locationPointer = 0
         },
         updateLeftButton: (state: utils, actions: PayloadAction<boolean>) => {
             state.leftButtonEnabled = actions.payload
         },
-        updateRightButton : (state: utils, actions: PayloadAction<boolean>) => {
+        updateRightButton: (state: utils, actions: PayloadAction<boolean>) => {
             state.rightButtonEnabled = actions.payload
         },
-        setName : (state: utils , actions : PayloadAction<string>) => {
-            localStorage.setItem("name",actions.payload)
+        setName: (state: utils, actions: PayloadAction<string>) => {
+            localStorage.setItem("name", actions.payload)
             state.name = actions.payload
         },
-        setFirstTime : (state :utils , action :PayloadAction<boolean>) => {
+        setFirstTime: (state: utils, action: PayloadAction<boolean>) => {
             state.firstTime = action.payload
-            localStorage.setItem("firstTime",JSON.stringify(action.payload))
+            localStorage.setItem("firstTime", JSON.stringify(action.payload))
+        },
+        toggleLocationList : (state:utils) => {
+            state.locationListIsOpen = !state.locationListIsOpen
         }
     },
 });
 
-export const hydrateUserFromLocal = () =>{
-    return async (dispatch:Dispatch) => {
+export const hydrateUserFromLocal = () => {
+    return async (dispatch: Dispatch) => {
         let Username: string = localStorage.getItem("name") ?? ""
         let firstTime: boolean = JSON.parse(localStorage.getItem("firstTime") ?? "true")
         dispatch(setName(Username))
@@ -73,11 +81,13 @@ export const {
     changeSelectedOption,
     incLocationPointer,
     decLocationPointer,
+    setLocationPointer,
     resetLocationPointer,
     updateLeftButton,
     updateRightButton,
     setName,
-    setFirstTime
+    setFirstTime,
+    toggleLocationList
 } = utilsSlice.actions;
 
 export default utilsSlice;

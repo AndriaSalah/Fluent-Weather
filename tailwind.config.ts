@@ -34,7 +34,8 @@ const config: Config = {
             },
             animation: {
                 "slide": 'slide 4s ease-in-out infinite',
-                "hover": 'hover 15s ease-in-out infinite'
+                "hover": 'hover 15s ease-in-out infinite',
+                "fadeIn": 'fadeIn 1s ease-in-out forwards',
             },
             keyframes: {
                 "slide": {
@@ -44,11 +45,18 @@ const config: Config = {
                 "hover": {
                     "0% , 100%": {"transform": 'translateY(-10%)'},
                     "50%": {"transform": 'translateY(10%)'}
+                },
+                "fadeIn":{
+                    "0%" : {"opacity":0,"scale":0.8},
+                    "100%": {"opacity":1,"scale":1},
+
                 }
             },
 
         },
     },
-    plugins: [],
+    plugins: [
+        require("tailwindcss-animation-delay")
+    ],
 };
 export default config;

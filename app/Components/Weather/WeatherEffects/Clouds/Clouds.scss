@@ -18,7 +18,6 @@
   right: 0;
   .cloud1{
     width:fit-content;
-    height: 15rem;
     @include cloud;
     bottom: 50vh;
     right: 35%;
@@ -27,7 +26,6 @@
   }
   .cloud2{
     width: 23rem;
-    height: 15rem;
     animation: cloud-anim 5s infinite alternate ease-in-out ;
     @include cloud;
     bottom: 43vh;
@@ -47,10 +45,12 @@
   @media (max-width: 768px) {
 
     .cloud1 {
+      width: 14rem;
       bottom: 40vh;
       right: 0;
     }
     .cloud2 {
+      width: 18rem;
       bottom: 30vh;
       left: -10vw;
     }

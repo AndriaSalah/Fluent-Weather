@@ -43,6 +43,11 @@ const GeocodeSlice = createSlice({
             },
             hydrateGeocodeData: (state: locationData[], action: PayloadAction<locationData[]>) => {
                 return action.payload
+            },
+            removeLocation : (state:locationData[], action: PayloadAction<number>) => {
+                const newLocationsList = state.filter((location,index)=> index !== action.payload)
+                localStorage.setItem("locations",JSON.stringify(newLocationsList))
+                return newLocationsList
             }
         }
     }
@@ -77,5 +82,9 @@ export const GeocodeCords = (lat: number, lng: number) => {
     }
 }
 
-export const {setGeocodeData, hydrateGeocodeData} = GeocodeSlice.actions
+export const {
+    setGeocodeData,
+    hydrateGeocodeData,
+    removeLocation
+} = GeocodeSlice.actions
 export default GeocodeSlice

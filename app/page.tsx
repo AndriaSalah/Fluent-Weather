@@ -24,6 +24,7 @@ export default function Home() {
     const {loading , transition} = useSelector((state: RootState) => state.flags);
     const dispatch = useAppDispatch()
 
+
     function clickHandler() {
         dispatch(toggleExpansion());
     }
