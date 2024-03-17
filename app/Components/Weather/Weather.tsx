@@ -234,6 +234,5 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
     );
 };
 
-Weather.propTypes = {};
 
 export default Weather;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import {AppDispatch} from "@/app/Stores";
-import {GeocodeCords} from "@/app/Stores/GeocodeSlice";
+import {GeocodeCords} from "@/app/Stores/LocationsSlice";
 
 const useLocationPermission = (dispatch: AppDispatch) => {
     return  async () => {

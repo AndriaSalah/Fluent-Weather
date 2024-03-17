@@ -4,20 +4,21 @@ import {MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight} from "react-ico
 import SunMoon from "@/app/Components/Weather/SunMoon";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "@/app/Stores";
-import {decLocationPointer, incLocationPointer, updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
+import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
+import {decLocationPointer, incLocationPointer} from "@/app/Stores/LocationsSlice";
 
 
 const WeatherControls = () => {
-    const savedLocations = useSelector((state:RootState) => state.geocode)
-    const {locationPointer, leftButtonEnabled , rightButtonEnabled , firstTime} = useSelector((state:RootState) => state.utils )
+    const {locationPointer,locationsData} = useSelector((state:RootState) => state.locations)
+    const {leftButtonEnabled , rightButtonEnabled , firstTime} = useSelector((state:RootState) => state.utils )
     const weather = useSelector((state:RootState) => state.currentWeather)
     const isDay = useSelector((state:RootState)=> state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 
     const increaseLocationPointer = ()=> {
-        if(locationPointer + 1 > savedLocations.length - 1) return
+        if(locationPointer + 1 > locationsData.length - 1) return
         dispatch(incLocationPointer())
     }
     const decreaseLocationPointer = ()=> {
@@ -26,16 +27,18 @@ const WeatherControls = () => {
     }
 
     useEffect(() => {
-        if(savedLocations.length > 0 && !firstTime) {
-            const {lat,lng} = savedLocations[locationPointer].location
+        console.log(locationPointer)
+        console.log(locationsData[locationPointer])
+        if(locationsData.length > 0 && !firstTime) {
+            const {lat,lng} = locationsData[locationPointer].location
             setTimeout(()=>{
                 dispatch(getCurrentWeather(lat!, lng!))
                 dispatch(getDailyWeather(lat!, lng!))
             },400)
         }
-        locationPointer + 1 > savedLocations.length -1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
+        locationPointer + 1 > locationsData.length -1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
         locationPointer - 1 < 0 ? dispatch(updateLeftButton(false)) : dispatch(updateLeftButton(true))
-    }, [dispatch, firstTime, locationPointer, savedLocations]);
+    }, [dispatch, firstTime, locationPointer, locationsData]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>

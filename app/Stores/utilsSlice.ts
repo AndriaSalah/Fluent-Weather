@@ -6,7 +6,6 @@ export type utils = {
     expand: boolean,
     locationListIsOpen: boolean
     selectedOption: options
-    locationPointer: number,
     leftButtonEnabled: boolean,
     rightButtonEnabled: boolean,
     name: string,
@@ -17,7 +16,6 @@ const initialState: utils = {
     expand: false,
     locationListIsOpen:false,
     selectedOption: "Temp",
-    locationPointer: 0,
     leftButtonEnabled: true,
     rightButtonEnabled: true,
     name: "",
@@ -33,18 +31,6 @@ const utilsSlice = createSlice({
         },
         changeSelectedOption: (state: utils, actions: PayloadAction<options>) => {
             state.selectedOption = actions.payload
-        },
-        incLocationPointer: (state: utils) => {
-            state.locationPointer++
-        },
-        decLocationPointer: (state: utils) => {
-            state.locationPointer--
-        },
-        setLocationPointer:(state:utils , action:PayloadAction<number>)=>{
-            state.locationPointer = action.payload
-        },
-        resetLocationPointer: (state: utils) => {
-            state.locationPointer = 0
         },
         updateLeftButton: (state: utils, actions: PayloadAction<boolean>) => {
             state.leftButtonEnabled = actions.payload
@@ -79,10 +65,6 @@ export const hydrateUserFromLocal = () => {
 export const {
     toggleExpansion,
     changeSelectedOption,
-    incLocationPointer,
-    decLocationPointer,
-    setLocationPointer,
-    resetLocationPointer,
     updateLeftButton,
     updateRightButton,
     setName,

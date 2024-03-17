@@ -35,7 +35,7 @@ const config: Config = {
             animation: {
                 "slide": 'slide 4s ease-in-out infinite',
                 "hover": 'hover 15s ease-in-out infinite',
-                "fadeIn": 'fadeIn 1s ease-in-out forwards',
+                "fadeIn": 'fadeIn 0.5s ease-in-out forwards',
             },
             keyframes: {
                 "slide": {
@@ -47,8 +47,8 @@ const config: Config = {
                     "50%": {"transform": 'translateY(10%)'}
                 },
                 "fadeIn":{
-                    "0%" : {"opacity":0,"scale":0.8},
-                    "100%": {"opacity":1,"scale":1},
+                    "0%" : {"opacity":"0"},
+                    "100%": {"opacity":"1"},
 
                 }
             },

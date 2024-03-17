@@ -1,8 +1,7 @@
 import React from 'react';
 import GooglePlacesAutocomplete, {geocodeByPlaceId} from 'react-google-places-autocomplete';
 import {useDispatch} from "react-redux";
-import {setGeocodeData} from "@/app/Stores/GeocodeSlice";
-import {resetLocationPointer} from "@/app/Stores/utilsSlice";
+import {resetLocationPointer, setGeocodeData} from "@/app/Stores/LocationsSlice";
 import {useFormatAddress} from "@/app/Utils/useFormatAddress";
 
 interface props {

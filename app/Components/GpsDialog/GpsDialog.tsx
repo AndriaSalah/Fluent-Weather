@@ -3,7 +3,7 @@ import React, {forwardRef, ReactNode, RefObject, useEffect, useImperativeHandle,
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
-import {GeocodeCords} from "@/app/Stores/GeocodeSlice";
+import {GeocodeCords} from "@/app/Stores/LocationsSlice";
 import {useAppDispatch} from "@/app/Stores";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 

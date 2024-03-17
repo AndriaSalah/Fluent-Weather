@@ -5,7 +5,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "@/app/Stores";
 import GreetingDialog, {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
-import {loadFromLocalStorage} from "@/app/Stores/GeocodeSlice";
+import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
@@ -19,8 +19,8 @@ export default function Home() {
     const greetingDialog = useRef<DialogHandles>(null)
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
-    const savedLocations = useSelector((state: RootState) => state.geocode)
-    const {expand,firstTime ,locationPointer} = useSelector((state: RootState) => state.utils);
+    const {locationPointer, locationsData} = useSelector((state: RootState) => state.locations)
+    const {expand,firstTime } = useSelector((state: RootState) => state.utils);
     const {loading , transition} = useSelector((state: RootState) => state.flags);
     const dispatch = useAppDispatch()
 
@@ -55,7 +55,7 @@ export default function Home() {
             clearTimeout(transitionTimer);
             setTransitionTimer(null);
         };
-    }, [dispatch,isDay , savedLocations , locationPointer]);
+    }, [dispatch,isDay , locationsData , locationPointer]);
 
     return (
         <>
