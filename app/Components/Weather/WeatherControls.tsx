@@ -27,8 +27,6 @@ const WeatherControls = () => {
     }
 
     useEffect(() => {
-        console.log(locationPointer)
-        console.log(locationsData[locationPointer])
         if(locationsData.length > 0 && !firstTime) {
             const {lat,lng} = locationsData[locationPointer].location
             setTimeout(()=>{

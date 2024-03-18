@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import TextField from "@/app/UI/TextField";
 import {FaAngleDown, FaLocationDot} from "react-icons/fa6";
 import {useSelector} from "react-redux";
@@ -6,6 +6,9 @@ import {RootState, useAppDispatch} from "@/app/Stores";
 import {GeocodeCords, removeLocation, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import DropList from "@/app/Components/Weather/DropList";
 import {toggleLocationList} from "@/app/Stores/utilsSlice";
+import {IoRefreshOutline} from "react-icons/io5";
+import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
+import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 
 interface props {
     openGpsDialog: () => void
@@ -13,20 +16,27 @@ interface props {
 
 const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
     const {locationListIsOpen} = useSelector((state: RootState) => state.utils)
-    const {locationPointer , locationsData} = useSelector((state: RootState) => state.locations)
+    const {locationPointer, locationsData} = useSelector((state: RootState) => state.locations)
+    const listRef = useRef<HTMLUListElement>(null)
     const dispatch = useAppDispatch()
 
-    const changeLocation = (locationPointer : number) => {
-        console.log("invoked1")
+    const changeLocation = (locationPointer: number) => {
         dispatch(setLocationPointer(locationPointer))
         dispatch(toggleLocationList())
     }
-    const deleteLocation = (locationPointer : number) => {
-        console.log("invoked2")
+    const deleteLocation = (locationPointer: number) => {
         dispatch(removeLocation(locationPointer))
     }
-
     const toggleList = () => locationsData.length > 1 && dispatch(toggleLocationList())
+    const locationListUnFocus = (e: MouseEvent) => {
+        if (listRef.current && !listRef.current.contains(e.target as Node)) toggleList()
+    }
+    const refresh = ()=> {
+        const lat = locationsData[locationPointer].location.lat
+        const lng = locationsData[locationPointer].location.lng
+        dispatch(getDailyWeather(lat!,lng!))
+        dispatch(getCurrentWeather(lat!,lng!))
+    }
     const checkLocationPermission = async () => {
         try {
             const result = await navigator.permissions.query({name: 'geolocation'});
@@ -37,8 +47,6 @@ const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
                         // User has granted permission
                         const {latitude, longitude} = position.coords;
                         dispatch(GeocodeCords(latitude, longitude))
-                        // dispatch(getCurrentWeather(latitude,longitude))
-                        // dispatch(getDailyWeather(latitude,longitude))
                     },
                     (error) => {
                         console.error('Error getting location:', error);
@@ -55,25 +63,34 @@ const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
         }
     };
 
+
     return (
-        <header className={"flex max-md:flex-col max-md:gap-5 justify-between items-center "}>
-            <div onClick={toggleList} className={"flex cursor-pointer items-center max-md:justify-center justify-start gap-2.5 relative max-md:w-full w-1/4"}>
+        <header className={"flex max-md:flex-col max-md:gap-5 justify-between items-center z-40 "}>
+            <div onClick={toggleList}
+                 className={"flex cursor-pointer items-center max-md:justify-center justify-start gap-2.5 relative max-md:w-full w-1/4"}>
                 <h1 className={"max-md:text-center w-fit text-4xl font-light"}>{locationsData.length !== 0 ? locationsData[locationPointer].address : "..."}</h1>
                 {locationsData.length > 1 &&
                     <>
-                    <FaAngleDown className={`text-2xl ${locationListIsOpen ? "rotate-180" : "rotate-0"} duration-300`}/>
-                    <DropList listData={locationsData} isOpen={locationListIsOpen} onSelect={changeLocation}
-                                                       onButtonClick={deleteLocation}/>
+                        <FaAngleDown
+                            className={`text-2xl ${locationListIsOpen ? "rotate-180" : "rotate-0"} duration-300`}/>
+                        <DropList ref={listRef} listData={locationsData} isOpen={locationListIsOpen}
+                                  onSelect={changeLocation}
+                                  onButtonClick={deleteLocation} onUnFocus={locationListUnFocus}/>
                     </>
-            }
+                }
             </div>
-            <div className={"max-md:w-full w-1/3 flex items-center gap-5 justify-center md:justify-end "}>
-                <TextField/>
-                <button onClick={checkLocationPermission}
-                        className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"}>
-                    <FaLocationDot/></button>
-            </div>
+            <div className={"max-md:w-full w-1/3 flex items-center gap-1.5 max-md:flex-col"}>
+                <div className={"max-md:w-full flex-1 flex items-center gap-5 justify-center md:justify-end  "}>
+                    <TextField/>
 
+                    <button onClick={checkLocationPermission}
+                            className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"}>
+                        <FaLocationDot/></button>
+                </div>
+                <button onClick={refresh}
+                        className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"}>
+                    <IoRefreshOutline/></button>
+            </div>
         </header>
     );
 };
