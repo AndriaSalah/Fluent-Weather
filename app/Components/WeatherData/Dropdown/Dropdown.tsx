@@ -38,8 +38,8 @@ const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange}) => 
         onChange(selectedOption) : onChange(defaultOption)
     }, [defaultOption, onChange, selectedOption]);
     return (
-        <div className={"w-full grid place-items-end relative select-none cursor-pointer"}>
-        <div ref={SelectRef} className={"w-[7rem] flex-grow flex bg-white text-black p-2 rounded-lg bg-opacity-65 relative items-center justify-around hover:bg-opacity-50 "} onClick={handleClick}>
+        <div className={"w-full grid place-items-end relative select-none"}>
+        <div ref={SelectRef} className={"w-[7rem] flex-grow flex bg-white text-black p-2 rounded-lg bg-opacity-65 relative items-center justify-around hover:bg-opacity-50 cursor-pointer "} onClick={handleClick}>
             <p className={"text-md w-20 whitespace-nowrap overflow-hidden overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
             <FaAngleDown className={`${isClicked && "rotate-180"} duration-300`} />
         </div>

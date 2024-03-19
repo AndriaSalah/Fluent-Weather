@@ -46,8 +46,8 @@ const utilsSlice = createSlice({
             state.firstTime = action.payload
             localStorage.setItem("firstTime", JSON.stringify(action.payload))
         },
-        toggleLocationList : (state:utils) => {
-            state.locationListIsOpen = !state.locationListIsOpen
+        setLocationListIsOpened : (state:utils, action : PayloadAction<boolean>) => {
+           state.locationListIsOpen = action.payload
         }
     },
 });
@@ -69,7 +69,7 @@ export const {
     updateRightButton,
     setName,
     setFirstTime,
-    toggleLocationList
+    setLocationListIsOpened
 } = utilsSlice.actions;
 
 export default utilsSlice;

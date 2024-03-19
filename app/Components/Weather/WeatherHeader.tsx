@@ -1,13 +1,12 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import TextField from "@/app/UI/TextField";
 import {FaAngleDown, FaLocationDot} from "react-icons/fa6";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {GeocodeCords, removeLocation, setLocationPointer} from "@/app/Stores/LocationsSlice";
+import {GeocodeCords, getWeather, removeLocation, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import DropList from "@/app/Components/Weather/DropList";
-import {toggleLocationList} from "@/app/Stores/utilsSlice";
+import {setLocationListIsOpened} from "@/app/Stores/utilsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
-import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
+
 
 interface props {
     openGpsDialog: () => void
@@ -16,25 +15,25 @@ interface props {
 const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
     const {locationListIsOpen} = useAppSelector(state => state.utils)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
+    const loading = useAppSelector(state => state.flags.loading)
     const listRef = useRef<HTMLUListElement>(null)
     const dispatch = useAppDispatch()
 
     const changeLocation = (locationPointer: number) => {
         dispatch(setLocationPointer(locationPointer))
-        dispatch(toggleLocationList())
+        dispatch(setLocationListIsOpened(false))
     }
     const deleteLocation = (locationPointer: number) => {
         dispatch(removeLocation(locationPointer))
     }
-    const toggleList = () => locationsData.length > 1 && dispatch(toggleLocationList())
+    const toggleList = () => locationsData.length > 1 &&  dispatch(setLocationListIsOpened(!locationListIsOpen))
     const locationListUnFocus = (e: MouseEvent) => {
-        if (listRef.current && !listRef.current.contains(e.target as Node)) toggleList()
+        if (listRef.current && !listRef.current.contains(e.target as Node)) dispatch(setLocationListIsOpened(false))
     }
     const refresh = ()=> {
         const lat = locationsData[locationPointer].location.lat
         const lng = locationsData[locationPointer].location.lng
-        dispatch(getDailyWeather(lat!,lng!))
-        dispatch(getCurrentWeather(lat!,lng!))
+        dispatch(getWeather(lat!,lng!))
     }
     const checkLocationPermission = async () => {
         try {
@@ -87,7 +86,7 @@ const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
                         <FaLocationDot/></button>
                 </div>
                 <button onClick={refresh}
-                        className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg"}>
+                        className={`w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg ${loading && "animate-spin"}`}>
                     <IoRefreshOutline/></button>
             </div>
         </header>

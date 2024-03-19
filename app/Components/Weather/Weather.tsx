@@ -216,12 +216,12 @@ const Weather: React.FC<props> = ({openGpsDialog}) => {
         updateWeatherDescription()
     }, [updateWeatherDescription]);
     return (
-        <section className={`flex w-full h-svh flex-col gap-20 md:gap-56 p-6 relative z-10 `}>
+        <section className={`flex w-full h-svh flex-col p-6 relative z-10 `}>
             <Rain isRaining={rainLevel}/>
             <Snow isSnowy={snowLevel}/>
             <Clouds isCloudy={cloudLevel}/>
             <WeatherHeader openGpsDialog={openGpsDialog}/>
-            <div className={`flex flex-col max-md:gap-8 gap-14 ${transition? "opacity-0" : "opacity-100"} duration-500 ease-in-out `}>
+            <div className={`flex flex-col flex-1 justify-center max-md:gap-8 gap-14 ${transition? "opacity-0" : "opacity-100"} duration-500 ease-in-out `}>
                 <WeatherControls/>
                 <div className={"z-10"}>
                     <p className={"text-center text-lg"}>Hello <b>{name}</b> {"today's weather is,"}</p>
