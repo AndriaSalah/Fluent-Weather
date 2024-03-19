@@ -7,8 +7,6 @@ import {useAppDispatch} from "@/app/Stores/Store";
 interface props {
     dark?: boolean
 }
-
-
 const TextField: React.FC<props> = ({dark = false}) => {
     const dispatch = useAppDispatch()
     const formatAddress = useFormatAddress

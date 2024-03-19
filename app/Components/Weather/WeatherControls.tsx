@@ -7,7 +7,8 @@ import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
-import {decLocationPointer, incLocationPointer} from "@/app/Stores/LocationsSlice";
+import {decLocationPointer, getWeather, incLocationPointer} from "@/app/Stores/LocationsSlice";
+import {setLoading} from "@/app/Stores/FlagsSlice";
 
 
 const WeatherControls = () => {
@@ -20,18 +21,20 @@ const WeatherControls = () => {
     const increaseLocationPointer = ()=> {
         if(locationPointer + 1 > locationsData.length - 1) return
         dispatch(incLocationPointer())
+
     }
     const decreaseLocationPointer = ()=> {
         if(locationPointer - 1 < 0) return
         dispatch(decLocationPointer())
+
     }
 
     useEffect(() => {
+        dispatch(setLoading(true))
         if(locationsData.length > 0 && !firstTime) {
             const {lat,lng} = locationsData[locationPointer].location
             setTimeout(()=>{
-                dispatch(getCurrentWeather(lat!, lng!))
-                dispatch(getDailyWeather(lat!, lng!))
+                dispatch(getWeather(lat!,lng!))
             },400)
         }
         locationPointer + 1 > locationsData.length -1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))

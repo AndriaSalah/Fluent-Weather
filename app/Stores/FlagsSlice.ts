@@ -4,11 +4,13 @@ import {stat} from "fs";
 export type flagsSlice = {
     initialLocationState :boolean,
     loading:boolean,
+    initialLoad:boolean,
     transition:boolean
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
     loading:true,
+    initialLoad:true,
     transition:true
 }
 const StatsSlice = createSlice({
@@ -20,12 +22,13 @@ const StatsSlice = createSlice({
             localStorage.setItem("initialLocationState",JSON.stringify(state.initialLocationState))
         },
         setLoading : (state : flagsSlice , action :PayloadAction<boolean>) => {
-            console.log("setLoading" + action.payload )
             state.loading = action.payload
         },
         toggleTransition : (state : flagsSlice , action : PayloadAction<boolean>) =>{
             state.transition = action.payload
-            console.log(state.transition)
+        },
+        disableInitialLoad : (state : flagsSlice) =>{
+            state.initialLoad = false
         }
 
     }
@@ -40,6 +43,7 @@ export const hydrateInitialLocationState = ()=>{
 export const {
     setInitialLocationState,
     setLoading,
+    disableInitialLoad,
     toggleTransition
 } = StatsSlice.actions
 

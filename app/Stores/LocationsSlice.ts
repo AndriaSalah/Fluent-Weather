@@ -2,7 +2,8 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {useFormatAddress} from "@/app/Utils/useFormatAddress";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import {store} from "@/app/Stores/index";
+import {AppDispatch} from "@/app/Stores/Store";
+import {setLoading} from "@/app/Stores/FlagsSlice";
 
 
 
@@ -87,7 +88,21 @@ export const loadFromLocalStorage = () => {
         dispatch(hydrateGeocodeData(previousData))
     }
 }
-
+export const getWeather = (lat: number, lng: number) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            dispatch(setLoading(true))
+            await Promise.all([
+                dispatch(getCurrentWeather(lat, lng)),
+                dispatch(getDailyWeather(lat, lng))
+            ]);
+            dispatch(setLoading(false));
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
+            dispatch(setLoading(false));
+        }
+    };
+};
 export const GeocodeCords = (lat: number, lng: number) => {
     return async (dispatch: Dispatch) => {
         const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
