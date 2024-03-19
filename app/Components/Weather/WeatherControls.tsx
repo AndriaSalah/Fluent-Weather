@@ -2,8 +2,8 @@
 import React, {useEffect} from 'react';
 import {MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight} from "react-icons/md";
 import SunMoon from "@/app/Components/Weather/SunMoon";
-import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "@/app/Stores";
+
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
@@ -11,10 +11,10 @@ import {decLocationPointer, incLocationPointer} from "@/app/Stores/LocationsSlic
 
 
 const WeatherControls = () => {
-    const {locationPointer,locationsData} = useSelector((state:RootState) => state.locations)
-    const {leftButtonEnabled , rightButtonEnabled , firstTime} = useSelector((state:RootState) => state.utils )
-    const weather = useSelector((state:RootState) => state.currentWeather)
-    const isDay = useSelector((state:RootState)=> state.currentWeather.current.is_day)
+    const {locationPointer,locationsData} = useAppSelector(state => state.locations)
+    const {leftButtonEnabled , rightButtonEnabled , firstTime} = useAppSelector(state => state.utils )
+    const weather = useAppSelector(state  => state.currentWeather)
+    const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 
     const increaseLocationPointer = ()=> {

@@ -1,8 +1,8 @@
 import React from 'react';
 import GooglePlacesAutocomplete, {geocodeByPlaceId} from 'react-google-places-autocomplete';
-import {useDispatch} from "react-redux";
 import {resetLocationPointer, setGeocodeData} from "@/app/Stores/LocationsSlice";
 import {useFormatAddress} from "@/app/Utils/useFormatAddress";
+import {useAppDispatch} from "@/app/Stores/Store";
 
 interface props {
     dark?: boolean
@@ -10,7 +10,7 @@ interface props {
 
 
 const TextField: React.FC<props> = ({dark = false}) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const formatAddress = useFormatAddress
     function handleSelect(place: any) {
         geocodeByPlaceId(place.value.place_id)

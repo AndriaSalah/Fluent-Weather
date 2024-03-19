@@ -103,3 +103,4 @@ export const getCurrentWeather =  (latitude : number , longitude : number) =>{
     }
 
 }
+

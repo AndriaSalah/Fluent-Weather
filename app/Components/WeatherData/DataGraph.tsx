@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {useSelector} from "react-redux";
-import {FormattedDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import {RootState, useAppDispatch} from "@/app/Stores";
+
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {ChartTooltip} from "@/app/Components/WeatherData/ChartToolTip";
 import Dropdown from "@/app/Components/WeatherData/Dropdown/Dropdown";
 import {changeSelectedOption, options} from "@/app/Stores/utilsSlice";
@@ -17,13 +16,11 @@ const Colors = {
 }
 type dataKeys = "temp_min" | "uv" | "wind_speed" | "rain"
 const DataGraph = () => {
-    const Daily_Data = useSelector((state:RootState) => state.dailyWeather )
-    const SelectedOption = useSelector((state:RootState) => state.utils.selectedOption )
+    const Daily_Data = useAppSelector(state => state.dailyWeather )
+    const SelectedOption = useAppSelector(state => state.utils.selectedOption )
     const [dataKey,setDataKey] = useState<dataKeys>("temp_min")
     const dispatch = useAppDispatch()
-    function log(){
-        console.log(Daily_Data[0])
-    }
+
     const onDropDownChange = (option:options)=>{
         dispatch(changeSelectedOption(option))
     }

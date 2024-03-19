@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {useDispatch} from "react-redux";
+
 
 type ReceivedDailyWeather = {
     daily: {

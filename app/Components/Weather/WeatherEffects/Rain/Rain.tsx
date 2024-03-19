@@ -1,13 +1,12 @@
 import './Rain.scss'
 import React from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "@/app/Stores";
+import {useAppSelector} from "@/app/Stores/Store";
 
 interface props {
     isRaining:number
 }
 export const Rain : React.FC<props> = ({isRaining}) => {
-    const transition = useSelector((state: RootState) => state.flags.transition);
+    const transition = useAppSelector(state => state.flags.transition);
     return (
         isRaining > 0 &&
         <div className={`RainWrapper ${transition && "hidden"}`}>

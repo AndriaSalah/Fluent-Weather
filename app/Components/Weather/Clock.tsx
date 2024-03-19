@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/app/Stores";
+import {useAppSelector} from "@/app/Stores/Store";
 
 const Clock = () => {
 
-    const timeZone = useSelector((state : RootState) => state.currentWeather.timezone)
+    const timeZone = useAppSelector(state  => state.currentWeather.timezone)
     const [currentTime, setCurrentTime] = useState('');
 
     useEffect(() => {

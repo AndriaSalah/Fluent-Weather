@@ -1,8 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import TextField from "@/app/UI/TextField";
 import {FaAngleDown, FaLocationDot} from "react-icons/fa6";
-import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "@/app/Stores";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {GeocodeCords, removeLocation, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import DropList from "@/app/Components/Weather/DropList";
 import {toggleLocationList} from "@/app/Stores/utilsSlice";
@@ -15,8 +14,8 @@ interface props {
 }
 
 const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
-    const {locationListIsOpen} = useSelector((state: RootState) => state.utils)
-    const {locationPointer, locationsData} = useSelector((state: RootState) => state.locations)
+    const {locationListIsOpen} = useAppSelector(state => state.utils)
+    const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const listRef = useRef<HTMLUListElement>(null)
     const dispatch = useAppDispatch()
 

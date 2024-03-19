@@ -1,5 +1,8 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {useFormatAddress} from "@/app/Utils/useFormatAddress";
+import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
+import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
+import {store} from "@/app/Stores/index";
 
 
 

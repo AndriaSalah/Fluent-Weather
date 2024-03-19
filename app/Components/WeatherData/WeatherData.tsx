@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { toggleExpansion } from "@/app/Stores/utilsSlice";
-import { RootState } from "@/app/Stores";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import DataCardGrid from "@/app/Components/WeatherData/DataCardGrid";
 import DataGraph from "@/app/Components/WeatherData/DataGraph";
@@ -11,8 +11,8 @@ import DataGraph from "@/app/Components/WeatherData/DataGraph";
 
 
 const WeatherData = () => {
-  const dispatch = useDispatch();
-  const toggle = useSelector((state: RootState) => state.utils.expand);
+  const dispatch = useAppDispatch();
+  const toggle = useAppSelector(state => state.utils.expand);
 
   function clickHandler() {
     dispatch(toggleExpansion());

@@ -3,8 +3,7 @@ import Clock from "@/app/Components/Weather/Clock";
 import WeatherControls from "@/app/Components/Weather/WeatherControls";
 import React, {useCallback, useEffect, useState} from "react";
 import WeatherHeader from "@/app/Components/Weather/WeatherHeader";
-import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "@/app/Stores";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {
     FaCloud, FaCloudBolt,
     FaCloudShowersHeavy, FaCloudShowersWater,
@@ -26,10 +25,10 @@ interface props {
 const Weather: React.FC<props> = ({openGpsDialog}) => {
     const [weatherDescription ,setWeatherDescription] = useState<string>("...")
     const [weatherIcon ,setWeatherIcon] = useState<React.ReactElement>()
-    const {name} = useSelector((state:RootState) => state.utils)
-    const {transition} = useSelector((state:RootState) => state.flags)
-    const {weather_code ,is_day} = useSelector((state:RootState) => state.currentWeather.current)
-    const {snowLevel ,rainLevel,cloudLevel} = useSelector((state:RootState) => state.currentWeather)
+    const {name} = useAppSelector(state => state.utils)
+    const {transition} = useAppSelector(state => state.flags)
+    const {weather_code ,is_day} = useAppSelector(state => state.currentWeather.current)
+    const {snowLevel ,rainLevel,cloudLevel} = useAppSelector(state => state.currentWeather)
     const dispatch = useAppDispatch()
     const updateWeatherDescription = useCallback(() => {
         dispatch(resetWeatherEffects())

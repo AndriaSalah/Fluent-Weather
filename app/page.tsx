@@ -2,8 +2,7 @@
 import Weather from "./Components/Weather/Weather";
 import WeatherData from "./Components/WeatherData/WeatherData";
 import React, {useEffect, useRef, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "@/app/Stores";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import GreetingDialog, {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
 import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
@@ -18,10 +17,10 @@ export default function Home() {
     const [transitionTimer, setTransitionTimer] = useState<any>(null);
     const greetingDialog = useRef<DialogHandles>(null)
     const gpsDialog = useRef<DialogHandles>(null)
-    const isDay = useSelector((state: RootState) => state.currentWeather.current.is_day)
-    const {locationPointer, locationsData} = useSelector((state: RootState) => state.locations)
-    const {expand,firstTime } = useSelector((state: RootState) => state.utils);
-    const {loading , transition} = useSelector((state: RootState) => state.flags);
+    const isDay = useAppSelector(state => state.currentWeather.current.is_day)
+    const {locationPointer, locationsData} = useAppSelector(state => state.locations)
+    const {expand,firstTime } = useAppSelector(state => state.utils);
+    const {loading , transition} = useAppSelector(state => state.flags);
     const dispatch = useAppDispatch()
 
 

@@ -2,9 +2,8 @@
 import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
 import TextField from "@/app/UI/TextField";
 import UnderlinedText from "@/app/UI/UnderlinedText";
-import {RootState, useAppDispatch} from "@/app/Stores";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
-import {useSelector} from "react-redux";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
@@ -26,8 +25,8 @@ const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-o
 export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next, setNext] = useState(false)
-    const locations = useSelector((state: RootState) => state.locations.locationsData)
-    const initialLocationState = useSelector((state: RootState) => state.flags.initialLocationState)
+    const locations = useAppSelector(state => state.locations.locationsData)
+    const initialLocationState = useAppSelector(state => state.flags.initialLocationState)
     const dispatch = useAppDispatch()
     const [showError, setShowError] = useState(false)
     const [errorMsg, setErrorMessage] = useState("")
