@@ -43,7 +43,7 @@ const WeatherControls = () => {
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>
-            <div className={"w-[3rem] flex-shrink-0"}>
+            <div className={"w-[3rem] md:w-fit flex-shrink-0"}>
             <button onClick={()=>{
                 console.log("clicked button")
                 decreaseLocationPointer()
@@ -51,7 +51,7 @@ const WeatherControls = () => {
             }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}> <MdOutlineKeyboardArrowLeft /></button>
             </div>
             <h2 className={`text-5xl md:text-6xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
-            <div className={"w-[3rem] flex-shrink-0 "}>
+            <div className={"w-[3rem] md:w-fit flex-shrink-0"}>
             <button onClick={()=>{
                 console.log("clicked button")
                 increaseLocationPointer()
