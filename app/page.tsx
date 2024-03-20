@@ -3,21 +3,23 @@ import Weather from "./Components/Weather/Weather";
 import WeatherData from "./Components/WeatherData/WeatherData";
 import React, {useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import GreetingDialog, {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
+import {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
 import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 import {disableInitialLoad, hydrateInitialLocationState, toggleTransition} from "@/app/Stores/FlagsSlice";
+import Overlays from "@/app/UI/Overlays";
+import TransitionScreen from "@/app/UI/TransitionScreen";
+
 
 
 export default function Home() {
     const [transitionTimer, setTransitionTimer] = useState<any>(null);
-    const greetingDialog = useRef<DialogHandles>(null)
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {expand, firstTime} = useAppSelector(state => state.utils);
-    const {loading, transition, initialLoad} = useAppSelector(state => state.flags);
+    const {expand} = useAppSelector(state => state.utils);
+    const {loading, initialLoad} = useAppSelector(state => state.flags);
     const dispatch = useAppDispatch()
 
 
@@ -29,8 +31,7 @@ export default function Home() {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
-        firstTime && greetingDialog.current?.openDialog();
-    }, [dispatch, firstTime]);
+    }, [dispatch]);
 
     useEffect(() => {
         const animate = (delay: number) => {
@@ -54,22 +55,11 @@ export default function Home() {
 
     return (
         <>
-            <GreetingDialog openGpsDialog={() => {
-                gpsDialog.current?.openDialog()
-            }} message={"Hello!"} onSubmit={() => {
-            }} ref={greetingDialog}/>
+            <Overlays openGpsDialog={gpsDialog.current?.openDialog}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
             <main
                 className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"} duration-100 relative overflow-clip`}>
-                <span
-                    className={`block w-full h-screen absolute bg-black ${transition ? "opacity-100" : isDay ? "bg-opacity-10" : "bg-opacity-55"} duration-700`}>
-                    { transition && <div className={`flex space-x-2 justify-center items-center h-screen invert opacity-0 animate-fadeIn animation-delay-500 `}>
-                        <span className='sr-only'>Loading...</span>
-                        <div className='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-                        <div className='h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-                        <div className='h-8 w-8 bg-black rounded-full animate-bounce'></div>
-                    </div>}
-                </span>
+                <TransitionScreen/>
                 <Weather openGpsDialog={() => gpsDialog.current?.openDialog()}/>
                 <WeatherData/>
                 <button

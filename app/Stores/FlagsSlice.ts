@@ -5,13 +5,15 @@ export type flagsSlice = {
     initialLocationState :boolean,
     loading:boolean,
     initialLoad:boolean,
-    transition:boolean
+    transition:boolean,
+    isRefreshing:boolean
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
     loading:true,
     initialLoad:true,
-    transition:true
+    transition:true,
+    isRefreshing:false
 }
 const StatsSlice = createSlice({
     name:"Stats",
@@ -29,6 +31,9 @@ const StatsSlice = createSlice({
         },
         disableInitialLoad : (state : flagsSlice) =>{
             state.initialLoad = false
+        },
+        setIsRefreshing: (state : flagsSlice , action:PayloadAction<boolean>) => {
+            state.isRefreshing = action.payload
         }
 
     }
@@ -44,7 +49,8 @@ export const {
     setInitialLocationState,
     setLoading,
     disableInitialLoad,
-    toggleTransition
+    toggleTransition,
+    setIsRefreshing
 } = StatsSlice.actions
 
 export default StatsSlice

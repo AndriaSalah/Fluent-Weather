@@ -1,4 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {AppDispatch} from "@/app/Stores/Store";
+import {disableLocationExists} from "@/app/Stores/LocationsSlice";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
 
@@ -9,7 +11,8 @@ export type utils = {
     leftButtonEnabled: boolean,
     rightButtonEnabled: boolean,
     name: string,
-    firstTime: boolean
+    firstTime: boolean,
+    showToast:boolean
 };
 
 const initialState: utils = {
@@ -19,7 +22,8 @@ const initialState: utils = {
     leftButtonEnabled: true,
     rightButtonEnabled: true,
     name: "",
-    firstTime: false
+    firstTime: false,
+    showToast:false
 };
 const utilsSlice = createSlice({
     name: "utils",
@@ -48,6 +52,9 @@ const utilsSlice = createSlice({
         },
         setLocationListIsOpened : (state:utils, action : PayloadAction<boolean>) => {
            state.locationListIsOpen = action.payload
+        },
+        setToast : (state : utils , actions:PayloadAction<boolean>) => {
+            state.showToast = actions.payload
         }
     },
 });
@@ -61,7 +68,15 @@ export const hydrateUserFromLocal = () => {
     }
 }
 
-
+export const toggleToast = () => {
+    return(dispatch :AppDispatch) => {
+        dispatch(setToast(true))
+        setTimeout(()=>{
+            dispatch(disableLocationExists())
+            dispatch(setToast(false))
+        },5000)
+    }
+}
 export const {
     toggleExpansion,
     changeSelectedOption,
@@ -69,7 +84,8 @@ export const {
     updateRightButton,
     setName,
     setFirstTime,
-    setLocationListIsOpened
+    setLocationListIsOpened,
+    setToast
 } = utilsSlice.actions;
 
 export default utilsSlice;

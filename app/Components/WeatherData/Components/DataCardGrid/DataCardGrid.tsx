@@ -1,5 +1,5 @@
 import React from 'react';
-import DataCard from "@/app/Components/WeatherData/DataCard";
+import DataCard from "@/app/Components/WeatherData/Components/DataCardGrid/DataCard";
 
 import {useAppSelector} from "@/app/Stores/Store";
 import {currentWeatherData} from "@/app/Stores/CurrentWeatherSlice";

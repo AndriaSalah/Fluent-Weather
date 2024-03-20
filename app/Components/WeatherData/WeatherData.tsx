@@ -4,8 +4,8 @@ import React from "react";
 import { toggleExpansion } from "@/app/Stores/utilsSlice";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
-import DataCardGrid from "@/app/Components/WeatherData/DataCardGrid";
-import DataGraph from "@/app/Components/WeatherData/DataGraph";
+import DataCardGrid from "@/app/Components/WeatherData/Components/DataCardGrid/DataCardGrid";
+import DataGraph from "@/app/Components/WeatherData/Components/Chart/DataGraph";
 
 
 

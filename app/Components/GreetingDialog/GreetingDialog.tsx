@@ -1,6 +1,6 @@
 "use client"
 import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
-import TextField from "@/app/UI/TextField";
+import AutoComplete from "@/app/UI/AutoComplete";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
@@ -105,7 +105,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                       onSubmit={(e) => props.onSubmit(e)} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
-                        <TextField dark={true}/>
+                        <AutoComplete dark={true}/>
                         <button type={"button"} onClick={props.openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
                         </button>

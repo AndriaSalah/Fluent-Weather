@@ -3,7 +3,8 @@ import {useFormatAddress} from "@/app/Utils/useFormatAddress";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {AppDispatch} from "@/app/Stores/Store";
-import {setLoading} from "@/app/Stores/FlagsSlice";
+import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import {stat} from "fs";
 
 
 
@@ -17,7 +18,8 @@ export type locationData = {
 }
 export type locationStore = {
     locationPointer:number
-    locationsData : locationData[]
+    locationsData : locationData[],
+    locationExists : boolean
 }
 type GeocodeReturn = {
     results: [
@@ -38,7 +40,8 @@ type GeocodeReturn = {
 
 const initialState: locationStore = {
     locationPointer : 0,
-    locationsData:[]
+    locationsData:[],
+    locationExists:false
 }
 const LocationsSlice = createSlice({
         name: "Geocode",
@@ -51,19 +54,22 @@ const LocationsSlice = createSlice({
                     localStorage.setItem("locations", JSON.stringify(newLocationsData));
                     state.locationsData = newLocationsData;
                 }
-                return state;
+                else {
+                    state.locationExists = true
+                    return state;
+                }
             },
             hydrateGeocodeData: (state: locationStore, action: PayloadAction<locationData[]>) => {
                 state.locationsData = action.payload
             },
             removeLocation : (state:locationStore, action: PayloadAction<number>) => {
                 const newLocationsList = state.locationsData.filter((location,index)=> index !== action.payload)
-                console.log(state.locationPointer > newLocationsList.length - 1)
                 const newPointer : number = state.locationPointer > newLocationsList.length - 1 ? newLocationsList.length-1 : state.locationPointer
                 localStorage.setItem("locations",JSON.stringify(newLocationsList))
                 return{
+                    ...state,
                     locationsData:newLocationsList,
-                    locationPointer:newPointer
+                    locationPointer:newPointer,
                 }
             },
             incLocationPointer: (state:locationStore) => {
@@ -78,6 +84,9 @@ const LocationsSlice = createSlice({
             resetLocationPointer: (state:locationStore) => {
                 state.locationPointer = 0
             },
+            disableLocationExists : (state : locationStore) =>{
+                state.locationExists = false
+            }
         }
     }
 )
@@ -97,6 +106,7 @@ export const getWeather = (lat: number, lng: number) => {
                 dispatch(getDailyWeather(lat, lng))
             ]);
             dispatch(setLoading(false));
+            dispatch(setIsRefreshing(false))
         } catch (error) {
             console.error("Error fetching weather data:", error);
             dispatch(setLoading(false));
@@ -126,6 +136,10 @@ export const GeocodeCords = (lat: number, lng: number) => {
     }
 }
 
+export const addLocation = () => {
+
+}
+
 export const {
     setGeocodeData,
     hydrateGeocodeData,
@@ -133,6 +147,7 @@ export const {
     setLocationPointer,
     resetLocationPointer,
     decLocationPointer,
-    incLocationPointer
+    incLocationPointer,
+    disableLocationExists
 } = LocationsSlice.actions
 export default LocationsSlice
