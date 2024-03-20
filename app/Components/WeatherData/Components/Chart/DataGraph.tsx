@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {ChartTooltip} from "@/app/Components/WeatherData/Components/Chart/ChartToolTip";
 import Dropdown from "@/app/Components/WeatherData/Dropdown/Dropdown";

@@ -1,4 +1,3 @@
-"use client"
 import React, {forwardRef, ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";

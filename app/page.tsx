@@ -8,18 +8,17 @@ import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {MdOutlineKeyboardArrowLeft} from "react-icons/md";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
-import {disableInitialLoad, hydrateInitialLocationState, toggleTransition} from "@/app/Stores/FlagsSlice";
+import {hydrateInitialLocationState} from "@/app/Stores/FlagsSlice";
 import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
 
 
 
 export default function Home() {
-    const [transitionTimer, setTransitionTimer] = useState<any>(null);
+
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const {expand} = useAppSelector(state => state.utils);
-    const {loading, initialLoad} = useAppSelector(state => state.flags);
     const dispatch = useAppDispatch()
 
 
@@ -33,25 +32,7 @@ export default function Home() {
         dispatch(hydrateInitialLocationState())
     }, [dispatch]);
 
-    useEffect(() => {
-        const animate = (delay: number) => {
-            setTransitionTimer(setTimeout(() => {
-                dispatch(toggleTransition(false));
-                setTransitionTimer(null);
-            }, delay));
-        }
-        if (initialLoad) {
-            dispatch(disableInitialLoad())
-        } else if (!transitionTimer) {
-            dispatch(toggleTransition(true));
-            !loading && animate(700)
-        }
 
-        return () => {
-            clearTimeout(transitionTimer);
-            setTransitionTimer(null);
-        };
-    }, [dispatch, loading]);
 
     return (
         <>

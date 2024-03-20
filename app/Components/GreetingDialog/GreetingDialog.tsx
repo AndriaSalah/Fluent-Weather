@@ -1,4 +1,3 @@
-"use client"
 import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
 import AutoComplete from "@/app/UI/AutoComplete";
 import UnderlinedText from "@/app/UI/UnderlinedText";

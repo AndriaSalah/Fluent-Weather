@@ -1,4 +1,3 @@
-"use client"
 import React from 'react';
 import AutoComplete from "@/app/UI/AutoComplete";
 import {FaLocationDot} from "react-icons/fa6";
