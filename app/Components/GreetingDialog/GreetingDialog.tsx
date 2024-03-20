@@ -12,7 +12,7 @@ interface Props {
     children?: ReactNode;
     message?: string;
     onSubmit: Function
-    openGpsDialog: () => void
+    openGpsDialog: (() => void)
 }
 
 export interface DialogHandles {

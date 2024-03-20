@@ -26,6 +26,7 @@ const AutoComplete: React.FC<props> = ({dark = false}) => {
 
     return (
         <GooglePlacesAutocomplete apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+                                  apiOptions={""}
                                   selectProps={{
                                       onChange: handleSelect,
                                       classNames: {

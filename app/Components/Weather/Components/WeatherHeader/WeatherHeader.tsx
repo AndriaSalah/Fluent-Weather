@@ -7,8 +7,6 @@ import {GeocodeCords, getWeather} from "@/app/Stores/LocationsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
 import {setIsRefreshing} from "@/app/Stores/FlagsSlice";
 import AddressList from "@/app/Components/Weather/Components/WeatherHeader/AddressList";
-
-
 interface props {
     openGpsDialog: () => void
 }

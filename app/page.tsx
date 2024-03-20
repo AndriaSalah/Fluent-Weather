@@ -55,7 +55,7 @@ export default function Home() {
 
     return (
         <>
-            <Overlays openGpsDialog={gpsDialog.current?.openDialog}/>
+            <Overlays openGpsDialog={() => gpsDialog.current?.openDialog()}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
             <main
                 className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"} duration-100 relative overflow-clip`}>

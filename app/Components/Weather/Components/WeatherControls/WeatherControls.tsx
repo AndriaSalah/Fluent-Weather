@@ -1,4 +1,3 @@
-"use client"
 import React, {useEffect, useState} from 'react';
 import {MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight} from "react-icons/md";
 import SunMoon from "@/app/Components/Weather/Components/WeatherControls/SunMoon";
