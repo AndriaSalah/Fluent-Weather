@@ -97,10 +97,9 @@ export const loadFromLocalStorage = () => {
         dispatch(hydrateGeocodeData(previousData))
     }
 }
-export const getWeather = (lat: number, lng: number) => {
+export const getWeather = (lat: number, lng: number, refresh?:boolean) => {
     return async (dispatch: AppDispatch) => {
         try {
-            dispatch(setLoading(true))
             await Promise.all([
                 dispatch(getCurrentWeather(lat, lng)),
                 dispatch(getDailyWeather(lat, lng))
@@ -109,7 +108,7 @@ export const getWeather = (lat: number, lng: number) => {
             dispatch(setIsRefreshing(false))
         } catch (error) {
             console.error("Error fetching weather data:", error);
-            dispatch(setLoading(false));
+            refresh? dispatch(setIsRefreshing(false)) : dispatch(setLoading(false))
         }
     };
 };

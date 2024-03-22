@@ -28,17 +28,16 @@ const WeatherControls = () => {
     }
 
     useEffect(() => {
-        const getWeatherDelay = (delay:number,lat:number,lng:number) => {
+        const getWeatherDelay = (delay:number,lat:number,lng:number , refresh?:boolean) => {
+            refresh? dispatch(setIsRefreshing(true)) : dispatch(setLoading(true))
             setTimeout(() => {
                 dispatch(getWeather(lat!, lng!))
             }, delay)
         }
-        dispatch(setLoading(true))
         if (locationsData.length > 0 && !firstTime) {
             const {lat, lng} = locationsData[locationPointer].location
             getWeatherDelay(400,lat!,lng!)
             !refreshInterval && setRefreshInterval(setInterval(() => {
-                dispatch(setIsRefreshing(true))
                 getWeatherDelay(400,lat!,lng!)
             }, 10 * 60000))
         }

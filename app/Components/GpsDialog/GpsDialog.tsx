@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
@@ -34,17 +34,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
             }
         })
     )
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.keyCode === 27) {
-                event.preventDefault();
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
+
 
 
     const goToNext =  (e:React.MouseEvent<HTMLButtonElement>) => {

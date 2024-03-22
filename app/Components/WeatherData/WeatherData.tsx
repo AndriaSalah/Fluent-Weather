@@ -15,7 +15,7 @@ const WeatherData = () => {
 
   return (
     <div
-      className={`rounded-xl flex top-0 right-0 absolute w-full md:w-[65%] z-10 
+      className={`rounded-xl flex top-0 right-0 absolute w-full md:w-[80%] lg:w-[65%] z-10 
       ${!toggle ? "max-md:translate-y-[60rem] md:translate-x-full" : "max-md:translate-y-[0%]  md:translate-x-0"}
        h-screen bg-[#FFFFFF7F] duration-500 items-center backdrop-blur-sm ease-in-out`}>
       <button

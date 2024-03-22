@@ -16,10 +16,9 @@ const WeatherHeader: React.FC<props> = ({openGpsDialog}) => {
     const dispatch = useAppDispatch()
 
     const refresh = () => {
-        dispatch(setIsRefreshing(true))
         const lat = locationsData[locationPointer].location.lat
         const lng = locationsData[locationPointer].location.lng
-        dispatch(getWeather(lat!, lng!))
+        dispatch(getWeather(lat!, lng!,true))
     }
 
     const checkLocationPermission = async () => {
