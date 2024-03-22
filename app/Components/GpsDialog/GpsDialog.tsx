@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, ReactNode, useImperativeHandle, useRef, useState} from "react";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
@@ -42,7 +42,6 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         if(!next) {
             setNext(true)
             setShowError(false)
-            e.currentTarget.innerText="Ask for permission"
         }
         else if(next){
             navigator.geolocation.getCurrentPosition(
@@ -55,7 +54,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                 },
                 (error) => {
                     console.error('Error getting location:', error);
-                    // Handle location retrieval error
+                    Error("Location Permission was denied")
                 }
             );
         }
@@ -64,7 +63,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const cancelHandler = () => {
         dialog.current?.close()
     }
-    const error = (message : string) =>{
+    const Error = (message : string) =>{
         setErrorMessage(message)
         setShowError(true)
     }
@@ -74,7 +73,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 <div className={"flex items-center justify-between px-2"}>
                     {props.message && <UnderlinedText text={props.message} header={true}/>}
-                    <button onClick={()=> dialog.current?.close()} className={"mr-2 grid place-items-center hover:bg-red-400 w-10 h-10 rounded-xl text-xl duration-300 "}><FaX/></button>
+                    <button onClick={cancelHandler} className={"mr-2 grid place-items-center hover:bg-red-400 w-10 h-10 rounded-xl text-xl duration-300 "}><FaX/></button>
                 </div>
                 <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
