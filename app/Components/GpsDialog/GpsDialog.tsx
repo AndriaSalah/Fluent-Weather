@@ -5,6 +5,7 @@ import locationImage from "@/public/img.png"
 import {GeocodeCords} from "@/app/Stores/LocationsSlice";
 import {useAppDispatch} from "@/app/Stores/Store";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
+import {FaX} from "react-icons/fa6";
 
 
 interface Props {
@@ -71,7 +72,10 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         <>
             <dialog ref={dialog}
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
-                {props.message && <UnderlinedText text={props.message} header={true}/>}
+                <div className={"flex items-center justify-between px-2"}>
+                    {props.message && <UnderlinedText text={props.message} header={true}/>}
+                    <button onClick={()=> dialog.current?.close()} className={"mr-2 grid place-items-center hover:bg-red-400 w-10 h-10 rounded-xl text-xl duration-300 "}><FaX/></button>
+                </div>
                 <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "} method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <h2 className={"w-4/5"}>In order to detect your current location , we need access to your location data from your browser</h2>
