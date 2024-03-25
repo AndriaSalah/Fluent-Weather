@@ -1,6 +1,4 @@
 import React from 'react';
-import waves from "@/public/pattern.svg"
-import Image from "next/image";
 import Wave from "@/app/UI/Waves";
 
 interface props {
@@ -16,9 +14,10 @@ const DataCard : React.FC<props> = ({Title,Value , fillValue,unit,span= ""}) => 
         <div className={`${span} shadow-card rounded-card bg-white bg-opacity-5 backdrop-blur-3xl flex justify-center flex-col p-4 relative`}>
             <p className={"text-md md:text-2xl"}>{Title}</p>
             <p className={"text-xl md:text-4xl text-center font-bold"}>{Value}<span className={`${unit !== '°' && "text-lg" } font-medium`}>{unit}</span></p>
-            <span className={`block fixed w-full bottom-0 left-0 rounded-card -z-10`} style={{height:fillValue+"%"}}>
+            {fillValue > 0 && <span className={`block fixed w-full bottom-0 left-0 rounded-card -z-10`}
+                   style={{height: fillValue + "%"}}>
             <Wave/>
-            </span>
+            </span>}
         </div>
     );
 };

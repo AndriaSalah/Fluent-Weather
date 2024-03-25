@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch} from "@/app/Stores/Store";
-import {disableLocationExists} from "@/app/Stores/LocationsSlice";
+import {disableLocationExists, initAutoGps, setGpsData} from "@/app/Stores/LocationsSlice";
+import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
 
@@ -75,6 +76,17 @@ export const toggleToast = () => {
             dispatch(disableLocationExists())
             dispatch(setToast(false))
         },5000)
+    }
+}
+
+export const InitializeAutoGps = async () =>{
+    const checkLocationPerm = useCheckLocationPerm()
+    const gpsPermission = await checkLocationPerm()
+    return  (dispatch:AppDispatch)=> {
+        if(gpsPermission) {
+            setGpsData
+            dispatch(initAutoGps())
+        }
     }
 }
 export const {

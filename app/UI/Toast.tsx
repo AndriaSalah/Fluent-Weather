@@ -1,4 +1,4 @@
-"use server"
+
 import React from 'react';
 
 interface ToastProps {

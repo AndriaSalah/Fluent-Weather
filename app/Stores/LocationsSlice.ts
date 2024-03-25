@@ -7,7 +7,6 @@ import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
 import {stat} from "fs";
 
 
-
 export type locationData = {
     placeID: string
     address?: string | null,
@@ -17,9 +16,10 @@ export type locationData = {
     }
 }
 export type locationStore = {
-    locationPointer:number
-    locationsData : locationData[],
-    locationExists : boolean
+    locationPointer: number
+    locationsData: locationData[],
+    locationExists: boolean,
+    gpsLocationInit: boolean
 }
 type GeocodeReturn = {
     results: [
@@ -39,52 +39,63 @@ type GeocodeReturn = {
 }
 
 const initialState: locationStore = {
-    locationPointer : 0,
-    locationsData:[],
-    locationExists:false
+    locationPointer: 0,
+    locationsData: [],
+    locationExists: false,
+    gpsLocationInit: false
 }
 const LocationsSlice = createSlice({
         name: "Geocode",
         initialState,
         reducers: {
             setGeocodeData: (state: locationStore, action: PayloadAction<locationData>) => {
-                const existingLocation  = state.locationsData.find((location:locationData) => location.placeID === action.payload.placeID);
+                const existingLocation = state.locationsData.find((location: locationData) => location.placeID === action.payload.placeID);
                 if (!existingLocation) {
-                    const newLocationsData = [action.payload, ...state.locationsData];
+                    const newLocationsData = state.gpsLocationInit ? [state.locationsData[0], action.payload, ...state.locationsData]
+                        :[action.payload, ...state.locationsData];
                     localStorage.setItem("locations", JSON.stringify(newLocationsData));
                     state.locationsData = newLocationsData;
-                }
-                else {
+                } else {
                     state.locationExists = true
-                    return state;
+                    return;
                 }
             },
             hydrateGeocodeData: (state: locationStore, action: PayloadAction<locationData[]>) => {
                 state.locationsData = action.payload
             },
-            removeLocation : (state:locationStore, action: PayloadAction<number>) => {
-                const newLocationsList = state.locationsData.filter((location,index)=> index !== action.payload)
-                const newPointer : number = state.locationPointer > newLocationsList.length - 1 ? newLocationsList.length-1 : state.locationPointer
-                localStorage.setItem("locations",JSON.stringify(newLocationsList))
-                return{
+            removeLocation: (state: locationStore, action: PayloadAction<number>) => {
+                const newLocationsList = state.locationsData.filter((location, index) => index !== action.payload)
+                const newPointer: number = state.locationPointer > newLocationsList.length - 1 ? newLocationsList.length - 1 : state.locationPointer
+                localStorage.setItem("locations", JSON.stringify(newLocationsList))
+                return {
                     ...state,
-                    locationsData:newLocationsList,
-                    locationPointer:newPointer,
+                    locationsData: newLocationsList,
+                    locationPointer: newPointer,
                 }
             },
-            incLocationPointer: (state:locationStore) => {
+           initAutoGps : (state : locationStore)=>{
+                state.gpsLocationInit = true
+            },
+            setGpsData: (state: locationStore, action: PayloadAction<locationData>) => {
+                if (state.gpsLocationInit) state.locationsData[0] = action.payload
+                else {
+                    state.locationsData.unshift(action.payload)
+                    state.gpsLocationInit = true
+                }
+            },
+            incLocationPointer: (state: locationStore) => {
                 state.locationPointer++
             },
-            decLocationPointer: (state:locationStore) => {
+            decLocationPointer: (state: locationStore) => {
                 state.locationPointer--
             },
-            setLocationPointer:(state:locationStore , action:PayloadAction<number>)=>{
+            setLocationPointer: (state: locationStore, action: PayloadAction<number>) => {
                 state.locationPointer = action.payload
             },
-            resetLocationPointer: (state:locationStore) => {
+            resetLocationPointer: (state: locationStore) => {
                 state.locationPointer = 0
             },
-            disableLocationExists : (state : locationStore) =>{
+            disableLocationExists: (state: locationStore) => {
                 state.locationExists = false
             }
         }
@@ -97,7 +108,7 @@ export const loadFromLocalStorage = () => {
         dispatch(hydrateGeocodeData(previousData))
     }
 }
-export const getWeather = (lat: number, lng: number, refresh?:boolean) => {
+export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
     return async (dispatch: AppDispatch) => {
         try {
             await Promise.all([
@@ -108,7 +119,7 @@ export const getWeather = (lat: number, lng: number, refresh?:boolean) => {
             dispatch(setIsRefreshing(false))
         } catch (error) {
             console.error("Error fetching weather data:", error);
-            refresh? dispatch(setIsRefreshing(false)) : dispatch(setLoading(false))
+            refresh ? dispatch(setIsRefreshing(false)) : dispatch(setLoading(false))
         }
     };
 };
@@ -122,12 +133,12 @@ export const GeocodeCords = (lat: number, lng: number) => {
             return await response.json()
         }
         try {
-            const locationData :GeocodeReturn = await fetchGeolocationData()
+            const locationData: GeocodeReturn = await fetchGeolocationData()
             const formattedAddress = formatAddress(locationData.results[0].formatted_address)
             dispatch(setGeocodeData({
                 placeID: locationData.results[0].place_id,
-                address:formattedAddress,
-                location:locationData.results[0].geometry.location
+                address: formattedAddress,
+                location: locationData.results[0].geometry.location
             }))
         } catch (e) {
             console.log(e)
@@ -147,6 +158,8 @@ export const {
     resetLocationPointer,
     decLocationPointer,
     incLocationPointer,
-    disableLocationExists
+    disableLocationExists,
+    initAutoGps,
+    setGpsData
 } = LocationsSlice.actions
 export default LocationsSlice

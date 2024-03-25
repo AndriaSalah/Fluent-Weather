@@ -12,7 +12,7 @@ const WeatherControls = () => {
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const {leftButtonEnabled, rightButtonEnabled, firstTime} = useAppSelector(state => state.utils)
     const weather = useAppSelector(state => state.currentWeather)
-    const isRefreshing = useAppSelector(state => state.flags.isRefreshing)
+    const {isRefreshing,initialLoad} = useAppSelector(state => state.flags)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 
@@ -38,7 +38,7 @@ const WeatherControls = () => {
             const {lat, lng} = locationsData[locationPointer].location
             getWeatherDelay(400,lat!,lng!)
             !refreshInterval && setRefreshInterval(setInterval(() => {
-                getWeatherDelay(400,lat!,lng!)
+                getWeatherDelay(400,lat!,lng!,true)
             }, 10 * 60000))
         }
         locationPointer + 1 > locationsData.length - 1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
@@ -47,7 +47,7 @@ const WeatherControls = () => {
             clearInterval(refreshInterval)
             setRefreshInterval(null)
         }
-    }, [dispatch, firstTime, locationPointer, locationsData]);
+    }, [dispatch, firstTime, locationPointer,initialLoad]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>
