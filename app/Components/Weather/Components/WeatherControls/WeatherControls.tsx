@@ -47,7 +47,7 @@ const WeatherControls = () => {
             clearInterval(refreshInterval)
             setRefreshInterval(null)
         }
-    }, [dispatch, firstTime, locationPointer,initialLoad]);
+    }, [dispatch, firstTime, locationPointer, locationsData]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>

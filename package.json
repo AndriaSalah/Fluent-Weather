@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.5",
     "@reduxjs/toolkit": "^2.1.0",
     "awesome-debounce-promise": "^2.1.0",
     "next": "14.1.0",
@@ -31,6 +32,7 @@
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.91.0"
   }
 }
