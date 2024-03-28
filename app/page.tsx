@@ -30,7 +30,7 @@ export default function Home() {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
-    });
+    },[dispatch]);
 
 
 
