@@ -11,8 +11,8 @@ const inter = Inter({subsets: ["latin"]});
 //     description: "A sleek looking weather app that will tell you everything you need to know about the weather around the world",
 // };
 
-const APP_NAME = "Fluent Weather";
-const APP_DEFAULT_TITLE = "PWA";
+const APP_NAME = "PWA";
+const APP_DEFAULT_TITLE = "Fluent Weather";
 const APP_TITLE_TEMPLATE = "%s - Fluent Weather PWA";
 const APP_DESCRIPTION = "A sleek looking weather app that will tell you everything you need to know about the weather around the world";
 
