@@ -13,7 +13,7 @@ const Toast: React.FC<ToastProps> = ({message, type}) => {
                 "border-rose-400" :
                 type === "success" ?
                     "border-green-300" : "border-blue-400"} 
-                     font-light border bg-opacity-70 absolute text-black grid place-items-center top-5 left-1/2 -translate-x-1/2 w-5/6 md:w-1/5 h-[3rem] animate-fadeIn rounded-card shadow-card bg-white z-50`}>
+                     font-light border absolute text-black grid place-items-center top-5 left-1/2 -translate-x-1/2 w-5/6 md:w-1/5 h-[3rem] animate-fadeIn rounded-card shadow-card bg-gray-200 z-50`}>
             <p>{message}</p>
         </span>
     );
