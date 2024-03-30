@@ -56,18 +56,13 @@ export const viewport: Viewport = {
     initialScale: 1,
     width: 'device-width',
     interactiveWidget:"resizes-visual",
-    themeColor: "#78a3cb"
-
-
 }
 
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <html lang="en">
-        <body className={inter.className +" "}>
+        <html className={inter.className} lang="en">
         <Providers>{children}</Providers>
-        </body>
         </html>
     );
 }
