@@ -11,7 +11,10 @@ import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 import {hydrateInitialLocationState} from "@/app/Stores/FlagsSlice";
 import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
-
+import day from "@/public/day.webp"
+import night from "@/public/night.webp"
+import Image from "next/image";
+import Background from "@/app/UI/Background";
 
 export default function Home() {
     const gpsDialog = useRef<DialogHandles>(null)
@@ -33,12 +36,8 @@ export default function Home() {
 
     useEffect(() => {
         const ChangeThemeColor = () => {
-            const meta = document.querySelector("meta[name='theme-color']")
-            isTransitioning ?
-                meta?.setAttribute("content", "#000")
-                : isDay ?
-                    meta?.setAttribute("content", "#7ea4cf")
-                    : meta?.setAttribute("content", "#2b2e4f")
+            const metaThemeColor = document.querySelector("meta[name='theme-color']")
+                metaThemeColor?.setAttribute("content", isTransitioning ? "#000" : isDay ? "#7ea4cf" : "#2b2e4f")
         }
         ChangeThemeColor()
     }, [isDay, isTransitioning]);
@@ -48,8 +47,9 @@ export default function Home() {
         <>
             <Overlays openGpsDialog={() => gpsDialog.current?.openDialog()}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
-            <main
-                className={`w-full h-[100svh] bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"} duration-100 relative overflow-clip`}>
+            {/*bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"}*/}
+            <main className={`grid place-items-center w-full h-[100svh] duration-100 relative overflow-clip`}>
+                <Background/>
                 <TransitionScreen/>
                 <Weather openGpsDialog={() => gpsDialog.current?.openDialog()}/>
                 <WeatherData/>

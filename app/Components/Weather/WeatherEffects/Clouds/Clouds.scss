@@ -1,6 +1,5 @@
 @mixin cloud{
   opacity: 90%;
-  filter:blur(2px);
   position: absolute;
   object-fit: cover;
   z-index: 0;

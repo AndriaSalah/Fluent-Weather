@@ -33,14 +33,19 @@ const config: Config = {
 
             },
             animation: {
-                "slide": 'slide 4s ease-in-out infinite',
+                "slide": 'slide 15s ease-in-out infinite',
+                "slideMobile": 'slideMobile 30s ease-in-out infinite',
                 "hover": 'hover 15s ease-in-out infinite',
                 "fadeIn": 'fadeIn 0.5s ease-in-out forwards',
             },
             keyframes: {
                 "slide": {
-                    "0% , 100%": {"transform": 'translateX(-0.1%)'},
-                    '50%': {"transform": 'translateX(0.1%)'}
+                    "0% , 100%": {"transform": 'translateX(-0.3%)'},
+                    '50%': {"transform": 'translateX(0.3%)'}
+                },
+                "slideMobile": {
+                    "0% , 100%": {"transform": 'translateX(-5%)'},
+                    '50%': {"transform": 'translateX(5%)'}
                 },
                 "hover": {
                     "0% , 100%": {"transform": 'translateY(-10%)'},
