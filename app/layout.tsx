@@ -55,14 +55,17 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
     initialScale: 1,
     width: 'device-width',
-    interactiveWidget:"resizes-visual",
+    interactiveWidget: "resizes-visual",
+    themeColor:"#000"
 }
 
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <html className={inter.className} lang="en">
-        <Providers>{children}</Providers>
+            <body>
+                <Providers>{children}</Providers>
+            </body>
         </html>
     );
 }

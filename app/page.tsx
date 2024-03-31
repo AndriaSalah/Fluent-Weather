@@ -13,9 +13,7 @@ import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
 
 
-
 export default function Home() {
-    const [themeColor,setThemeColor] = useState("#78a3cb")
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const {expand} = useAppSelector(state => state.utils);
@@ -31,23 +29,23 @@ export default function Home() {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
-    },[dispatch]);
+    }, [dispatch]);
 
     useEffect(() => {
-        isTransitioning?setThemeColor("#000000"):isDay?setThemeColor("#78a3cb"):setThemeColor("#2b2e4f")
-    }, [isDay,isTransitioning]);
+        const ChangeThemeColor = () => {
+            const meta = document.querySelector("meta[name='theme-color']")
+            isTransitioning ?
+                meta?.setAttribute("content", "#000")
+                : isDay ?
+                    meta?.setAttribute("content", "#7ea4cf")
+                    : meta?.setAttribute("content", "#2b2e4f")
+        }
+        ChangeThemeColor()
+    }, [isDay, isTransitioning]);
 
 
     return (
         <>
-            {/*
-            I don't know if this is a good idea to change the location of the body tag but, I wanted
-            to be able to change the color of the status bar dynamically with the day and transition states and am open to better solutions
-            */}
-            <head>
-                <meta name="theme-color" content={themeColor}/>
-            </head>
-            <body>
             <Overlays openGpsDialog={() => gpsDialog.current?.openDialog()}/>
             <GpsDialog message={"GPS"} ref={gpsDialog}/>
             <main
@@ -63,7 +61,7 @@ export default function Home() {
                     <MdOutlineKeyboardArrowLeft/>
                 </button>
             </main>
-            </body>
+
         </>
     );
 }
