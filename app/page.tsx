@@ -1,11 +1,11 @@
 "use client"
 import Weather from "./Components/Weather/Weather";
 import WeatherData from "./Components/WeatherData/WeatherData";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
 import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
-import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
+import {hydrateUserFromLocal} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 import {hydrateInitialLocationState, hydrateLocationPermState} from "@/app/Stores/FlagsSlice";
 import Overlays from "@/app/UI/Overlays";
@@ -41,7 +41,6 @@ export default function Home() {
         <>
             <Overlays openGpsDialog={() => gpsDialog.current?.openDialog()}/>
             {!locationPermState && <GpsDialog message={"GPS"} ref={gpsDialog}/>}
-            {/*bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"}*/}
             <main className={`grid place-items-center w-full h-[100svh] duration-100 relative overflow-clip`}>
                 <Background/>
                 <TransitionScreen/>

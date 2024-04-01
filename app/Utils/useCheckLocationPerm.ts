@@ -1,7 +1,3 @@
-import { useEffect } from 'react';
-import {AppDispatch} from "@/app/Stores/Store";
-import {GeocodeCords} from "@/app/Stores/LocationsSlice";
-import {promises} from "dns";
 
 const useCheckLocationPerm = () => {
     return  async ()  => {
