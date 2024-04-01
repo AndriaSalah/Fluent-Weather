@@ -7,7 +7,7 @@ import {DialogHandles} from "@/app/Components/GreetingDialog/GreetingDialog";
 import {loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {hydrateUserFromLocal, toggleExpansion} from "@/app/Stores/utilsSlice";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
-import {hydrateInitialLocationState} from "@/app/Stores/FlagsSlice";
+import {hydrateInitialLocationState, hydrateLocationPermState} from "@/app/Stores/FlagsSlice";
 import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
 import Background from "@/app/UI/Background";
@@ -16,7 +16,7 @@ import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
 export default function Home() {
     const gpsDialog = useRef<DialogHandles>(null)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const isTransitioning = useAppSelector(state => state.flags.transition)
+    const {transition , locationPermState} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
 
 
@@ -25,21 +25,22 @@ export default function Home() {
         dispatch(loadFromLocalStorage());
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
+        dispatch(hydrateLocationPermState())
     }, [dispatch]);
 
     useEffect(() => {
         const ChangeThemeColor = () => {
             const metaThemeColor = document.querySelector("meta[name='theme-color']")
-                metaThemeColor?.setAttribute("content", isTransitioning ? "#000" : isDay ? "#7ea4cf" : "#2b2e4f")
+                metaThemeColor?.setAttribute("content", transition ? "#000" : isDay ? "#7ea4cf" : "#2b2e4f")
         }
         ChangeThemeColor()
-    }, [isDay, isTransitioning]);
+    }, [isDay, transition]);
 
 
     return (
         <>
             <Overlays openGpsDialog={() => gpsDialog.current?.openDialog()}/>
-            <GpsDialog message={"GPS"} ref={gpsDialog}/>
+            {!locationPermState && <GpsDialog message={"GPS"} ref={gpsDialog}/>}
             {/*bg-no-repeat bg-cover ${isDay ? "bg-day" : "bg-night"}*/}
             <main className={`grid place-items-center w-full h-[100svh] duration-100 relative overflow-clip`}>
                 <Background/>

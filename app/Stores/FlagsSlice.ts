@@ -1,5 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {stat} from "fs";
+import {AppDispatch} from "@/app/Stores/Store";
+import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
 
 export type flagsSlice = {
     initialLocationState :boolean,
@@ -7,13 +9,15 @@ export type flagsSlice = {
     initialLoad:boolean,
     transition:boolean,
     isRefreshing:boolean
+    locationPermState:boolean
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
     loading:true,
     initialLoad:true,
     transition:true,
-    isRefreshing:false
+    isRefreshing:false,
+    locationPermState:false
 }
 const StatsSlice = createSlice({
     name:"Stats",
@@ -34,6 +38,9 @@ const StatsSlice = createSlice({
         },
         setIsRefreshing: (state : flagsSlice , action:PayloadAction<boolean>) => {
             state.isRefreshing = action.payload
+        },
+        setLocationPermissionState:(state :flagsSlice , action :PayloadAction<boolean>) => {
+            state.locationPermState = action.payload
         }
 
     }
@@ -45,12 +52,20 @@ export const hydrateInitialLocationState = ()=>{
         dispatch(setInitialLocationState(initialLocationState))
     }
 }
+export const hydrateLocationPermState = () => {
+    return async (dispatch:AppDispatch) => {
+        const checkLocationPermState = useCheckLocationPerm()
+        const locationPermState = await checkLocationPermState()
+        dispatch(setLocationPermissionState(locationPermState!))
+    }
+}
 export const {
     setInitialLocationState,
     setLoading,
     disableInitialLoad,
     toggleTransition,
-    setIsRefreshing
+    setIsRefreshing,
+    setLocationPermissionState
 } = StatsSlice.actions
 
 export default StatsSlice
