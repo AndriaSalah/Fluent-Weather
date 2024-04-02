@@ -4,13 +4,14 @@ import Toast from "@/app/UI/Toast";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {toggleToast} from "@/app/Stores/utilsSlice";
 
-interface OverLays {
-    openGpsDialog :() => void
-}
-const Overlays : React.FC<OverLays> = ({openGpsDialog}) => {
+
+
+const Overlays : React.FC = () => {
     const greetingDialog = useRef<DialogHandles>(null)
+    const gpsDialog = useRef<DialogHandles>(null)
     const {firstTime ,showToast} = useAppSelector(state => state.utils);
     const locationsExists = useAppSelector(state => state.locations.locationExists)
+    const locationPermState = useAppSelector(state => state.flags.locationPermState)
     const dispatch = useAppDispatch()
     useEffect(() => {
         locationsExists && dispatch(toggleToast())
@@ -21,7 +22,7 @@ const Overlays : React.FC<OverLays> = ({openGpsDialog}) => {
     }, [firstTime]);
     return (
         <>
-            {firstTime && <GreetingDialog openGpsDialog={openGpsDialog} message={"Hello!"} onSubmit={()=>{}} ref={greetingDialog}/>}
+            {firstTime && <GreetingDialog message={"Hello!"} ref={greetingDialog}/>}
             {showToast && <Toast message={"Location already exists"} type={"error"}/>}
         </>
     );

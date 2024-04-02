@@ -4,7 +4,6 @@ import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {AppDispatch} from "@/app/Stores/Store";
 import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
-import {stat} from "fs";
 
 
 export type locationData = {
@@ -51,10 +50,11 @@ const LocationsSlice = createSlice({
             setGeocodeData: (state: locationStore, action: PayloadAction<locationData>) => {
                 const existingLocation = state.locationsData.find((location: locationData) => location.placeID === action.payload.placeID);
                 if (!existingLocation) {
-                    const newLocationsData = state.gpsLocationInit ? [state.locationsData[0], action.payload, ...state.locationsData]
-                        :[action.payload, ...state.locationsData];
-                    localStorage.setItem("locations", JSON.stringify(newLocationsData));
-                    state.locationsData = newLocationsData;
+                    const localStorageReady = [action.payload, ...state.locationsData.filter(
+                        (item, index) => state.gpsLocationInit ? index !== 0 : item)];
+                    localStorage.setItem("locations", JSON.stringify(localStorageReady));
+                    state.locationsData = state.gpsLocationInit ? [state.locationsData[0], ...localStorageReady] : localStorageReady
+                    state.locationPointer = state.gpsLocationInit ? 1 : 0
                 } else {
                     state.locationExists = true
                     return;
@@ -73,7 +73,7 @@ const LocationsSlice = createSlice({
                     locationPointer: newPointer,
                 }
             },
-           initAutoGps : (state : locationStore)=>{
+            initAutoGps: (state: locationStore) => {
                 state.gpsLocationInit = true
             },
             setGpsData: (state: locationStore, action: PayloadAction<locationData>) => {
@@ -93,7 +93,7 @@ const LocationsSlice = createSlice({
                 state.locationPointer = action.payload
             },
             resetLocationPointer: (state: locationStore) => {
-                state.locationPointer = 0
+                state.locationPointer = state.gpsLocationInit ? 1 : 0
             },
             disableLocationExists: (state: locationStore) => {
                 state.locationExists = false
@@ -123,32 +123,41 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
         }
     };
 };
-export const GeocodeCords = (lat: number, lng: number) => {
+export const AutoGps = () => {
+
     return async (dispatch: Dispatch) => {
-        const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-        const formatAddress = useFormatAddress
-        const fetchGeolocationData = async () => {
-            const response = await fetch(URL_Reverse)
-            if (!response.ok) return console.log("error fetching data")
-            return await response.json()
-        }
-        try {
-            const locationData: GeocodeReturn = await fetchGeolocationData()
-            const formattedAddress = formatAddress(locationData.results[0].formatted_address)
-            dispatch(setGeocodeData({
-                placeID: locationData.results[0].place_id,
-                address: formattedAddress,
-                location: locationData.results[0].geometry.location
-            }))
-        } catch (e) {
-            console.log(e)
-        }
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                console.log('Location permission granted');
+                // User has granted permission
+                const {latitude, longitude} = position.coords;
+                const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+                const formatAddress = useFormatAddress
+                const fetchGeolocationData = async () => {
+                    const response = await fetch(URL_Reverse)
+                    if (!response.ok) return console.log("error fetching data")
+                    return await response.json()
+                }
+                try {
+                    const locationData: GeocodeReturn = await fetchGeolocationData()
+                    const formattedAddress = formatAddress(locationData.results[0].formatted_address)
+                    dispatch(setGpsData({
+                        placeID: locationData.results[0].place_id,
+                        address: formattedAddress,
+                        location: locationData.results[0].geometry.location
+                    }))
+                } catch (e) {
+                    console.log(e)
+                }
+            },
+            (error) => {
+                console.error('Error getting location:', error);
+                // Handle location retrieval error
+            })
+
     }
 }
 
-export const addLocation = () => {
-
-}
 
 export const {
     setGeocodeData,

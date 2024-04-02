@@ -3,14 +3,14 @@ import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
 import {GeocodeCords} from "@/app/Stores/LocationsSlice";
-import {useAppDispatch} from "@/app/Stores/Store";
+import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {FaX} from "react-icons/fa6";
+import {createPortal} from "react-dom";
 
 
 interface Props {
     children?: ReactNode;
-    message?: string;
 }
 
 export interface DialogHandles {
@@ -20,11 +20,12 @@ export interface DialogHandles {
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
-export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
+export const GpsDialog = forwardRef<DialogHandles,Props>((props, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next,setNext] = useState(false)
     const [showError , setShowError]= useState(false)
     const [errorMsg , setErrorMessage]= useState("")
+    const {locationPermState} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
     useImperativeHandle(ref, () => ({
             openDialog() {
@@ -38,7 +39,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
 
 
 
-    const goToNext =  (e:React.MouseEvent<HTMLButtonElement>) => {
+    const goToNext =  () => {
         if(!next) {
             setNext(true)
             setShowError(false)
@@ -69,10 +70,11 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     }
     return (
         <>
+        {!locationPermState &&
             <dialog ref={dialog}
                     className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 <div className={"flex items-center justify-between px-2"}>
-                    {props.message && <UnderlinedText text={props.message} header={true}/>}
+                    <UnderlinedText text={"GPS"} header={true}/>
                     <button onClick={cancelHandler} className={"mr-2 grid place-items-center hover:bg-red-400 w-10 h-10 rounded-xl text-xl duration-300 "}><FaX/></button>
                 </div>
                 <form style={{transform:next? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "} method="dialog">
@@ -88,7 +90,7 @@ export const GpsDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     <h3 className={`${showError ? "visible":"invisible"} text-red-400`}>{errorMsg}</h3>
                     <button onClick={goToNext} className={buttonStyles} id={"submit"} type="submit">Next</button>
                 </div>
-            </dialog>
+            </dialog>}
         </>
     )
 })

@@ -6,12 +6,11 @@ import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
+import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
 
 interface Props {
     children?: ReactNode;
     message?: string;
-    onSubmit: Function
-    openGpsDialog: (() => void)
 }
 
 export interface DialogHandles {
@@ -22,6 +21,7 @@ export interface DialogHandles {
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
 export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
+    const gpsDialog = useRef<DialogHandles>(null)
     const dialog = useRef<HTMLDialogElement>(null)
     const [next, setNext] = useState(false)
     const locations = useAppSelector(state => state.locations.locationsData)
@@ -101,11 +101,11 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                 <form onSubmitCapture={(event: React.FormEvent<FormElement>) => handleNameSubmit(event)}
                       style={{transform: initialLocationState ? "translateX(-100%)" : next ? "translateX(-100%)" : ""}}
                       className={"flex  h-3/4 duration-700 "}
-                      onSubmit={(e) => props.onSubmit(e)} method="dialog">
+                      method="dialog">
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
                         <AutoComplete dark={true}/>
-                        <button type={"button"} onClick={props.openGpsDialog}
+                        <button type={"button"} onClick={()=> gpsDialog.current?.openDialog()}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
                         </button>
                         <div className={"h-1/4 w-full grid place-items-center"}>
@@ -123,6 +123,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     <h3 className={`${showError ? "visible" : "invisible"} text-red-400`}>{errorMsg}</h3>
                 </div>
             </dialog>
+            <GpsDialog ref={gpsDialog}/>
         </>
     )
 })
