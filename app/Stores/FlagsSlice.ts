@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch} from "@/app/Stores/Store";
 import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
+import {toggleToast} from "@/app/Stores/utilsSlice";
 
 export type flagsSlice = {
     initialLocationState :boolean,
@@ -53,9 +54,9 @@ export const hydrateInitialLocationState = ()=>{
 }
 export const hydrateLocationPermState = () => {
     return async (dispatch:AppDispatch) => {
-        const checkLocationPermState = useCheckLocationPerm()
-        const locationPermState = await checkLocationPermState()
-        dispatch(setLocationPermissionState(locationPermState!))
+        const locationPermState = await useCheckLocationPerm()
+        dispatch(toggleToast("location state : " +JSON.stringify(locationPermState) , "normal"))
+        dispatch(setLocationPermissionState(locationPermState))
     }
 }
 export const {

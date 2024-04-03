@@ -6,7 +6,7 @@ import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
+import GpsDialog from "@/app/UI/GpsDialog";
 
 interface Props {
     children?: ReactNode;

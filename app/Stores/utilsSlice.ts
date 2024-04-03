@@ -1,7 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch} from "@/app/Stores/Store";
-import {disableLocationExists, initAutoGps, setGpsData} from "@/app/Stores/LocationsSlice";
-import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
+import {disableLocationExists} from "@/app/Stores/LocationsSlice";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
 export type toastTypes = "success" | "error" | "normal"
@@ -16,7 +15,7 @@ export type utils = {
     firstTime: boolean,
     showToast:boolean,
     toastType:toastTypes,
-    toastMessage:string
+    toastMessage:any
 };
 
 const initialState: utils = {
@@ -86,17 +85,6 @@ export const toggleToast = (message:string , type : toastTypes) => {
             dispatch(disableLocationExists())
             dispatch(setToast(false))
         },5000)
-    }
-}
-
-export const InitializeAutoGps = async () =>{
-    const checkLocationPerm = useCheckLocationPerm()
-    const gpsPermission = await checkLocationPerm()
-    return  (dispatch:AppDispatch)=> {
-        if(gpsPermission) {
-            setGpsData
-            dispatch(initAutoGps())
-        }
     }
 }
 export const {
