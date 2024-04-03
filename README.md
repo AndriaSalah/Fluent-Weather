@@ -1,7 +1,39 @@
-# This project is still a work in progress , and currently on hold till i find some free time to continue working on it
+# Fluent Weather
+![](https://raw.githubusercontent.com/AndriaSalah/weather2.0/master/public/icons/icon-180x180.png)
+### Description
+I decided to build this website since i wasnt satisfied with my previous weather app , it didnt end up the way i wanted it to be looking like which was to be simple and beautifull such that any user would just leave it runing in the background as a screen saver and i think i acheived that and not only that but it comes with type saftey and PWA compatiblity
 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+You can check it out at [Fluent Weather](http://Fluent-weather.vercel.app "Fluent Weather")
+### Features
+- PWA ready
+- Displays Current and Daily Weather ( 7 day Forecast )
+- Display Current Time based on the current Locale and updates every minute
+- Auto Refresh after 10 mins
+- Location auto detection , only if Location premission was granted
+- Weather effects (Rain, Snow, Clouds)
+- Address search auto complete using Google's auto complete api
+
+### Technologies used
+- React.JS
+- NextJS
+- TypeScript
+- Tailwind
+- Redux toolkit
+- Sass
+
+### Contribution 🫶
+- **I feel like there is a big room for improvment in my code , I am not the cleanest coder or anywhere near that but feel free to submit an issue or open a discussion**
+- **If you want to contribute then feel free to open a pull request and i will be checking it out as soon as possible and follow this structure :**
+ - PR Title : should be the most important changes
+ - PR Description : should be structured in a list of changes 
+
+- **if you want to submit an issue please follow these rules :**
+ - Attach a screenshot of the current states from redux dev tools
+ - Attach a screenshot of the local storage
+ - If you got a Toast notification with an error code please also provide it
+ - Any console errors would also be much appreciated. 
+ - provide steps to be able to recreate the issue.
 
 ## Getting Started
 
@@ -19,7 +51,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
