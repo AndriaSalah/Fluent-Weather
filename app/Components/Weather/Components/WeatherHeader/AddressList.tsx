@@ -8,6 +8,7 @@ import {setLocationListIsOpened} from "@/app/Stores/utilsSlice";
 
 const AddressList = () => {
     const {locationListIsOpen} = useAppSelector(state => state.utils)
+    const {loading} = useAppSelector(state => state.flags)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const listRef = useRef<HTMLUListElement>(null)
     const dispatch = useAppDispatch()
@@ -27,7 +28,7 @@ const AddressList = () => {
     return (
         <div onClick={toggleList}
              className={"flex cursor-pointer items-center max-md:justify-center justify-start gap-2.5 relative max-md:w-full w-1/4"}>
-                <h1 className={"max-md:text-center w-fit text-4xl font-light"}>{locationsData.length !== 0 ? locationsData[locationPointer].address : "..."}</h1>
+                <h1 className={"max-md:text-center w-fit text-4xl font-light"}>{locationsData[locationPointer]?.address ?? "..."}</h1>
                 {locationsData.length > 1 &&
                     <>
                         <FaAngleDown

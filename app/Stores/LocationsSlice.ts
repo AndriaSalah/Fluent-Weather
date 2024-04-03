@@ -103,8 +103,8 @@ const LocationsSlice = createSlice({
 )
 
 export const loadFromLocalStorage = () => {
-    return (dispatch: Dispatch) => {
-        const previousData: locationData[] = JSON.parse(localStorage.getItem("locations") ?? "[]")
+    return async (dispatch: Dispatch) => {
+        const previousData: locationData[] = await JSON.parse(localStorage.getItem("locations") ?? "[]")
         dispatch(hydrateGeocodeData(previousData))
     }
 }
@@ -124,8 +124,7 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
     };
 };
 export const AutoGps = () => {
-
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: AppDispatch) => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 console.log('Location permission granted');

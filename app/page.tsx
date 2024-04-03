@@ -12,7 +12,6 @@ import Background from "@/app/UI/Background";
 import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
 
 export default function Home() {
-
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const {transition, locationPermState} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
@@ -20,19 +19,14 @@ export default function Home() {
 
 
     useEffect(() => {
-        dispatch(loadFromLocalStorage());
+        dispatch(hydrateLocationPermState())
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
-        dispatch(hydrateLocationPermState())
-
-    }, [dispatch]);
-
-    useEffect(() => {
-        if(locationPermState){
-            console.log("location granted")
-            dispatch(AutoGps())
-        }
+        locationPermState && dispatch(AutoGps())
+        dispatch(loadFromLocalStorage())
     }, [dispatch,locationPermState]);
+
+
 
     useEffect(() => {
         const ChangeThemeColor = () => {

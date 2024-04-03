@@ -2,11 +2,11 @@ import React, {forwardRef, ReactNode, useImperativeHandle, useRef, useState} fro
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
-import {GeocodeCords} from "@/app/Stores/LocationsSlice";
+import {AutoGps} from "@/app/Stores/LocationsSlice";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {FaX} from "react-icons/fa6";
-import {createPortal} from "react-dom";
+
 
 
 interface Props {
@@ -46,10 +46,9 @@ export const GpsDialog = forwardRef<DialogHandles,Props>((props, ref) => {
         }
         else if(next){
             navigator.geolocation.getCurrentPosition(
-                (position) => {
+                () => {
                     // User has granted permission
-                    const {latitude, longitude} = position.coords;
-                    dispatch(GeocodeCords(latitude,longitude))
+                    dispatch(AutoGps())
                     dispatch(setInitialLocationState(true))
                     dialog.current?.close()
                 },
