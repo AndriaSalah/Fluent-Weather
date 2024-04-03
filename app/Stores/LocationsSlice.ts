@@ -128,7 +128,6 @@ export const AutoGps = () => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 console.log('Location permission granted');
-                // User has granted permission
                 const {latitude, longitude} = position.coords;
                 const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
                 const formatAddress = useFormatAddress

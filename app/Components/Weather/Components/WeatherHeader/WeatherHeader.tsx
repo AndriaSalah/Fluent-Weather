@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import AutoComplete from "@/app/UI/AutoComplete";
 import {FaLocationDot} from "react-icons/fa6";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {AutoGps, getWeather} from "@/app/Stores/LocationsSlice";
+import {AutoGps, getWeather, resetLocationPointer, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
 import AddressList from "@/app/Components/Weather/Components/WeatherHeader/AddressList";
 import GpsDialog from "@/app/Components/GpsDialog/GpsDialog";
@@ -22,7 +22,12 @@ const WeatherHeader: React.FC = () => {
         dispatch(getWeather(lat!, lng!, true))
     }
 
-    const checkLocationPermission =  () => locationPermState ? dispatch(AutoGps()) : gpsDialog.current?.openDialog()
+    const checkLocationPermission =  () => {
+        if(locationPermState) {
+            dispatch(AutoGps())
+            dispatch(setLocationPointer(0))
+        } else gpsDialog.current?.openDialog()
+    }
 
 
 
