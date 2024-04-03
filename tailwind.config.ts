@@ -44,7 +44,7 @@ const config: Config = {
                     '50%': {"transform": 'translateX(0.3%)'}
                 },
                 "slideMobile": {
-                    "0% , 100%": {"transform": 'translateX(-5%)'},
+                    "0% , 100%": {"transform": 'translateX(-2%)'},
                     '50%': {"transform": 'translateX(5%)'}
                 },
                 "hover": {

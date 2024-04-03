@@ -1,4 +1,6 @@
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {toggleToast} from "@/app/Stores/utilsSlice";
+import {AppDispatch} from "@/app/Stores/Store";
 
 
 type ReceivedDailyWeather = {
@@ -44,10 +46,10 @@ export default dailyWeatherSlice
 export const getDailyWeather = (latitude : number , longitude : number ) => {
     const options: string[] = ["temperature_2m_max", "temperature_2m_min", "uv_index_max", "wind_speed_10m_max", "rain_sum"]
     const API_URL: string = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=${options.toString()}&timezone=auto`
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: AppDispatch) => {
         const getDailyData = async () => {
             const response = await fetch(API_URL)
-            if (!response.ok) return console.log("error occurred while fetching data")
+            if (!response.ok) return dispatch(toggleToast("error 232: error fetching weather data ","error"))
             return await response.json()
         }
         try {
@@ -64,6 +66,7 @@ export const getDailyWeather = (latitude : number , longitude : number ) => {
             dispatch(updateDailyWeather(formattedData))
         } catch (e) {
             console.log(e)
+            dispatch(toggleToast("error 204: " + e,"error"))
         }
     }
 }

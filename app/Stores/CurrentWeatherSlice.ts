@@ -1,7 +1,6 @@
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {setLoading} from "@/app/Stores/FlagsSlice";
-import weather from "@/app/Components/Weather/Weather";
-import {lab} from "d3-color";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {toggleToast} from "@/app/Stores/utilsSlice";
+import {AppDispatch} from "@/app/Stores/Store";
 
 export type currentWeatherData ={
         time: string,
@@ -86,10 +85,10 @@ export default CurrentWeatherSlice
 export const getCurrentWeather =  (latitude : number , longitude : number) =>{
     const options : string[] = ["temperature_2m","relative_humidity_2m","apparent_temperature","is_day","wind_speed_10m","precipitation","weather_code","rain","snowfall"]
     const API_URL : string = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=${options.toString()}&timezone=auto`
-    return async (dispatch:Dispatch)=>{
+    return async (dispatch:AppDispatch)=>{
         const getCurrentData = async ()=>{
             const response  = await fetch(API_URL)
-            if (!response.ok) return console.log("error fetching data")
+            if (!response.ok) return dispatch(toggleToast("error 323: error fetching weather data ","error"))
             return await response.json()
         }
         try {
@@ -98,6 +97,7 @@ export const getCurrentWeather =  (latitude : number , longitude : number) =>{
         }
         catch (e){
             console.log(e)
+            dispatch(toggleToast("error 304: " + e,"error"))
         }
 
     }

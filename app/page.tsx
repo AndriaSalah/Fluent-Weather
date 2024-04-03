@@ -19,11 +19,11 @@ export default function Home() {
 
 
     useEffect(() => {
+        dispatch(loadFromLocalStorage())
         dispatch(hydrateLocationPermState())
         dispatch(hydrateUserFromLocal())
         dispatch(hydrateInitialLocationState())
         locationPermState && dispatch(AutoGps())
-        dispatch(loadFromLocalStorage())
     }, [dispatch,locationPermState]);
 
 

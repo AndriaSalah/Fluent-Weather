@@ -4,6 +4,7 @@ import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {AppDispatch} from "@/app/Stores/Store";
 import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import {toggleToast} from "@/app/Stores/utilsSlice";
 
 
 export type locationData = {
@@ -103,8 +104,8 @@ const LocationsSlice = createSlice({
 )
 
 export const loadFromLocalStorage = () => {
-    return async (dispatch: Dispatch) => {
-        const previousData: locationData[] = await JSON.parse(localStorage.getItem("locations") ?? "[]")
+    return (dispatch: Dispatch) => {
+        const previousData: locationData[] = JSON.parse(localStorage.getItem("locations") ?? "[]")
         dispatch(hydrateGeocodeData(previousData))
     }
 }
@@ -119,6 +120,7 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
             dispatch(setIsRefreshing(false))
         } catch (error) {
             console.error("Error fetching weather data:", error);
+            dispatch(toggleToast("error 132: " + error,"error"))
             refresh ? dispatch(setIsRefreshing(false)) : dispatch(setLoading(false))
         }
     };
@@ -133,7 +135,7 @@ export const AutoGps = () => {
                 const formatAddress = useFormatAddress
                 const fetchGeolocationData = async () => {
                     const response = await fetch(URL_Reverse)
-                    if (!response.ok) return console.log("error fetching data")
+                    if (!response.ok) dispatch(toggleToast("error 101: error fetching data ","error"))
                     return await response.json()
                 }
                 try {
@@ -145,12 +147,11 @@ export const AutoGps = () => {
                         location: locationData.results[0].geometry.location
                     }))
                 } catch (e) {
-                    console.log(e)
+                    dispatch(toggleToast("error 102: " + e,"error"))
                 }
             },
             (error) => {
-                console.error('Error getting location:', error);
-                // Handle location retrieval error
+                dispatch(toggleToast("error 104: " + error,"error"))
             })
 
     }

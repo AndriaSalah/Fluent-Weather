@@ -4,6 +4,7 @@ import {disableLocationExists, initAutoGps, setGpsData} from "@/app/Stores/Locat
 import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
+export type toastTypes = "success" | "error" | "normal"
 
 export type utils = {
     expand: boolean,
@@ -13,7 +14,9 @@ export type utils = {
     rightButtonEnabled: boolean,
     name: string,
     firstTime: boolean,
-    showToast:boolean
+    showToast:boolean,
+    toastType:toastTypes,
+    toastMessage:string
 };
 
 const initialState: utils = {
@@ -24,7 +27,9 @@ const initialState: utils = {
     rightButtonEnabled: true,
     name: "",
     firstTime: false,
-    showToast:false
+    showToast:false,
+    toastType:"normal",
+    toastMessage:""
 };
 const utilsSlice = createSlice({
     name: "utils",
@@ -56,6 +61,10 @@ const utilsSlice = createSlice({
         },
         setToast : (state : utils , actions:PayloadAction<boolean>) => {
             state.showToast = actions.payload
+        },
+        setToastInfo : (state : utils , action : PayloadAction<{message:string,type:toastTypes}>) =>{
+            state.toastMessage = action.payload.message
+            state.toastType = action.payload.type
         }
     },
 });
@@ -69,8 +78,9 @@ export const hydrateUserFromLocal = () => {
     }
 }
 
-export const toggleToast = () => {
+export const toggleToast = (message:string , type : toastTypes) => {
     return(dispatch :AppDispatch) => {
+        dispatch(setToastInfo({message,type}))
         dispatch(setToast(true))
         setTimeout(()=>{
             dispatch(disableLocationExists())
@@ -97,7 +107,8 @@ export const {
     setName,
     setFirstTime,
     setLocationListIsOpened,
-    setToast
+    setToast,
+    setToastInfo
 } = utilsSlice.actions;
 
 export default utilsSlice;

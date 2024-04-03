@@ -46,8 +46,8 @@ const StatsSlice = createSlice({
 })
 
 export const hydrateInitialLocationState = ()=>{
-    return async (dispatch:Dispatch) =>{
-        const initialLocationState : boolean =JSON.parse(localStorage.getItem("initialLocationState") ?? "false")
+    return (dispatch:Dispatch) =>{
+        const initialLocationState : boolean = JSON.parse(localStorage.getItem("initialLocationState") ?? "false")
         dispatch(setInitialLocationState(initialLocationState))
     }
 }
