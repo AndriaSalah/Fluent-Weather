@@ -8,7 +8,6 @@ import {setLocationListIsOpened} from "@/app/Stores/utilsSlice";
 
 const AddressList = () => {
     const {locationListIsOpen} = useAppSelector(state => state.utils)
-    const {loading} = useAppSelector(state => state.flags)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const listRef = useRef<HTMLUListElement>(null)
     const dispatch = useAppDispatch()

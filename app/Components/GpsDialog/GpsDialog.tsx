@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import Image from "next/image";
 import locationImage from "@/public/img.png"
@@ -9,9 +9,6 @@ import {FaX} from "react-icons/fa6";
 
 
 
-interface Props {
-    children?: ReactNode;
-}
 
 export interface DialogHandles {
     openDialog: () => void;
@@ -20,7 +17,7 @@ export interface DialogHandles {
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
-export const GpsDialog = forwardRef<DialogHandles,Props>((props, ref) => {
+export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next,setNext] = useState(false)
     const [showError , setShowError]= useState(false)
