@@ -20,8 +20,6 @@ You can check out the live version at [Fluent Weather](http://Fluent-weather.ver
 - Redux toolkit
 - Sass
 
-<<<<<<< HEAD
-=======
 ### Contribution 🫶
 - **I feel like there is a big room for improvment in my code , I am not the cleanest coder or anywhere near that but feel free to submit an issue or open a discussion**
 - **If you want to contribute then feel free to open a pull request and and follow this structure :**
@@ -38,10 +36,6 @@ You can check out the live version at [Fluent Weather](http://Fluent-weather.ver
  - Any console errors would also be much appreciated. 
  - provide steps to be able to recreate the issue.
 ```
-<<<<<<< Updated upstream
-=======
->>>>>>> a23fcf28050272f309e57479584db0c4b36db643
->>>>>>> Stashed changes
 ## Getting Started
 
 First, run the development server:
