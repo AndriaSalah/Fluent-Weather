@@ -88,7 +88,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                             </div>
                             :
                             <div
-                                className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
+                                className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center max-md:p-4 max-md:h-full"}>
                                 <h2 className={"w-4/5 font-bold"}>{errorMsg}</h2>
                                 <p>Please follow the instruction on the following website to unblock the permission</p>
                                 <a className={"text-blue-700 font-bold"}

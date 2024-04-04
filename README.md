@@ -1,27 +1,27 @@
 # Fluent Weather
 ![](https://raw.githubusercontent.com/AndriaSalah/weather2.0/master/public/icons/icon-180x180.png)
-### Description
-I decided to build this website since i wasnt satisfied with my previous weather app , it didnt end up the way i wanted it to be looking like which was to be simple and beautifull such that any user would just leave it runing in the background as a screen saver and i think i acheived that and not only that but it comes with type saftey and PWA compatiblity
 
 
-You can check it out at [Fluent Weather](http://Fluent-weather.vercel.app "Fluent Weather")
+You can check out the live version at [Fluent Weather](http://Fluent-weather.vercel.app "Fluent Weather")
 ### Features
 - PWA ready
-- Displays Current and Daily Weather ( 7 day Forecast )
+- Displays Current and Daily Weather ( 7-day Forecast )
 - Display Current Time based on the current Locale and updates every minute
 - Auto Refresh after 10 mins
-- Location auto detection , only if Location premission was granted
+- Location auto-detection , only if Location permission was granted
 - Weather effects (Rain, Snow, Clouds)
 - Address search auto complete using Google's auto complete api
 
 ### Technologies used
 - React.JS
-- NextJS
+- Next.JS
 - TypeScript
 - Tailwind
 - Redux toolkit
 - Sass
 
+<<<<<<< HEAD
+=======
 ### Contribution 🫶
 - **I feel like there is a big room for improvment in my code , I am not the cleanest coder or anywhere near that but feel free to submit an issue or open a discussion**
 - **If you want to contribute then feel free to open a pull request and and follow this structure :**
@@ -38,6 +38,10 @@ You can check it out at [Fluent Weather](http://Fluent-weather.vercel.app "Fluen
  - Any console errors would also be much appreciated. 
  - provide steps to be able to recreate the issue.
 ```
+<<<<<<< Updated upstream
+=======
+>>>>>>> a23fcf28050272f309e57479584db0c4b36db643
+>>>>>>> Stashed changes
 ## Getting Started
 
 First, run the development server:

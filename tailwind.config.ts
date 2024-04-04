@@ -34,7 +34,7 @@ const config: Config = {
             },
             animation: {
                 "slide": 'slide 15s ease-in-out infinite',
-                "slideMobile": 'slideMobile 30s ease-in-out infinite',
+                "slideMobile": 'slideMobile 25s ease-in-out infinite',
                 "hover": 'hover 15s ease-in-out infinite',
                 "fadeIn": 'fadeIn 0.5s ease-in-out forwards',
             },
@@ -44,8 +44,8 @@ const config: Config = {
                     '50%': {"transform": 'translateX(0.3%)'}
                 },
                 "slideMobile": {
-                    "0% , 100%": {"transform": 'translateX(-2%)'},
-                    '50%': {"transform": 'translateX(5%)'}
+                    "0% , 100%": {"transform": 'translateX(-4%)'},
+                    '50%': {"transform": 'translateX(3%)'}
                 },
                 "hover": {
                     "0% , 100%": {"transform": 'translateY(-10%)'},

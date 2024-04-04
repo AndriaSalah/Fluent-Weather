@@ -89,6 +89,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     const cancelHandler = () => {
         dialog.current?.close()
     }
+    const openGpsDialog = () => gpsDialog.current?.openDialog()
     const error = (message: string) => {
         setErrorMessage(message)
         setShowError(true)
@@ -105,7 +106,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
                         <AutoComplete dark={true}/>
-                        <button type={"button"} onClick={()=> gpsDialog.current?.openDialog()}
+                        <button type={"button"} onClick={openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
                         </button>
                         <div className={"h-1/4 w-full grid place-items-center"}>
