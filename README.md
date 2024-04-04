@@ -20,22 +20,6 @@ You can check out the live version at [Fluent Weather](http://Fluent-weather.ver
 - Redux toolkit
 - Sass
 
-### Contribution 🫶
-- **I feel like there is a big room for improvment in my code , I am not the cleanest coder or anywhere near that but feel free to submit an issue or open a discussion**
-- **If you want to contribute then feel free to open a pull request and and follow this structure :**
- ```bash
-  PR Title : should be the most important changes
-  PR Description : should be structured as a list of changes
-```
-
-- **if you want to submit an issue please follow these rules :**
-```
- - Attach a screenshot of the current states from redux dev tools
- - Attach a screenshot of the local storage
- - If you got a Toast notification with an error code please also provide it
- - Any console errors would also be much appreciated. 
- - provide steps to be able to recreate the issue.
-```
 ## Getting Started
 
 First, run the development server:
