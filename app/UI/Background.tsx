@@ -7,7 +7,7 @@ import {useAppSelector} from "@/app/Stores/Store";
 const Background = () => {
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     return (
-        <div className={"w-[110%] fixed"}>
+        <div className={"w-[110vw] fixed"}>
             <Image src={isDay? day:night} alt={"background Image"} className={"object-cover w-full h-svh animate-slideMobile md:animate-slide"}/>
         </div>
     );

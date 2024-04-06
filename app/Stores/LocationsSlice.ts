@@ -1,10 +1,11 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {useFormatAddress} from "@/app/Utils/useFormatAddress";
+import {FormatAddress} from "@/app/Utils/FormatAddress";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {AppDispatch} from "@/app/Stores/Store";
-import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import {setGpsError, setInitialLocationState, setIsRefreshing, setLoading, setUseGps} from "@/app/Stores/FlagsSlice";
 import {toggleToast} from "@/app/Stores/utilsSlice";
+
 
 
 export type locationData = {
@@ -126,9 +127,10 @@ export const AutoGps = () => {
     return async (dispatch: AppDispatch) => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
+                dispatch(toggleToast(`location State : true `,"normal"))
                 const {latitude, longitude} = position.coords;
                 const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-                const formatAddress = useFormatAddress
+
                 const fetchGeolocationData = async () => {
                     const response = await fetch(URL_Reverse)
                     if (!response.ok) dispatch(toggleToast("error 101: error fetching data ","error"))
@@ -136,19 +138,23 @@ export const AutoGps = () => {
                 }
                 try {
                     const locationData: GeocodeReturn = await fetchGeolocationData()
-                    const formattedAddress = formatAddress(locationData.results[0].formatted_address)
+                    const formattedAddress = FormatAddress(locationData.results[0].formatted_address)
                     dispatch(setGpsData({
                         placeID: locationData.results[0].place_id,
                         address: formattedAddress,
                         location: locationData.results[0].geometry.location
                     }))
+                    dispatch(setInitialLocationState(true))
+                    dispatch(setUseGps(true))
                 } catch (e) {
                     dispatch(toggleToast("error 102: " + e,"error"))
                 }
             },
             (error) => {
-                dispatch(toggleToast("error 104: " + error,"error"))
+                dispatch(toggleToast("location state : false" + error,"error"))
+                dispatch(setGpsError(true))
             })
+
 
     }
 }

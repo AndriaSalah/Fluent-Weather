@@ -4,7 +4,6 @@ import Image from "next/image";
 import locationImage from "@/public/img.png"
 import {AutoGps} from "@/app/Stores/LocationsSlice";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {FaX} from "react-icons/fa6";
 
 
@@ -18,9 +17,7 @@ const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-o
 export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next, setNext] = useState(false)
-    const [showError, setShowError] = useState(false)
-    const [errorMsg, setErrorMessage] = useState("")
-    const {locationPermState} = useAppSelector(state => state.flags)
+    const {useGPS , gpsError} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
     useImperativeHandle(ref, () => ({
             openDialog() {
@@ -32,39 +29,22 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
         })
     )
 
-
     const goToNext = () => {
         if (!next) {
             setNext(true)
-            setShowError(false)
         } else if (next) {
-            navigator.geolocation.getCurrentPosition(
-                () => {
-                    // User has granted permission
-                    dispatch(AutoGps())
-                    dispatch(setInitialLocationState(true))
-                    dialog.current?.close()
-                },
-                (error) => {
-                    console.error('Error getting location:', error);
-                    Error("Location Permission was denied")
-                }
-            );
+           dispatch(AutoGps())
         }
-
     }
+
     const cancelHandler = () => {
         dialog.current?.close()
     }
-    const Error = (message: string) => {
-        setErrorMessage(message)
-        setShowError(true)
-    }
     return (
         <>
-            {!locationPermState &&
+            {!useGPS &&
                 <dialog ref={dialog}
-                        className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                        className={"w-full h-5/6 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                     <div className={"flex items-center justify-between px-2"}>
                         <UnderlinedText text={"GPS"} header={true}/>
                         <button onClick={cancelHandler}
@@ -78,7 +58,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                             <h2 className={"w-4/5"}>In order to detect your current location , we need access to your
                                 location data from your browser</h2>
                         </div>
-                        {!showError ?
+                        {!gpsError ?
                             <div
                                 className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                                 <h2 className={"w-4/5"}>By continuing, the browser will ask you for a permission to
@@ -89,7 +69,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                             :
                             <div
                                 className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center max-md:p-4 max-md:h-full"}>
-                                <h2 className={"w-4/5 font-bold"}>{errorMsg}</h2>
+                                <h2 className={"w-4/5 font-bold"}>Location Permission Denied</h2>
                                 <p>Please follow the instruction on the following website to unblock the permission</p>
                                 <a className={"text-blue-700 font-bold"}
                                    href={"https://whatismyipaddress.com/enabling-and-disabling-geolocation-on-your-browser"}>How to unblock
@@ -98,7 +78,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                             </div>
                         }
                     </form>
-                    {!showError &&
+                    {!gpsError &&
                         <div className={"flex flex-col h-1/4 justify-around items-center "}>
                             <button onClick={goToNext} className={buttonStyles} id={"submit"} type="submit">Next
                             </button>

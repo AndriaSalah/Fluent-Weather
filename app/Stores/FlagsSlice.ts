@@ -1,7 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {AppDispatch} from "@/app/Stores/Store";
-import useCheckLocationPerm from "@/app/Utils/useCheckLocationPerm";
-import {toggleToast} from "@/app/Stores/utilsSlice";
+
 
 export type flagsSlice = {
     initialLocationState :boolean,
@@ -9,7 +7,8 @@ export type flagsSlice = {
     initialLoad:boolean,
     transition:boolean,
     isRefreshing:boolean
-    locationPermState:boolean
+    useGPS:boolean,
+    gpsError:boolean
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
@@ -17,7 +16,8 @@ const initialState : flagsSlice = {
     initialLoad:true,
     transition:true,
     isRefreshing:false,
-    locationPermState:false
+    useGPS:false,
+    gpsError:false
 }
 const StatsSlice = createSlice({
     name:"Stats",
@@ -39,33 +39,33 @@ const StatsSlice = createSlice({
         setIsRefreshing: (state : flagsSlice , action:PayloadAction<boolean>) => {
             state.isRefreshing = action.payload
         },
-        setLocationPermissionState:(state :flagsSlice , action :PayloadAction<boolean>) => {
-            state.locationPermState = action.payload
+        setUseGps : (state : flagsSlice , action : PayloadAction<boolean>) => {
+            state.useGPS = action.payload
+            localStorage.setItem("useGPS",JSON.stringify(action.payload))
+        },
+        setGpsError : (state : flagsSlice , action:PayloadAction<boolean>) => {
+            state.gpsError = action.payload
         }
-
     }
 })
 
-export const hydrateInitialLocationState = ()=>{
+export const hydrateFlags = ()=>{
     return (dispatch:Dispatch) =>{
         const initialLocationState : boolean = JSON.parse(localStorage.getItem("initialLocationState") ?? "false")
+        const useGPS : boolean = JSON.parse(localStorage.getItem("useGPS") ?? "false")
         dispatch(setInitialLocationState(initialLocationState))
+        dispatch(setUseGps(useGPS))
     }
 }
-export const hydrateLocationPermState = () => {
-    return async (dispatch:AppDispatch) => {
-        const locationPermState = await useCheckLocationPerm()
-        dispatch(toggleToast("location state : " +JSON.stringify(locationPermState) , "normal"))
-        dispatch(setLocationPermissionState(locationPermState))
-    }
-}
+
 export const {
     setInitialLocationState,
     setLoading,
     disableInitialLoad,
     toggleTransition,
     setIsRefreshing,
-    setLocationPermissionState
+    setUseGps,
+    setGpsError
 } = StatsSlice.actions
 
 export default StatsSlice

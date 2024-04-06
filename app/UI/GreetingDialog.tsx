@@ -97,15 +97,15 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
     return (
         <>
             <dialog ref={dialog}
-                    className={"w-full h-2/3 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                    className={" w-full h-4/6 md:w-4/6 md:h-4/6 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 {props.message && <UnderlinedText text={props.message} header={true}/>}
-                <form onSubmitCapture={(event: React.FormEvent<FormElement>) => handleNameSubmit(event)}
+                <form onSubmit={(event: React.FormEvent<FormElement>) => handleNameSubmit(event)}
                       style={{transform: initialLocationState ? "translateX(-100%)" : next ? "translateX(-100%)" : ""}}
                       className={"flex  h-3/4 duration-700 "}
                       method="dialog">
-                    <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
+                    <div className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
-                        <AutoComplete dark={true}/>
+                            <AutoComplete dark={true}/>
                         <button type={"button"} onClick={openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
                         </button>

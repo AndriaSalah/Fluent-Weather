@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import AutoComplete from "@/app/UI/AutoComplete";
 import {FaLocationDot} from "react-icons/fa6";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {AutoGps, getWeather, resetLocationPointer, setLocationPointer} from "@/app/Stores/LocationsSlice";
+import {AutoGps, getWeather, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
 import AddressList from "@/app/Components/Weather/Components/WeatherHeader/AddressList";
 import GpsDialog from "@/app/UI/GpsDialog";
@@ -11,7 +11,7 @@ import {DialogHandles} from "@/app/UI/GreetingDialog";
 
 const WeatherHeader: React.FC = () => {
     const gpsDialog = useRef<DialogHandles>(null)
-    const {loading, isRefreshing , locationPermState} = useAppSelector(state => state.flags)
+    const {loading, isRefreshing , useGPS} = useAppSelector(state => state.flags)
     const {firstTime} = useAppSelector(state => state.utils)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const dispatch = useAppDispatch()
@@ -22,8 +22,8 @@ const WeatherHeader: React.FC = () => {
         dispatch(getWeather(lat!, lng!, true))
     }
 
-    const checkLocationPermission =  () => {
-        if(locationPermState) {
+    const getCurrentLocation =  () => {
+        if(useGPS) {
             dispatch(AutoGps())
             dispatch(setLocationPointer(0))
         } else gpsDialog.current?.openDialog()
@@ -38,7 +38,7 @@ const WeatherHeader: React.FC = () => {
                 <div className={"max-md:w-full w-1/3 flex items-center gap-1.5 max-md:flex-col"}>
                     <div className={"max-md:w-full flex-1 flex items-center gap-5 justify-center md:justify-end  "}>
                         <AutoComplete/>
-                        <button disabled={loading} onClick={checkLocationPermission}
+                        <button disabled={loading} onClick={getCurrentLocation}
                                 className={"w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg duration-300"}>
                             <FaLocationDot/></button>
                     </div>

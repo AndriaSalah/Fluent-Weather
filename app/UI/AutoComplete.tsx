@@ -1,7 +1,7 @@
 import React from 'react';
 import GooglePlacesAutocomplete, {geocodeByPlaceId} from 'react-google-places-autocomplete';
 import {resetLocationPointer, setGeocodeData} from "@/app/Stores/LocationsSlice";
-import {useFormatAddress} from "@/app/Utils/useFormatAddress";
+import {FormatAddress} from "@/app/Utils/FormatAddress";
 import {useAppDispatch} from "@/app/Stores/Store";
 
 interface props {
@@ -9,11 +9,10 @@ interface props {
 }
 const AutoComplete: React.FC<props> = ({dark = false}) => {
     const dispatch = useAppDispatch()
-    const formatAddress = useFormatAddress
     function handleSelect(place: any) {
         geocodeByPlaceId(place.value.place_id)
             .then(results => {
-                const formattedAddress = formatAddress(results[0].formatted_address)
+                const formattedAddress = FormatAddress(results[0].formatted_address)
                 dispatch(setGeocodeData({
                     placeID:results[0].place_id,
                     address:formattedAddress,
@@ -27,9 +26,10 @@ const AutoComplete: React.FC<props> = ({dark = false}) => {
     return (
         <GooglePlacesAutocomplete apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
                                   selectProps={{
+                                      cacheOptions:true,
                                       onChange: handleSelect,
                                       classNames: {
-                                          container: (state) => ((state.isFocused ? "max-md:w-5/6 w-4/6" : "max-md:w-4/6 w-[13rem]") + " duration-300 "),
+                                          container: (state) => ((state.isFocused ? "max-md:w-5/6 w-1/2" : "max-md:w-4/6 w-[13rem]") + " duration-300 "),
                                           control: () => "rounded-card",
                                           menu: () => "rounded-card",
                                           menuList: () => "text-black",

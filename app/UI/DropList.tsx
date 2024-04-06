@@ -12,7 +12,7 @@ interface listProps{
     onUnFocus : (e:MouseEvent)=>void
 }
 const DropList = forwardRef<HTMLUListElement,listProps>(({listData,isOpen,onSelect,onButtonClick,onUnFocus},ref) => {
-    const {locationPermState} = useAppSelector(state => state.flags)
+    const {useGPS} = useAppSelector(state => state.flags)
     const locationPointer = useAppSelector(state => state.locations.locationPointer)
     useEffect(() => {
         document.addEventListener("click",onUnFocus)
@@ -24,9 +24,9 @@ const DropList = forwardRef<HTMLUListElement,listProps>(({listData,isOpen,onSele
             {listData.map((listItem , index) =>
             <div key={index} className={`${locationPointer === index && "bg-white"} flex w-full select-none justify-between  hover:bg-white hover: bg-opacity-75 rounded-md cursor-pointer`}>
                 <button onClick={()=>onSelect(index)} type={"button"} className={"flex-1 text-start p-4"}>{
-                    locationPermState && index === 0 ? "Current Location" : listItem.address
+                    useGPS && index === 0 ? "Current Location" : listItem.address
                 }</button>
-                {locationPermState && index === 0 ?
+                {useGPS && index === 0 ?
                     <button type={"button"}
                             className={"m-2 p-2 rounded-lg hover:bg-blue-400 duration-300 "}><FaLocationDot/></button>
                     : <button onClick={() => onButtonClick(index)} type={"button"}

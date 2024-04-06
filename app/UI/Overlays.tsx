@@ -9,15 +9,15 @@ import {toggleToast} from "@/app/Stores/utilsSlice";
 const Overlays : React.FC = () => {
     const greetingDialog = useRef<DialogHandles>(null)
     const {firstTime ,showToast} = useAppSelector(state => state.utils);
-    const locationsExists = useAppSelector(state => state.locations.locationExists)
+    const {locationExists,locationsData} = useAppSelector(state => state.locations)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        locationsExists && dispatch(toggleToast("Location already exists","error"))
-    }, [dispatch,locationsExists]);
+        locationExists && dispatch(toggleToast("Location already exists","error"))
+    }, [dispatch,locationExists]);
 
     useEffect(() => {
         firstTime && greetingDialog.current?.openDialog()
-    }, [firstTime]);
+    }, [firstTime,locationsData]);
     return (
         <>
             {firstTime && <GreetingDialog message={"Hello!"} ref={greetingDialog}/>}

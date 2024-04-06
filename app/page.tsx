@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {AutoGps, loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
 import {hydrateUserFromLocal} from "@/app/Stores/utilsSlice";
-import {hydrateInitialLocationState, hydrateLocationPermState} from "@/app/Stores/FlagsSlice";
+import {hydrateFlags} from "@/app/Stores/FlagsSlice";
 import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
 import Background from "@/app/UI/Background";
@@ -13,20 +13,18 @@ import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
 
 export default function Home() {
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {transition, locationPermState} = useAppSelector(state => state.flags)
+    const {transition,useGPS} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
 
-
+    useEffect(() => {
+        dispatch(hydrateFlags())
+        dispatch(hydrateUserFromLocal())
+        dispatch(loadFromLocalStorage())
+    }, [dispatch]);
 
     useEffect(() => {
-        dispatch(loadFromLocalStorage())
-        dispatch(hydrateLocationPermState())
-        dispatch(hydrateUserFromLocal())
-        dispatch(hydrateInitialLocationState())
-        locationPermState && dispatch(AutoGps())
-    }, [dispatch,locationPermState]);
-
-
+        useGPS && dispatch(AutoGps())
+    }, [dispatch,useGPS]);
 
     useEffect(() => {
         const ChangeThemeColor = () => {
