@@ -26,8 +26,8 @@ const AddressList = () => {
 
     return (
         <div onClick={toggleList}
-             className={"flex cursor-pointer items-center max-md:justify-center justify-start gap-2.5 relative max-md:w-full w-1/4"}>
-                <h1 className={"max-md:text-center w-fit text-4xl font-light"}>{locationsData[locationPointer]?.address ?? "..."}</h1>
+             className={`flex ${locationsData.length>1 ? "cursor-pointer" : "cursor-default"} items-center max-md:justify-center justify-start gap-2.5 relative max-md:w-full w-1/4`}>
+                <h1 className={"max-md:text-center w-fit text-3xl md:text-4xl font-light"}>{locationsData[locationPointer]?.address ?? "..."}</h1>
                 {locationsData.length > 1 &&
                     <>
                         <FaAngleDown

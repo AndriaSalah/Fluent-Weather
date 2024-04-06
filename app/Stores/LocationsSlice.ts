@@ -10,10 +10,10 @@ import {toggleToast} from "@/app/Stores/utilsSlice";
 
 export type locationData = {
     placeID: string
-    address?: string | null,
+    address?: string ,
     location: {
-        lat: number | null,
-        lng: number | null
+        lat: number,
+        lng: number
     }
 }
 export type locationStore = {
@@ -29,10 +29,8 @@ type GeocodeReturn = {
             formatted_address: string,
             geometry: {
                 location: {
-                    lat: number | null,
-                    lng
-                        :
-                        number | null
+                    lat: number,
+                    lng: number
                 }
             }
         }
@@ -127,7 +125,6 @@ export const AutoGps = () => {
     return async (dispatch: AppDispatch) => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
-                dispatch(toggleToast(`location State : true `,"normal"))
                 const {latitude, longitude} = position.coords;
                 const URL_Reverse = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=administrative_area_level_2&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
 

@@ -19,7 +19,7 @@ const WeatherHeader: React.FC = () => {
     const refresh = () => {
         const lat = locationsData[locationPointer].location.lat
         const lng = locationsData[locationPointer].location.lng
-        dispatch(getWeather(lat!, lng!, true))
+        dispatch(getWeather(lat, lng, true))
     }
 
     const getCurrentLocation =  () => {
