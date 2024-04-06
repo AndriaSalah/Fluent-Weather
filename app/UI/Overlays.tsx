@@ -8,7 +8,7 @@ import {toggleToast} from "@/app/Stores/utilsSlice";
 
 const Overlays : React.FC = () => {
     const greetingDialog = useRef<DialogHandles>(null)
-    const {firstTime ,showToast} = useAppSelector(state => state.utils);
+    const {firstTime ,toast} = useAppSelector(state => state.utils);
     const {locationExists,locationsData} = useAppSelector(state => state.locations)
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -21,7 +21,7 @@ const Overlays : React.FC = () => {
     return (
         <>
             {firstTime && <GreetingDialog message={"Hello!"} ref={greetingDialog}/>}
-            {showToast && <Toast/>}
+            {toast.showToast && <Toast/>}
         </>
     );
 };
