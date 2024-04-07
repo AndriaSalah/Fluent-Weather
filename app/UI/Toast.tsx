@@ -4,7 +4,7 @@ import {useAppSelector} from "@/app/Stores/Store";
 
 
 const Toast: React.FC = () => {
-    const {toastType ,toastMessage} = useAppSelector(state => state.utils);
+    const {toastType ,toastMessage} = useAppSelector(state => state.utils.toast);
     return (
         <span
             className={`${toastType === "error" ?

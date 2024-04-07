@@ -4,7 +4,7 @@ import SunMoon from "@/app/Components/Weather/Components/WeatherControls/SunMoon
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {decLocationPointer, getWeather, incLocationPointer} from "@/app/Stores/LocationsSlice";
-import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import {disableInitialLoad, setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
 
 
 const WeatherControls = () => {
@@ -12,7 +12,7 @@ const WeatherControls = () => {
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const {leftButtonEnabled, rightButtonEnabled, firstTime} = useAppSelector(state => state.utils)
     const weather = useAppSelector(state => state.currentWeather)
-    const {isRefreshing,initialLoad} = useAppSelector(state => state.flags)
+    const {initialLoad} = useAppSelector(state => state.flags)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 
@@ -36,18 +36,18 @@ const WeatherControls = () => {
         }
         if (locationsData.length > 0 && !firstTime) {
             const {lat, lng} = locationsData[locationPointer].location
-            getWeatherDelay(400,lat!,lng!)
+            getWeatherDelay(400,lat,lng)
             !refreshInterval && setRefreshInterval(setInterval(() => {
-                getWeatherDelay(400,lat!,lng!,true)
+                getWeatherDelay(400,lat,lng,true)
             }, 10 * 60000))
         }
-        locationPointer + 1 > locationsData.length - 1 ? dispatch(updateRightButton(false)) : dispatch(updateRightButton(true))
-        locationPointer - 1 < 0 ? dispatch(updateLeftButton(false)) : dispatch(updateLeftButton(true))
+        dispatch(updateRightButton(locationPointer + 1 <= locationsData.length - 1))
+        dispatch(updateLeftButton(locationPointer - 1 >= 0))
         return () => {
             clearInterval(refreshInterval)
             setRefreshInterval(null)
         }
-    }, [dispatch, firstTime, locationPointer, locationsData]);
+    }, [dispatch, firstTime, locationPointer , locationsData]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>

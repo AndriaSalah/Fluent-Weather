@@ -20,6 +20,7 @@ export default function Home() {
         dispatch(hydrateFlags())
         dispatch(hydrateUserFromLocal())
         dispatch(loadFromLocalStorage())
+
     }, [dispatch]);
 
     useEffect(() => {

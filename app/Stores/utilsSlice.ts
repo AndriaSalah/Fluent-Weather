@@ -6,7 +6,7 @@ export type options = "Temp" | "Wind" | "Rain" | "UV"
 export type toastTypes = "success" | "error" | "normal"
 export type toast = {
     showToast: boolean,
-    toastType: toastTypes | undefined,
+    toastType: toastTypes ,
     toastMessage: any
 }
 export type utils = {
@@ -66,7 +66,7 @@ const utilsSlice = createSlice({
             state.toast = {
                 showToast: actions.payload.showToast,
                 toastMessage: actions.payload.toastMessage,
-                toastType: actions.payload.toastType
+                toastType: actions.payload.toastType ?? "normal"
             }
         },
     },

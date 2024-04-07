@@ -64,9 +64,12 @@ const LocationsSlice = createSlice({
                 state.locationsData = action.payload
             },
             removeLocation: (state: locationStore, action: PayloadAction<number>) => {
-                const newLocationsList = state.locationsData.filter((location, index) => index !== action.payload)
-                const newPointer: number = state.locationPointer > newLocationsList.length - 1 ? newLocationsList.length - 1 : state.locationPointer
-                localStorage.setItem("locations", JSON.stringify(newLocationsList))
+                const filteredLocationsList = state.locationsData.filter(
+                    (location, index) =>state.gpsLocationInit && index === 0 ? false : index !== action.payload)
+                // const newPointer: number = state.gpsLocationInit && newLocationsList.length === 0 ? 0 : state.locationPointer > newLocationsList.length - 1 ? newLocationsList.length - 1 : state.locationPointer;
+                localStorage.setItem("locations", JSON.stringify(filteredLocationsList))
+                const newLocationsList = state.gpsLocationInit ? [state.locationsData[0],...filteredLocationsList] : filteredLocationsList
+                const newPointer: number = Math.max(0,Math.min(state.locationPointer, newLocationsList.length - 1));
                 return {
                     ...state,
                     locationsData: newLocationsList,

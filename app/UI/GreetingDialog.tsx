@@ -1,4 +1,4 @@
-import React, {forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import AutoComplete from "@/app/UI/AutoComplete";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
@@ -9,8 +9,8 @@ import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import GpsDialog from "@/app/UI/GpsDialog";
 
 interface Props {
-    children?: ReactNode;
     message?: string;
+    custom?: boolean;
 }
 
 export interface DialogHandles {
@@ -95,6 +95,7 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
         setShowError(true)
     }
     return (
+
         <>
             <dialog ref={dialog}
                     className={" w-full h-4/6 md:w-4/6 md:h-4/6 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
@@ -103,9 +104,10 @@ export const GreetingDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                       style={{transform: initialLocationState ? "translateX(-100%)" : next ? "translateX(-100%)" : ""}}
                       className={"flex  h-3/4 duration-700 "}
                       method="dialog">
-                    <div className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>
+                    <div
+                        className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-xl font-light"}>{"Let's start by searching for a place"}</p>
-                            <AutoComplete dark={true}/>
+                        <AutoComplete dark={true}/>
                         <button type={"button"} onClick={openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-700"}>Use location instead ?
                         </button>
