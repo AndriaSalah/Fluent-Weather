@@ -39,7 +39,7 @@ export default function Home() {
     return (
         <>
             <Overlays/>
-            <main className={`grid place-items-center w-full h-[100svh] duration-100 relative overflow-clip`}>
+            <main className={`grid place-items-center w-full h-svh duration-100 relative overflow-clip`}>
                 <Background/>
                 <TransitionScreen/>
                 <Weather/>

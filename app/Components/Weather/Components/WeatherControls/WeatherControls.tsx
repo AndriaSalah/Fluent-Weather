@@ -4,7 +4,7 @@ import SunMoon from "@/app/Components/Weather/Components/WeatherControls/SunMoon
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {decLocationPointer, getWeather, incLocationPointer} from "@/app/Stores/LocationsSlice";
-import {disableInitialLoad, setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
 
 
 const WeatherControls = () => {
@@ -12,7 +12,6 @@ const WeatherControls = () => {
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const {leftButtonEnabled, rightButtonEnabled, firstTime} = useAppSelector(state => state.utils)
     const weather = useAppSelector(state => state.currentWeather)
-    const {initialLoad} = useAppSelector(state => state.flags)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 

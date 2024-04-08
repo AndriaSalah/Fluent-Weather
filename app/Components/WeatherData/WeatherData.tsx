@@ -12,7 +12,7 @@ const WeatherData = () => {
       ${!toggle ? "max-md:translate-y-[60rem] md:translate-x-full" : "max-md:translate-y-[0%]  md:translate-x-0"}
        h-screen bg-[#FFFFFF7F] duration-500 items-center backdrop-blur-sm ease-in-out`}>
         <ViewWeatherDataButton/>
-      <div className={"flex w-full flex-col text-black items-center h-lvh p-2 md:p-4 gap-2"}>
+      <div className={"flex w-full flex-col text-black items-center h-svh p-2 md:p-4 gap-2"}>
         <DataGraph/>
         <DataCardGrid/>
       </div>

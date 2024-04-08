@@ -48,7 +48,7 @@ const WeatherHeader: React.FC = () => {
                         <IoRefreshOutline/></button>
                 </div>
             </header>
-            {!firstTime && <GpsDialog ref={gpsDialog}/>}
+            {!firstTime && !useGPS && <GpsDialog ref={gpsDialog}/>}
         </>
     );
 };

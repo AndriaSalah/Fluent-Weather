@@ -35,8 +35,7 @@ const dailyWeatherSlice = createSlice({
     name: "dailyWeather",
     initialState,
     reducers: {
-        updateDailyWeather: (state: FormattedDailyWeather, action: PayloadAction<FormattedDailyWeather>) => action.payload
-
+        updateDailyWeather: (_, action: PayloadAction<FormattedDailyWeather>) => action.payload
     }
 })
 
@@ -62,7 +61,6 @@ export const getDailyWeather = (latitude : number , longitude : number ) => {
                 wind_speed: dailyData.daily.wind_speed_10m_max[index],
                 rain: dailyData.daily.rain_sum[index]
             }))
-            console.log(formattedData)
             dispatch(updateDailyWeather(formattedData))
         } catch (e) {
             console.log(e)

@@ -3,8 +3,8 @@ import {AppDispatch} from "@/app/Stores/Store";
 import {disableLocationExists} from "@/app/Stores/LocationsSlice";
 
 export type options = "Temp" | "Wind" | "Rain" | "UV"
-export type toastTypes = "success" | "error" | "normal"
-export type toast = {
+type toastTypes = "success" | "error" | "normal"
+type toast = {
     showToast: boolean,
     toastType: toastTypes ,
     toastMessage: any

@@ -6,70 +6,12 @@ interface props{
     isSnowy:number
 }
 export const Snow: React.FC<props> = ({isSnowy}) => {
+    const snowFlakes = new Array(Math.min(isSnowy,3)*16).fill(null)
     const transition = useAppSelector(state => state.flags.transition);
     return (
         isSnowy > 0 &&
         <div className={`SnowWrapper ${transition && "hidden"}`}>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            <div className="snowflake"></div>
-            {
-                isSnowy > 1 &&
-                <>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                </>
-            }
-            {
-                isSnowy > 2 &&
-                <>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                    <div className="snowflake"></div>
-                </>
-            }
+            {snowFlakes.map((_,index)=> <div key={index} className="snowflake"></div>)}
         </div>
     )
 }
