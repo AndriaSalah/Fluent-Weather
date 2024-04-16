@@ -156,7 +156,7 @@ export const AutoGps = () => {
                     }))
                     dispatch(setUseGps(true))
                     firstTime && (setInitialLocationState(true))
-                    SavedLocationsLoaded && dispatch(loadFromLocalStorage())
+                    !SavedLocationsLoaded && dispatch(loadFromLocalStorage())
                 } catch (e) {
                     dispatch(toggleToast("error 102: " + e,"error"))
                 }
