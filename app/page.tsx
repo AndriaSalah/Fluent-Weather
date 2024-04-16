@@ -13,18 +13,16 @@ import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
 
 export default function Home() {
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {transition,useGPS} = useAppSelector(state => state.flags)
+    const {transition,useGPS ,initialLoad} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(hydrateFlags())
         dispatch(hydrateUserFromLocal())
-        dispatch(loadFromLocalStorage())
-
     }, [dispatch]);
 
     useEffect(() => {
-        useGPS && dispatch(AutoGps())
+        if(!initialLoad) useGPS ? dispatch(AutoGps()) : dispatch(loadFromLocalStorage())
     }, [dispatch,useGPS]);
 
     useEffect(() => {
@@ -39,7 +37,7 @@ export default function Home() {
     return (
         <>
             <Overlays/>
-            <main className={`grid place-items-center w-full h-svh duration-100 relative overflow-clip`}>
+            <main className={`grid place-items-center w-full h-svh duration-100 relative overflow-hidden`}>
                 <Background/>
                 <TransitionScreen/>
                 <Weather/>

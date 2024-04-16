@@ -20,7 +20,7 @@ const DataCardGrid = () => {
             case "Rain":
                 return Math.min((weatherData.rain / 50) * 100, 100)
             case "WindSpeed" :
-                return weatherData.wind_speed_10m
+                return Math.min((weatherData.wind_speed_10m/40) * 100 , 100)
             default :
                 return 0
         }

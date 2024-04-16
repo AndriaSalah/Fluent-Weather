@@ -85,6 +85,7 @@ export default CurrentWeatherSlice
 export const getCurrentWeather =  (latitude : number , longitude : number) =>{
     const options : string[] = ["temperature_2m","relative_humidity_2m","apparent_temperature","is_day","wind_speed_10m","precipitation","weather_code","rain","snowfall"]
     const API_URL : string = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=${options.toString()}&timezone=auto`
+    console.log(API_URL)
     return async (dispatch:AppDispatch)=>{
         const getCurrentData = async ()=>{
             const response  = await fetch(API_URL)

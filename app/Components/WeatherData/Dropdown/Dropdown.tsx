@@ -31,16 +31,13 @@ const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange}) => 
     const handleClick = () => setIsClicked(!isClicked)
     const setOption = (option:options) =>{
         setSelectedOption(option)
+        onChange(option)
         setIsClicked(false)
     }
-    useEffect(() => {
-        selectedOption ?
-        onChange(selectedOption) : onChange(defaultOption)
-    }, [defaultOption, onChange, selectedOption]);
     return (
         <div className={"w-full grid place-items-end relative select-none"}>
         <div ref={SelectRef} className={"w-[7rem] flex-grow flex bg-white text-black p-2 rounded-lg bg-opacity-65 relative items-center justify-around hover:bg-opacity-50 cursor-pointer "} onClick={handleClick}>
-            <p className={"text-md w-20 whitespace-nowrap overflow-hidden overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
+            <p className={"text-md w-20 whitespace-nowrap overflow-hidden text-center overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
             <FaAngleDown className={`${isClicked && "rotate-180"} duration-300`} />
         </div>
             <div className="Dropdown w-[7rem]  flex flex-col gap-1 absolute bg-white mt-1 top-full z-20 py-1 border-2 border-white border-opacity-25 rounded-lg duration-300"

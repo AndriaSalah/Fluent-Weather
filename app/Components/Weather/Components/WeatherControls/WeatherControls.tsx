@@ -27,26 +27,31 @@ const WeatherControls = () => {
     }
 
     useEffect(() => {
-        const getWeatherDelay = (delay:number,lat:number,lng:number , refresh?:boolean) => {
-            refresh? dispatch(setIsRefreshing(true)) : dispatch(setLoading(true))
+        const getWeatherDelay = (delay: number, lat: number, lng: number, refresh?: boolean) => {
+            refresh ? dispatch(setIsRefreshing(true)) : dispatch(setLoading(true))
             setTimeout(() => {
                 dispatch(getWeather(lat!, lng!))
             }, delay)
         }
         if (locationsData.length > 0 && !firstTime) {
             const {lat, lng} = locationsData[locationPointer].location
-            getWeatherDelay(400,lat,lng)
+            getWeatherDelay(400, lat, lng)
             !refreshInterval && setRefreshInterval(setInterval(() => {
-                getWeatherDelay(400,lat,lng,true)
+                getWeatherDelay(400, lat, lng, true)
             }, 10 * 60000))
         }
-        dispatch(updateRightButton(locationPointer + 1 <= locationsData.length - 1))
-        dispatch(updateLeftButton(locationPointer - 1 >= 0))
+        if (locationsData.length > 1) {
+            dispatch(updateRightButton(locationPointer + 1 <= locationsData.length - 1))
+            dispatch(updateLeftButton(locationPointer - 1 >= 0))
+        } else {
+            dispatch(updateRightButton(false))
+            dispatch(updateLeftButton(false))
+        }
         return () => {
             clearInterval(refreshInterval)
             setRefreshInterval(null)
         }
-    }, [dispatch, firstTime, locationPointer , locationsData]);
+    }, [dispatch, firstTime, locationPointer, locationsData]);
     return (
         <div className={"flex items-center justify-center gap-10 md:gap-20 relative max-md:h-[24vh] md:h-[20vh]"}>
             <SunMoon isDay={isDay}/>

@@ -45,43 +45,43 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
             {!useGPS &&
                 <dialog ref={dialog}
                         className={"w-full h-5/6 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
-                    <div className={"flex items-center justify-between px-2"}>
+                    <div className={"h-1/6 flex items-center justify-between px-2"}>
                         <UnderlinedText text={"GPS"} header={true}/>
                         <button onClick={cancelHandler}
                                 className={"mr-2 grid place-items-center hover:bg-red-400 w-10 h-10 rounded-xl text-xl duration-300 "}>
                             <FaX/></button>
                     </div>
-                    <form style={{transform: next ? "translateX(-100%)" : ""}} className={"flex  h-1/2 duration-700 "}
+                    {!gpsError ?
+                    <form style={{transform: next ? "translateX(-100%)" : ""}} className={"flex h-full duration-700 "}
                           method="dialog">
                         <div
                             className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                             <h2 className={"w-4/5"}>In order to detect your current location , we need access to your
                                 location data from your browser</h2>
+                            <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
+                                <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Next
+                                </button>
+                            </div>
                         </div>
-                        {!gpsError ?
                             <div
-                                className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
+                                className={"flex h-full flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                                 <h2 className={"w-4/5"}>By continuing, the browser will ask you for a permission to
                                     let us access to
                                     your location data , please press allow</h2>
                                 <Image src={locationImage} alt={"example of the location permission"}/>
+                                <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
+                                    <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Ask for permission</button>
+                                </div>
                             </div>
-                            :
-                            <div
-                                className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center max-md:p-4 max-md:h-full"}>
-                                <h2 className={"w-4/5 font-bold"}>Location Permission Denied</h2>
-                                <p>Please follow the instruction on the following website to unblock the permission</p>
-                                <a className={"text-blue-700 font-bold"}
-                                   href={"https://whatismyipaddress.com/enabling-and-disabling-geolocation-on-your-browser"}>How to unblock
-                                    location access</a>
-                                <p>After following these steps please refresh the page</p>
-                            </div>
-                        }
-                    </form>
-                    {!gpsError &&
-                        <div className={"flex flex-col h-1/4 justify-around items-center "}>
-                            <button onClick={goToNext} className={buttonStyles} id={"submit"} type="submit">Next
-                            </button>
+                    </form> :
+                        <div
+                            className={"flex flex-col gap-5 w-full text-center items-center justify-center max-md:p-4 h-4/6"}>
+                            <h2 className={"w-4/5 font-bold"}>Location Permission Denied</h2>
+                            <p>Please follow the instruction on the following website to unblock the permission</p>
+                            <a className={"text-blue-700 font-bold"}
+                               href={"https://whatismyipaddress.com/enabling-and-disabling-geolocation-on-your-browser"}>How to unblock
+                                location access</a>
+                            <p>After following these steps please refresh the page</p>
                         </div>
                     }
                 </dialog>}

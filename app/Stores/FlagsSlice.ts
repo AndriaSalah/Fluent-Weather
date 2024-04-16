@@ -7,8 +7,9 @@ export type flagsSlice = {
     initialLoad:boolean,
     transition:boolean,
     isRefreshing:boolean
-    useGPS:boolean,
+    useGPS:boolean|null,
     gpsError:boolean
+    isSavedLocationsLoaded:boolean
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
@@ -16,11 +17,12 @@ const initialState : flagsSlice = {
     initialLoad:true,
     transition:true,
     isRefreshing:false,
-    useGPS:false,
-    gpsError:false
+    useGPS:null,
+    gpsError:false,
+    isSavedLocationsLoaded:false
 }
 const StatsSlice = createSlice({
-    name:"Stats",
+    name:"flags",
     initialState,
     reducers:{
         setInitialLocationState : (state : flagsSlice , action :PayloadAction<boolean>) => {
@@ -45,6 +47,9 @@ const StatsSlice = createSlice({
         },
         setGpsError : (state : flagsSlice , action:PayloadAction<boolean>) => {
             state.gpsError = action.payload
+        },
+        savedLocationsLoaded : (state : flagsSlice) => {
+            state.isSavedLocationsLoaded = true
         }
     }
 })
@@ -65,7 +70,8 @@ export const {
     toggleTransition,
     setIsRefreshing,
     setUseGps,
-    setGpsError
+    setGpsError,
+    savedLocationsLoaded
 } = StatsSlice.actions
 
 export default StatsSlice

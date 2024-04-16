@@ -2,8 +2,15 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {FormatAddress} from "@/app/Utils/FormatAddress";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
-import {AppDispatch} from "@/app/Stores/Store";
-import {setGpsError, setInitialLocationState, setIsRefreshing, setLoading, setUseGps} from "@/app/Stores/FlagsSlice";
+import {AppDispatch, RootState} from "@/app/Stores/Store";
+import {
+    savedLocationsLoaded,
+    setGpsError,
+    setInitialLocationState,
+    setIsRefreshing,
+    setLoading,
+    setUseGps
+} from "@/app/Stores/FlagsSlice";
 import {toggleToast} from "@/app/Stores/utilsSlice";
 
 
@@ -61,7 +68,7 @@ const LocationsSlice = createSlice({
                 }
             },
             hydrateGeocodeData: (state: locationStore, action: PayloadAction<locationData[]>) => {
-                state.locationsData = action.payload
+                state.locationsData = state.gpsLocationInit ? [state.locationsData[0],... action.payload] : action.payload
             },
             removeLocation: (state: locationStore, action: PayloadAction<number>) => {
                 const filteredLocationsList = state.locationsData.filter(
@@ -106,6 +113,7 @@ export const loadFromLocalStorage = () => {
     return (dispatch: Dispatch) => {
         const previousData: locationData[] = JSON.parse(localStorage.getItem("locations") ?? "[]")
         dispatch(hydrateGeocodeData(previousData))
+        dispatch(savedLocationsLoaded())
     }
 }
 export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
@@ -125,7 +133,9 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
     };
 };
 export const AutoGps = () => {
-    return async (dispatch: AppDispatch) => {
+    return async (dispatch: AppDispatch , getState: () => RootState) => {
+        const SavedLocationsLoaded = getState().flags.isSavedLocationsLoaded
+        const firstTime = getState().utils.firstTime
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const {latitude, longitude} = position.coords;
@@ -144,15 +154,18 @@ export const AutoGps = () => {
                         address: formattedAddress,
                         location: locationData.results[0].geometry.location
                     }))
-                    dispatch(setInitialLocationState(true))
                     dispatch(setUseGps(true))
+                    firstTime && (setInitialLocationState(true))
+                    SavedLocationsLoaded && dispatch(loadFromLocalStorage())
                 } catch (e) {
                     dispatch(toggleToast("error 102: " + e,"error"))
                 }
             },
             (error) => {
-                dispatch(toggleToast("location state : false" + error,"error"))
+                dispatch(toggleToast(error.message,"error"))
                 dispatch(setGpsError(true))
+                dispatch(setUseGps(false))
+                !savedLocationsLoaded && dispatch(loadFromLocalStorage())
             })
 
 
