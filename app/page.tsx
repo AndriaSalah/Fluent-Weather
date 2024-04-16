@@ -1,50 +1,31 @@
-"use client"
-import Weather from "./Components/Weather/Weather";
-import WeatherData from "./Components/WeatherData/WeatherData";
-import React, {useEffect} from "react";
+'use client'
+import React, {useEffect, useRef, useState} from "react";
+import AutoComplete from "@/app/UI/AutoComplete";
+import UnderlinedText from "@/app/UI/UnderlinedText";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {AutoGps, loadFromLocalStorage} from "@/app/Stores/LocationsSlice";
-import {hydrateUserFromLocal} from "@/app/Stores/utilsSlice";
-import {hydrateFlags} from "@/app/Stores/FlagsSlice";
-import Overlays from "@/app/UI/Overlays";
-import TransitionScreen from "@/app/UI/TransitionScreen";
-import Background from "@/app/UI/Background";
-import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
+import {setName} from "@/app/Stores/utilsSlice";
+import {hydrateFlags, setFirstTime, setInitialLocationState} from "@/app/Stores/FlagsSlice";
+import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
+import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
+import GpsDialog, {DialogHandles} from "@/app/UI/GpsDialog";
+import {getWeather} from "@/app/Stores/LocationsSlice";
+import {useRouter} from "next/navigation";
 
-export default function Home() {
-    const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {transition,useGPS ,initialLoad} = useAppSelector(state => state.flags)
+
+const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
+
+export default function Home () {
+    const {firstTime} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
-
+    const router = useRouter()
     useEffect(() => {
-        dispatch(hydrateFlags())
-        dispatch(hydrateUserFromLocal())
-    }, [dispatch]);
-
+       dispatch(hydrateFlags())
+    },[dispatch]);
     useEffect(() => {
-        if(!initialLoad) useGPS ? dispatch(AutoGps()) : dispatch(loadFromLocalStorage())
-    }, [dispatch,useGPS]);
-
-    useEffect(() => {
-        const ChangeThemeColor = () => {
-            const metaThemeColor = document.querySelector("meta[name='theme-color']")
-                metaThemeColor?.setAttribute("content", transition ? "#000" : isDay ? "#7ea4cf" : "#2b2e4f")
-        }
-        ChangeThemeColor()
-    }, [isDay, transition]);
-
-
-    return (
-        <>
-            <Overlays/>
-            <main className={`grid place-items-center w-full h-svh duration-100 relative overflow-hidden`}>
-                <Background/>
-                <TransitionScreen/>
-                <Weather/>
-                <WeatherData/>
-                <ViewWeatherDataButton isMobile={true}/>
-            </main>
-
-        </>
-    );
+        console.error("first time " , firstTime);
+        if(firstTime !== null ) firstTime ? router.push("/greeting") : router.push("/main")
+    },[firstTime, router]);
+    return null
 }
+
+

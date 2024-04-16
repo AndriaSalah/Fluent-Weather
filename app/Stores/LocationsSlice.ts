@@ -135,7 +135,7 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
 export const AutoGps = () => {
     return async (dispatch: AppDispatch , getState: () => RootState) => {
         const SavedLocationsLoaded = getState().flags.isSavedLocationsLoaded
-        const firstTime = getState().utils.firstTime
+        const firstTime = getState().flags.firstTime
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const {latitude, longitude} = position.coords;

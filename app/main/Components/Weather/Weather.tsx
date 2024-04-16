@@ -1,10 +1,12 @@
-import Clock from "@/app/Components/Weather/Components/Clock";
-import WeatherControls from "@/app/Components/Weather/Components/WeatherControls/WeatherControls";
+
 import React from "react";
-import WeatherHeader from "@/app/Components/Weather/Components/WeatherHeader/WeatherHeader";
 import {useAppSelector} from "@/app/Stores/Store";
-import WeatherEffects from "@/app/Components/Weather/WeatherEffects/WeatherEffects";
-import WeatherDescription from "@/app/Components/Weather/Components/WeatherControls/WeatherDescription";
+import WeatherDescription from "@/app/main/Components/Weather/Components/WeatherControls/WeatherDescription";
+import WeatherEffects from "@/app/main/Components/Weather/WeatherEffects/WeatherEffects";
+import WeatherHeader from "@/app/main/Components/Weather/Components/WeatherHeader/WeatherHeader";
+import WeatherControls from "@/app/main/Components/Weather/Components/WeatherControls/WeatherControls";
+import Clock from "@/app/main/Components/Weather/Components/Clock";
+
 
 
 const Weather: React.FC = () => {

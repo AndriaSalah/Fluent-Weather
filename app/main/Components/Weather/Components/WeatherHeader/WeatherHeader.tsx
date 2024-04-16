@@ -4,15 +4,14 @@ import {FaLocationDot} from "react-icons/fa6";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {AutoGps, getWeather, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
-import AddressList from "@/app/Components/Weather/Components/WeatherHeader/AddressList";
 import GpsDialog from "@/app/UI/GpsDialog";
 import {DialogHandles} from "@/app/UI/GreetingDialog";
+import AddressList from "@/app/main/Components/Weather/Components/WeatherHeader/AddressList";
 
 
 const WeatherHeader: React.FC = () => {
     const gpsDialog = useRef<DialogHandles>(null)
-    const {loading, isRefreshing , useGPS} = useAppSelector(state => state.flags)
-    const {firstTime} = useAppSelector(state => state.utils)
+    const {loading, isRefreshing , useGPS , firstTime} = useAppSelector(state => state.flags)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
     const dispatch = useAppDispatch()
 
@@ -28,7 +27,6 @@ const WeatherHeader: React.FC = () => {
             dispatch(setLocationPointer(0))
         } else gpsDialog.current?.openDialog()
     }
-
 
 
     return (

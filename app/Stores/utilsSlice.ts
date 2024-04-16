@@ -16,7 +16,6 @@ export type utils = {
     leftButtonEnabled: boolean,
     rightButtonEnabled: boolean,
     name: string,
-    firstTime: boolean,
     toast: toast
 };
 
@@ -27,7 +26,6 @@ const initialState: utils = {
     leftButtonEnabled: true,
     rightButtonEnabled: true,
     name: "",
-    firstTime: false,
     toast: {
         showToast: false,
         toastType: "normal",
@@ -55,10 +53,6 @@ const utilsSlice = createSlice({
             localStorage.setItem("name", actions.payload)
             state.name = actions.payload
         },
-        setFirstTime: (state: utils, action: PayloadAction<boolean>) => {
-            state.firstTime = action.payload
-            localStorage.setItem("firstTime", JSON.stringify(action.payload))
-        },
         setLocationListIsOpened: (state: utils, action: PayloadAction<boolean>) => {
             state.locationListIsOpen = action.payload
         },
@@ -72,12 +66,10 @@ const utilsSlice = createSlice({
     },
 });
 
-export const hydrateUserFromLocal = () => {
+export const getSavedUserName = () => {
     return async (dispatch: Dispatch) => {
         let Username: string = localStorage.getItem("name") ?? ""
-        let firstTime: boolean = JSON.parse(localStorage.getItem("firstTime") ?? "true")
         dispatch(setName(Username))
-        dispatch(setFirstTime(firstTime))
     }
 }
 
@@ -102,7 +94,6 @@ export const {
     updateLeftButton,
     updateRightButton,
     setName,
-    setFirstTime,
     setLocationListIsOpened,
     setToast,
 } = utilsSlice.actions;

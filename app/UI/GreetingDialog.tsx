@@ -2,8 +2,8 @@ import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} fro
 import AutoComplete from "@/app/UI/AutoComplete";
 import UnderlinedText from "@/app/UI/UnderlinedText";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
-import {setFirstTime, setName} from "@/app/Stores/utilsSlice";
-import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
+import {setName} from "@/app/Stores/utilsSlice";
+import {setFirstTime, setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
 import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import GpsDialog from "@/app/UI/GpsDialog";

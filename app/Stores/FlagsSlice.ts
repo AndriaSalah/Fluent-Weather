@@ -1,6 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 
+
 export type flagsSlice = {
     initialLocationState :boolean,
     loading:boolean,
@@ -9,7 +10,8 @@ export type flagsSlice = {
     isRefreshing:boolean
     useGPS:boolean|null,
     gpsError:boolean
-    isSavedLocationsLoaded:boolean
+    isSavedLocationsLoaded:boolean,
+    firstTime: boolean | null
 }
 const initialState : flagsSlice = {
     initialLocationState:false,
@@ -19,7 +21,8 @@ const initialState : flagsSlice = {
     isRefreshing:false,
     useGPS:null,
     gpsError:false,
-    isSavedLocationsLoaded:false
+    isSavedLocationsLoaded:false,
+    firstTime: null
 }
 const StatsSlice = createSlice({
     name:"flags",
@@ -50,7 +53,11 @@ const StatsSlice = createSlice({
         },
         savedLocationsLoaded : (state : flagsSlice) => {
             state.isSavedLocationsLoaded = true
-        }
+        },
+        setFirstTime: (state: flagsSlice, action: PayloadAction<boolean>) => {
+            state.firstTime = action.payload
+            localStorage.setItem("firstTime", JSON.stringify(action.payload))
+        },
     }
 })
 
@@ -58,8 +65,10 @@ export const hydrateFlags = ()=>{
     return (dispatch:Dispatch) =>{
         const initialLocationState : boolean = JSON.parse(localStorage.getItem("initialLocationState") ?? "false")
         const useGPS : boolean = JSON.parse(localStorage.getItem("useGPS") ?? "false")
+        const firstTime : boolean = JSON.parse(localStorage.getItem("firstTime") ?? "true")
         dispatch(setInitialLocationState(initialLocationState))
         dispatch(setUseGps(useGPS))
+        dispatch(setFirstTime(firstTime))
     }
 }
 
@@ -71,7 +80,8 @@ export const {
     setIsRefreshing,
     setUseGps,
     setGpsError,
-    savedLocationsLoaded
+    savedLocationsLoaded,
+    setFirstTime
 } = StatsSlice.actions
 
 export default StatsSlice

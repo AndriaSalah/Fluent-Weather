@@ -1,8 +1,8 @@
 import React from "react";
 import {useAppSelector} from "@/app/Stores/Store";
-import DataCardGrid from "@/app/Components/WeatherData/Components/DataCardGrid/DataCardGrid";
-import DataGraph from "@/app/Components/WeatherData/Components/Chart/DataGraph";
 import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
+import DataGraph from "@/app/main/Components/WeatherData/Components/Chart/DataGraph";
+import DataCardGrid from "@/app/main/Components/WeatherData/Components/DataCardGrid/DataCardGrid";
 const WeatherData = () => {
   const toggle = useAppSelector(state => state.utils.expand);
 

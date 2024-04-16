@@ -1,7 +1,5 @@
-
 import React from "react";
 import {options} from "@/app/Stores/utilsSlice";
-
 interface props {
     active?:boolean,
     payload? :{

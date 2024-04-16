@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight} from "react-icons/md";
-import SunMoon from "@/app/Components/Weather/Components/WeatherControls/SunMoon";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {updateLeftButton, updateRightButton} from "@/app/Stores/utilsSlice";
 import {decLocationPointer, getWeather, incLocationPointer} from "@/app/Stores/LocationsSlice";
 import {setIsRefreshing, setLoading} from "@/app/Stores/FlagsSlice";
+import SunMoon from "@/app/main/Components/Weather/Components/WeatherControls/SunMoon";
 
 
 const WeatherControls = () => {
     const [refreshInterval, setRefreshInterval] = useState<any>(null)
     const {locationPointer, locationsData} = useAppSelector(state => state.locations)
-    const {leftButtonEnabled, rightButtonEnabled, firstTime} = useAppSelector(state => state.utils)
+    const {leftButtonEnabled, rightButtonEnabled} = useAppSelector(state => state.utils)
     const weather = useAppSelector(state => state.currentWeather)
+    const {firstTime} = useAppSelector(state => state.flags)
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
     const dispatch = useAppDispatch()
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 interface props {
     isDay : number
 }
