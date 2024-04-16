@@ -19,12 +19,9 @@ const Clock = () => {
                 setCurrentTime(formattedTime);
             }
         }
-
-        // Update time immediately and then every minute
         updateTime();
-        const intervalId = setInterval(updateTime, 60000); // Update every minute
+        const intervalId = setInterval(updateTime, 60000);
 
-        // Clean up the interval to avoid memory leaks
         return () => clearInterval(intervalId);
     }, [timeZone]);
     return (

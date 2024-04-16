@@ -59,7 +59,6 @@ const WeatherControls = () => {
             <div className={"w-[3rem] md:w-[5rem] flex-shrink-0"}>
                 <button onClick={() => {
                     decreaseLocationPointer()
-                    console.log(weather)
                 }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}><MdOutlineKeyboardArrowLeft/>
                 </button>
             </div>

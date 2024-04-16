@@ -57,9 +57,6 @@ export const GpsErrorDialog = forwardRef<DialogHandles, Props>((props, ref) => {
                     <p className={"text-xl font-light p-4"}>{"We ran into an error locating you , and you didnt have any saved locations , lets add one now"}</p>
                     <AutoComplete dark={true}/>
                     <h3 className={`${showError ? "visible" : "invisible"} text-red-400`}>{errorMsg}</h3>
-                    {/*<div className={"h-1/4 w-full grid place-items-center"}>*/}
-                    {/*    <button onClick={goToNext} className={buttonStyles} type={"button"}>Next</button>*/}
-                    {/*</div>*/}
                 </div>
             </form>
         </dialog>

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import GreetingDialog, {DialogHandles} from "@/app/UI/GreetingDialog";
+import  {DialogHandles} from "@/app/UI/GpsDialog";
 import Toast from "@/app/UI/Toast";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {toggleToast} from "@/app/Stores/utilsSlice";

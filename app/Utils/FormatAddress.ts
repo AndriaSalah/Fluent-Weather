@@ -5,9 +5,6 @@ export const FormatAddress = (address:string) : string => {
     if(split.length > 1) {
         return split[0] + ", " + split[split.length-1]
     }
-    // else if (split.length === 2){
-    //     return split[0]+ "," + split[1]
-    // }
     else if(split.length === 1){
         return split[0]
     }

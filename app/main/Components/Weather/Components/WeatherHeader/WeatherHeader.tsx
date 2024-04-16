@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {AutoGps, getWeather, setLocationPointer} from "@/app/Stores/LocationsSlice";
 import {IoRefreshOutline} from "react-icons/io5";
 import GpsDialog from "@/app/UI/GpsDialog";
-import {DialogHandles} from "@/app/UI/GreetingDialog";
+import {DialogHandles} from "@/app/UI/GpsDialog";
 import AddressList from "@/app/main/Components/Weather/Components/WeatherHeader/AddressList";
 
 

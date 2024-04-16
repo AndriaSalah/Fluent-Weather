@@ -5,9 +5,8 @@ import UnderlinedText from "@/app/UI/UnderlinedText";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {setName} from "@/app/Stores/utilsSlice";
 import {setFirstTime, setInitialLocationState} from "@/app/Stores/FlagsSlice";
-import {getCurrentWeather} from "@/app/Stores/CurrentWeatherSlice";
-import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import GpsDialog, {DialogHandles} from "@/app/UI/GpsDialog";
+import {getWeather} from "@/app/Stores/LocationsSlice";
 
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
@@ -30,13 +29,11 @@ export default function Greeting () {
         else displayError("Please enter a name shorter than 10 characters and less than 4 characters")
     }
 
-    const goToNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const setInitialLocation = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (locations.length !== 0) {
-            setNext(true)
             setShowError(false)
             const {lat, lng} = locations[0].location
-            dispatch(getCurrentWeather(lat!, lng!))
-            dispatch(getDailyWeather(lat!, lng!))
+            dispatch(getWeather(lat,lng))
             dispatch(setInitialLocationState(true))
             e.currentTarget.innerText = "Finish"
         } else {
@@ -57,14 +54,14 @@ export default function Greeting () {
                      className={"flex  h-3/4 duration-700 "}>
                     <div
                         className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>
-                        <p className={"text-3xl font-light"}>Welcome to <b className={"text-blue-500"}>Fluent Weather</b></p>
-                        <p className={"text-xl font-light"}>{"Let's start by adding a location using "}<b>Search</b> or <b>GPS</b></p>
+                        <p className={"text-2xl md:text-3xl font-light"}>Welcome to <b className={"text-blue-500"}>Fluent Weather</b></p>
+                        <p className={"text-lg md:text-xl font-light"}>{"Let's start by adding a location using "}<b>Search</b> or <b>GPS</b></p>
                         <AutoComplete dark={true}/>
                         <button type={"button"} onClick={openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-500"}>Use GPS instead ?
                         </button>
                         <div className={"h-1/4 w-full grid place-items-center"}>
-                            <button onClick={goToNext} className={buttonStyles} type={"button"}>Next</button>
+                            <button onClick={setInitialLocation} className={buttonStyles} type={"button"}>Next</button>
                         </div>
                     </div>
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center "}>

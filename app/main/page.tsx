@@ -12,7 +12,7 @@ import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
 
 const Main = () => {
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {transition,useGPS ,initialLoad} = useAppSelector(state => state.flags)
+    const {transition,useGPS} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
