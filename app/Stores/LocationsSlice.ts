@@ -155,7 +155,6 @@ export const AutoGps = () => {
                         location: locationData.results[0].geometry.location
                     }))
                     dispatch(setUseGps(true))
-                    firstTime && (setInitialLocationState(true))
                     !SavedLocationsLoaded && dispatch(loadFromLocalStorage())
                 } catch (e) {
                     dispatch(toggleToast("error 102: " + e,"error"))

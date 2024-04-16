@@ -50,7 +50,7 @@ export default function Greeting () {
             <main
                 className={" bg-white text-black w-full h-full border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 <UnderlinedText text={"Hello!"} header={true}/>
-                <div style={{transform: initialLocationState ? "translateX(-100%)" : next ? "translateX(-100%)" : ""}}
+                <div style={{transform: initialLocationState ? "translateX(-100%)" : ""}}
                      className={"flex  h-3/4 duration-700 "}>
                     <div
                         className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>

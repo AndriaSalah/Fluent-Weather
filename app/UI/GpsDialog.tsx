@@ -5,6 +5,7 @@ import locationImage from "@/public/img.png"
 import {AutoGps} from "@/app/Stores/LocationsSlice";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {FaX} from "react-icons/fa6";
+import {setInitialLocationState} from "@/app/Stores/FlagsSlice";
 
 
 export interface DialogHandles {
@@ -17,7 +18,7 @@ const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-o
 export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
     const [next, setNext] = useState(false)
-    const {useGPS , gpsError} = useAppSelector(state => state.flags)
+    const {useGPS, gpsError} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
     useImperativeHandle(ref, () => ({
             openDialog() {
@@ -33,7 +34,8 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
         if (!next) {
             setNext(true)
         } else if (next) {
-           dispatch(AutoGps())
+            dispatch(AutoGps())
+            dispatch(setInitialLocationState(true))
         }
     }
 
@@ -52,17 +54,19 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                             <FaX/></button>
                     </div>
                     {!gpsError ?
-                    <form style={{transform: next ? "translateX(-100%)" : ""}} className={"flex h-full duration-700 "}
-                          method="dialog">
-                        <div
-                            className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
-                            <h2 className={"w-4/5"}>In order to detect your current location , we need access to your
-                                location data from your browser</h2>
-                            <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
-                                <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Next
-                                </button>
+                        <form style={{transform: next ? "translateX(-100%)" : ""}}
+                              className={"flex h-full duration-700 "}
+                              method="dialog">
+                            <div
+                                className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
+                                <h2 className={"w-4/5"}>In order to detect your current location , we need access to
+                                    your
+                                    location data from your browser</h2>
+                                <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
+                                    <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Next
+                                    </button>
+                                </div>
                             </div>
-                        </div>
                             <div
                                 className={"flex h-full flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
                                 <h2 className={"w-4/5"}>By continuing, the browser will ask you for a permission to
@@ -70,16 +74,19 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                                     your location data , please press allow</h2>
                                 <Image src={locationImage} alt={"example of the location permission"}/>
                                 <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
-                                    <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Ask for permission</button>
+                                    <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Ask
+                                        for permission
+                                    </button>
                                 </div>
                             </div>
-                    </form> :
+                        </form> :
                         <div
                             className={"flex flex-col gap-5 w-full text-center items-center justify-center max-md:p-4 h-4/6"}>
                             <h2 className={"w-4/5 font-bold"}>Location Permission Denied</h2>
                             <p>Please follow the instruction on the following website to unblock the permission</p>
                             <a className={"text-blue-700 font-bold"}
-                               href={"https://whatismyipaddress.com/enabling-and-disabling-geolocation-on-your-browser"}>How to unblock
+                               href={"https://whatismyipaddress.com/enabling-and-disabling-geolocation-on-your-browser"}>How
+                                to unblock
                                 location access</a>
                             <p>After following these steps please refresh the page</p>
                         </div>
