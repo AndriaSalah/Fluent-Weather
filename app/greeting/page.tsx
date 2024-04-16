@@ -7,6 +7,7 @@ import {setName} from "@/app/Stores/utilsSlice";
 import {setFirstTime, setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import GpsDialog, {DialogHandles} from "@/app/UI/GpsDialog";
 import {getWeather} from "@/app/Stores/LocationsSlice";
+import {useRouter} from "next/navigation";
 
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
@@ -14,17 +15,18 @@ const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-o
 export default function Greeting () {
     const gpsDialog = useRef<DialogHandles>(null)
     const nameField = useRef<HTMLInputElement>(null)
-    const [next, setNext] = useState(false)
     const locations = useAppSelector(state => state.locations.locationsData)
     const initialLocationState = useAppSelector(state => state.flags.initialLocationState)
     const dispatch = useAppDispatch()
     const [showError, setShowError] = useState(false)
     const [errorMsg, setErrorMessage] = useState("")
+    const router = useRouter()
 
     const saveName = (name: string) => {
         if (name.length < 10 && name.length > 4) {
             dispatch(setName(name))
             dispatch(setFirstTime(false))
+            router.push("/main")
         }
         else displayError("Please enter a name shorter than 10 characters and less than 4 characters")
     }
