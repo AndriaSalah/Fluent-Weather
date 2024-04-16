@@ -1,8 +1,9 @@
-# Fluent Weather
-![](https://raw.githubusercontent.com/AndriaSalah/weather2.0/master/public/icons/icon-180x180.png)
+<div align="center"><img src="https://raw.githubusercontent.com/AndriaSalah/weather2.0/master/public/icons/icon-180x180.png"/></div>
 
+<h1 align="center" > Fluent Weather </h1>
 
-You can check out the live version at [Fluent Weather](http://Fluent-weather.vercel.app "Fluent Weather")
+<h3 align="center" >You can check out the live version at <a href="https://fluent-weather.vercel.app/">Fluent Weather</a></h3>
+
 ### Features
 - PWA ready
 - Displays Current and Daily Weather ( 7-day Forecast )
