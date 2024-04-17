@@ -6,7 +6,6 @@ import {AppDispatch, RootState} from "@/app/Stores/Store";
 import {
     savedLocationsLoaded,
     setGpsError,
-    setInitialLocationState,
     setIsRefreshing,
     setLoading,
     setUseGps
@@ -135,7 +134,6 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
 export const AutoGps = () => {
     return async (dispatch: AppDispatch , getState: () => RootState) => {
         const SavedLocationsLoaded = getState().flags.isSavedLocationsLoaded
-        const firstTime = getState().flags.firstTime
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const {latitude, longitude} = position.coords;

@@ -9,15 +9,19 @@ import Overlays from "@/app/UI/Overlays";
 import TransitionScreen from "@/app/UI/TransitionScreen";
 import Background from "@/app/UI/Background";
 import ViewWeatherDataButton from "@/app/UI/ViewWeatherDataButton";
+import {redirect} from "next/navigation";
 
 const Main = () => {
     const isDay = useAppSelector(state => state.currentWeather.current.is_day)
-    const {transition,useGPS} = useAppSelector(state => state.flags)
+    const {transition, useGPS, firstTime} = useAppSelector(state => state.flags)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getSavedUserName())
-        useGPS ? dispatch(AutoGps()) : dispatch(loadFromLocalStorage())
+        if (firstTime || firstTime === null) redirect("/")
+        else {
+            dispatch(getSavedUserName())
+            useGPS ? dispatch(AutoGps()) : dispatch(loadFromLocalStorage())
+        }
     }, [dispatch]);
 
 
