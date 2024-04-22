@@ -5,7 +5,7 @@ import {getDailyWeather} from "@/app/Stores/DailyWeatherSlice";
 import {AppDispatch, RootState} from "@/app/Stores/Store";
 import {
     savedLocationsLoaded,
-    setGpsError,
+    setGpsError, setInitialLocationState,
     setIsRefreshing,
     setLoading,
     setUseGps
@@ -133,7 +133,7 @@ export const getWeather = (lat: number, lng: number, refresh?: boolean) => {
 };
 export const AutoGps = () => {
     return async (dispatch: AppDispatch , getState: () => RootState) => {
-        const SavedLocationsLoaded = getState().flags.isSavedLocationsLoaded
+        const {isSavedLocationsLoaded,firstTime} = getState().flags
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const {latitude, longitude} = position.coords;
@@ -153,7 +153,9 @@ export const AutoGps = () => {
                         location: locationData.results[0].geometry.location
                     }))
                     dispatch(setUseGps(true))
-                    !SavedLocationsLoaded && dispatch(loadFromLocalStorage())
+                    !isSavedLocationsLoaded && dispatch(loadFromLocalStorage())
+                    firstTime && dispatch(setInitialLocationState(true))
+
                 } catch (e) {
                     dispatch(toggleToast("error 102: " + e,"error"))
                 }

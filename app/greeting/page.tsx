@@ -28,9 +28,10 @@ export default function Greeting () {
 
     const saveName = (name: string) => {
         if (name.length < 10 && name.length > 4) {
+            console.log("test")
             dispatch(setName(name))
             dispatch(setFirstTime(false))
-            redirect("/")
+            router.push("/")
         }
         else displayError("Please enter a name shorter than 10 characters and less than 4 characters")
     }
@@ -54,7 +55,7 @@ export default function Greeting () {
     return (
         <>
             <main
-                className={" bg-white text-black w-full h-full border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                className={" bg-white text-black w-full h-full py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 <UnderlinedText text={"Hello!"} header={true}/>
                 <div style={{transform: initialLocationState ? "translateX(-100%)" : ""}}
                      className={"flex  h-3/4 duration-700 "}>

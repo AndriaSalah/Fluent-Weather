@@ -35,7 +35,6 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
             setNext(true)
         } else if (next) {
             dispatch(AutoGps())
-            dispatch(setInitialLocationState(true))
         }
     }
 
