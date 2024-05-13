@@ -56,14 +56,14 @@ const WeatherControls = () => {
             <div className={"w-[3rem] md:w-[5rem] flex-shrink-0"}>
                 <button onClick={() => {
                     decreaseLocationPointer()
-                }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"}`}><MdOutlineKeyboardArrowLeft/>
+                }} className={`text-5xl md:text-7xl ${!leftButtonEnabled && "hidden"} hover:scale-110 duration-300`}><MdOutlineKeyboardArrowLeft/>
                 </button>
             </div>
             <h2 className={`text-5xl md:text-6xl font-light ${!isDay && "text-black"}`}>{weather.current.temperature_2m}&deg;</h2>
             <div className={"w-[3rem] md:w-[5rem] flex-shrink-0"}>
                 <button onClick={() => {
                     increaseLocationPointer()
-                }} className={`text-5xl md:text-7xl ${!rightButtonEnabled && "hidden"}`}><MdOutlineKeyboardArrowRight/>
+                }} className={`text-5xl md:text-7xl ${!rightButtonEnabled && "hidden"} hover:scale-110 duration-300`}><MdOutlineKeyboardArrowRight/>
                 </button>
             </div>
         </div>

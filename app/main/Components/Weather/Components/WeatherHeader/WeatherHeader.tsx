@@ -3,10 +3,10 @@ import AutoComplete from "@/app/UI/AutoComplete";
 import {FaLocationDot} from "react-icons/fa6";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {AutoGps, getWeather, setLocationPointer} from "@/app/Stores/LocationsSlice";
-import {IoRefreshOutline} from "react-icons/io5";
 import GpsDialog from "@/app/UI/GpsDialog";
 import {DialogHandles} from "@/app/UI/GpsDialog";
 import AddressList from "@/app/main/Components/Weather/Components/WeatherHeader/AddressList";
+import {MdOutlineRefresh} from "react-icons/md";
 
 
 const WeatherHeader: React.FC = () => {
@@ -42,8 +42,8 @@ const WeatherHeader: React.FC = () => {
                     </div>
                     <button onClick={refresh}
                             disabled={isRefreshing}
-                            className={`w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-lg ${isRefreshing && "animate-spin duration-300"}`}>
-                        <IoRefreshOutline/></button>
+                            className={`w-[30px] h-[30px] hover:bg-white hover:text-black grid place-content-center rounded-xl text-2xl ${isRefreshing && "animate-spin duration-300"}`}>
+                        <MdOutlineRefresh/></button>
                 </div>
             </header>
             {!firstTime && !useGPS && <GpsDialog ref={gpsDialog}/>}
