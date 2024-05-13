@@ -6,9 +6,10 @@ import {options} from "@/app/Stores/utilsSlice";
 interface props {
     defaultOption:options,
     options:options[],
-    onChange : (option:options) => void
+    onChange : (option:options) => void,
+    darkMode : boolean,
 }
-const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange}) => {
+const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange , darkMode}) => {
     const [isClicked, setIsClicked] = useState<boolean>(false)
     const [selectedOption , setSelectedOption] = useState<options>()
     const styles : React.CSSProperties = {
@@ -36,11 +37,11 @@ const Dropdown : React.FC<props> = ({ defaultOption , options=[] ,onChange}) => 
     }
     return (
         <div className={"w-full grid place-items-end relative select-none"}>
-        <div ref={SelectRef} className={"w-[7rem] flex-grow flex bg-white text-black p-2 rounded-lg bg-opacity-65 relative items-center justify-around hover:bg-opacity-50 cursor-pointer "} onClick={handleClick}>
+        <div ref={SelectRef} className={`w-[7rem] flex-grow flex ${darkMode? "bg-gray-600 text-white" : "bg-white text-black"} p-2 rounded-lg bg-opacity-65 relative items-center justify-around hover:bg-opacity-50 cursor-pointer `} onClick={handleClick}>
             <p className={"text-md w-20 whitespace-nowrap overflow-hidden text-center overflow-ellipsis"}>{!selectedOption? defaultOption : selectedOption}</p>
             <FaAngleDown className={`${isClicked && "rotate-180"} duration-300`} />
         </div>
-            <div className="Dropdown w-[7rem]  flex flex-col gap-1 absolute bg-white mt-1 top-full z-20 py-1 border-2 border-white border-opacity-25 rounded-lg duration-300"
+            <div className={`Dropdown w-[7rem]  flex flex-col gap-1 absolute ${darkMode? "bg-gray-600 text-white" : "bg-white text-black"} mt-1 top-full z-20 py-1 border-2 border-white border-opacity-25 rounded-lg duration-300`}
                 style={styles}>
                 {options.map((option,index) => <p className={"rounded-lg text-base flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis py-1 px-2 hover:bg-blue-200 duration-300"} key={index} onClick={()=>setOption(option)}>{option}</p>)}
             </div>

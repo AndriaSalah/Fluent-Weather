@@ -5,20 +5,23 @@ import {changeSelectedOption, options} from "@/app/Stores/utilsSlice";
 import Dropdown from "@/app/main/Components/WeatherData/Dropdown/Dropdown";
 import {ChartTooltip} from "@/app/main/Components/WeatherData/Components/Chart/ChartToolTip";
 
-const Colors = {
-    Gradient_max: "#ea8282",
-    Gradient_min: "#5C9CE5",
-    Gradient_start : "#464545",
-    Tick_color: 'black',
-    StrokeColor_min : "#5C9CE5",
-    StrokeColor_max : "#ea8282"
-}
+
 type dataKeys = "temp_min" | "uv" | "wind_speed" | "rain"
 const DataGraph = () => {
     const Daily_Data = useAppSelector(state => state.dailyWeather )
+    const {is_day} = useAppSelector(state => state.currentWeather.current)
     const SelectedOption = useAppSelector(state => state.utils.selectedOption )
     const [dataKey,setDataKey] = useState<dataKeys>("temp_min")
     const dispatch = useAppDispatch()
+
+    const Colors = {
+        Gradient_max: "#ea8282",
+        Gradient_min: "#5C9CE5",
+        Gradient_start : "#464545",
+        Tick_color: is_day ?  'black' : 'white',
+        StrokeColor_min : "#5C9CE5",
+        StrokeColor_max : "#ea8282"
+    }
 
     const onDropDownChange = (option:options)=>{
         dispatch(changeSelectedOption(option))
@@ -31,8 +34,8 @@ const DataGraph = () => {
     }, [SelectedOption]);
     return (
         <div className={"grid gap-1 max-sm:h-[38%] md:h-1/2 w-full p-1 md:p-4 "}>
-            <Dropdown defaultOption={"Temp"} options={["Temp", "Wind", "Rain", "UV"]} onChange={onDropDownChange}/>
-            <ResponsiveContainer className={" bg-[#FFFFFF7F] rounded-xl backdrop-blur-3xl"}>
+            <Dropdown darkMode={!is_day} defaultOption={"Temp"} options={["Temp", "Wind", "Rain", "UV"]} onChange={onDropDownChange}/>
+            <ResponsiveContainer className={" bg-white bg-opacity-5 rounded-xl backdrop-blur-3xl"}>
                     <AreaChart data={Daily_Data}
                                margin={{top: 35, right: 35, left: 15, bottom: 30}}>
                         <defs>

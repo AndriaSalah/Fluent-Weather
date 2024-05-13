@@ -7,7 +7,7 @@ import {setName} from "@/app/Stores/utilsSlice";
 import {setFirstTime, setInitialLocationState} from "@/app/Stores/FlagsSlice";
 import GpsDialog, {DialogHandles} from "@/app/UI/GpsDialog";
 import {getWeather} from "@/app/Stores/LocationsSlice";
-import {permanentRedirect, redirect, useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 
 
 const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
@@ -24,7 +24,7 @@ export default function Greeting () {
 
     useEffect(() => {
         !firstTime && redirect("/")
-    }, []);
+    }, [firstTime]);
 
     const saveName = (name: string) => {
         if (name.length < 10 && name.length > 4) {
@@ -58,7 +58,7 @@ export default function Greeting () {
                 className={" bg-white text-black w-full h-full py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                 <UnderlinedText text={"Hello!"} header={true}/>
                 <div style={{transform: initialLocationState ? "translateX(-100%)" : ""}}
-                     className={"flex  h-3/4 duration-700 "}>
+                     className={"flex h-3/4 duration-700 "}>
                     <div
                         className={"flex flex-col gap-5 w-full h-full text-center shrink-0 items-center justify-center"}>
                         <p className={"text-2xl md:text-3xl font-light"}>Welcome to <b className={"text-blue-500"}>Fluent Weather</b></p>

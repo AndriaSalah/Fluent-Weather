@@ -3,6 +3,7 @@ import  {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "@/app/Stores/Store";
 import {hydrateFlags} from "@/app/Stores/FlagsSlice";
 import {permanentRedirect, useRouter} from "next/navigation";
+import Loader from "@/app/UI/Loader";
 
 
 export default function Home () {
@@ -16,7 +17,9 @@ export default function Home () {
         console.error("first time " , firstTime);
         if(firstTime !== null ) firstTime ? permanentRedirect("/greeting") : permanentRedirect("/main")
     },[firstTime]);
-    return null
+    return (
+        <Loader/>
+    )
 }
 
 
