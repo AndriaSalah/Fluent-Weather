@@ -13,7 +13,7 @@ export interface DialogHandles {
     closeDialog: () => void;
 }
 
-const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
+const buttonStyles: string = "px-2 py-2 rounded-3xl border border-black border-opacity-15 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-[20vw]"
 
 export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
     const dialog = useRef<HTMLDialogElement>(null)
@@ -45,7 +45,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
         <>
             {!useGPS &&
                 <dialog ref={dialog}
-                        className={"w-full h-5/6 md:w-1/2 md:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                        className={"w-full h-5/6 md:w-2/3 md:h-2/3 2xl:w-1/2 2xl:h-1/2 border-4 border-blue-400 rounded-card shadow-2xl py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
                     <div className={"h-1/6 flex items-center justify-between px-2"}>
                         <UnderlinedText text={"GPS"} header={true}/>
                         <button onClick={cancelHandler}
@@ -54,7 +54,7 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                     </div>
                     {!gpsError ?
                         <form style={{transform: next ? "translateX(-100%)" : ""}}
-                              className={"flex h-full duration-700 "}
+                              className={"flex h-5/6 duration-700 "}
                               method="dialog">
                             <div
                                 className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center"}>
@@ -72,11 +72,9 @@ export const GpsDialog = forwardRef<DialogHandles>(({}, ref) => {
                                     let us access to
                                     your location data , please press allow</h2>
                                 <Image src={locationImage} alt={"example of the location permission"}/>
-                                <div className={"w-full flex flex-col h-1/4 justify-around items-center "}>
-                                    <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">Ask
-                                        for permission
-                                    </button>
-                                </div>
+                                <button onClick={goToNext} className={buttonStyles} id={"button"} type="button">
+                                    Ask for permission
+                                </button>
                             </div>
                         </form> :
                         <div

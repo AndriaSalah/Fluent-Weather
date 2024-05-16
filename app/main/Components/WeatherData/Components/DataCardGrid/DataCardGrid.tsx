@@ -28,7 +28,7 @@ const DataCardGrid = () => {
     }
     return (
         <div
-            className={"max-md:h-[40%] h-1/2 md:h-3/5 w-full grid grid-cols-3 max-md:grid-cols-6 max-md:grid-rows-3 grid-rows-2 gap-2 md:gap-14 p-1 md:p-4 "}>
+            className={"max-md:h-[40%] h-1/2 md:h-3/5 w-full grid grid-cols-3 max-md:grid-cols-6 max-md:grid-rows-3 grid-rows-2 gap-2 md:gap-6 p-1 md:p-4 "}>
             <DataCard Title={"Feels like"} span={"max-md:col-span-4"} Value={weatherData.apparent_temperature}
                       unit={'°'} fillValue={getFillValue("FeelsLike")}
                       icon={<FaTemperatureEmpty/>}/>

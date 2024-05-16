@@ -33,7 +33,7 @@ const DataGraph = () => {
                     :SelectedOption === "Rain" && setDataKey("rain")
     }, [SelectedOption]);
     return (
-        <div className={"grid gap-1 max-sm:h-[38%] md:h-1/2 w-full p-1 md:p-4 "}>
+        <div className={"grid gap-1 max-sm:h-[38%] md:h-2/3 w-full p-1 md:p-4 "}>
             <Dropdown darkMode={!is_day} defaultOption={"Temp"} options={["Temp", "Wind", "Rain", "UV"]} onChange={onDropDownChange}/>
             <ResponsiveContainer className={" bg-white bg-opacity-5 rounded-xl backdrop-blur-3xl"}>
                     <AreaChart data={Daily_Data}
