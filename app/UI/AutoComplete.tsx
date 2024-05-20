@@ -29,20 +29,20 @@ const AutoComplete: React.FC<props> = ({dark = false}) => {
                                       cacheOptions:true,
                                       onChange: handleSelect,
                                       classNames: {
-                                          container: (state) => ((state.isFocused ? "max-md:w-5/6 w-1/2" : "max-md:w-4/6 w-[13rem]") + " duration-300 "),
+                                          container: (state) => ((state.isFocused ? "w-1/2" : " w-[13rem]") + " duration-300 "),
                                           control: () => "rounded-card",
                                           menu: () => "rounded-card",
                                           menuList: () => "text-black",
 
                                       },
                                       styles: {
-                                          control: (baseStyles) => ({
+                                          control: (baseStyles,props) => ({
                                               ...baseStyles,
                                               backgroundColor: "transparent !important",
-                                              border: `${dark ? "#60A5FA" : "#FFFFFF7F"} 2.5px solid`,
+                                              border:`${ props.isFocused? !dark ? "#FFFFFFAB" : "#60A5FA" : dark ? "#60A5FA" : "#FFFFFF7F"} 2.5px solid`,
                                               boxShadow: "none",
                                               ":hover": {
-                                                  border: `${dark ? "#60A5FA" : "#FFFFFF7F"} 2.5px solid`
+                                                  border: `${ props.isFocused? !dark ? "#FFFFFFAB" : "#60A5FA" : dark ? "#60A5FA" : "#FFFFFF7F" } 2.5px solid`
                                               }
                                           }),
                                           input: (provided) => ({
