@@ -18,7 +18,7 @@ const DataCard: React.FC<props> = ({Title, Value, fillValue, unit, span = "", ic
         <div
             className={`${span} shadow-card rounded-card bg-white bg-opacity-5 backdrop-blur-3xl flex justify-center flex-col p-4 relative`}>
             <div className={`flex items-center justify-between  ${is_day ? "text-black" : "text-white"} `}>
-                <p className={`text-md md:text-2xl`}>{Title}</p>
+                <p className={`text-md md:lg xl:text-xl`}>{Title}</p>
                 <i className={"text-xl"}>{icon}</i>
             </div>
             <div className={`grid place-items-center flex-1 ${is_day ? "text-black" : "text-white"}`}>
