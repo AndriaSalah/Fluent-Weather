@@ -29,7 +29,7 @@ const AutoComplete: React.FC<props> = ({dark = false}) => {
                                       cacheOptions:true,
                                       onChange: handleSelect,
                                       classNames: {
-                                          container: (state) => ((state.isFocused ? "w-1/2" : " w-[13rem]") + " duration-300 "),
+                                          container: (state) => ((state.isFocused ? "w-5/6 md:w-1/2" : " w-[13rem]") + " duration-300 "),
                                           control: () => "rounded-card",
                                           menu: () => "rounded-card",
                                           menuList: () => "text-black",
