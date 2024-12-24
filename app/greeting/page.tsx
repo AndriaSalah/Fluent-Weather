@@ -62,13 +62,13 @@ export default function Greeting () {
                 <div style={{transform: initialLocationState ? "translateX(-100%)" : ""}}
                      className={"flex h-3/4 duration-700 "}>
                     <div
-                        className={"flex flex-col gap-5 w-full h-full text-black text-center shrink-0 items-center justify-center "}>
-                        <span className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-white w-1/3 h-full rounded-xl"}>
-                        <p className={"text-2xl md:text-3xl font-light"}>Welcome to <b className={"text-blue-500"}>Fluent Weather</b></p>
-                        <p className={"text-lg md:text-xl font-light"}>{"Let's start by adding a location using "}<b>Search</b> or <b>GPS</b></p>
+                        className={"flex flex-col gap-5 w-full h-full text-white text-center shrink-0 items-center justify-center "}>
+                        <span className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-gray-500 w-full md:w-2/3 lg:w-1/3 h-full rounded-xl"}>
+                        <p className={"text-2xl md:text-3xl font-extralight"}>Welcome to <b className={"text-blue-400 font-bold"}>Fluent Weather</b></p>
+                        <p className={"text-lg md:text-xl font-extralight"}>{"Let's start by adding a location using "}<b>Search</b> or <b>GPS</b></p>
                         <AutoComplete dark={true}/>
                         <button type={"button"} onClick={openGpsDialog}
-                                className={"text-[0.8rem] w-1/2 text-center text-blue-500"}>Use GPS instead ?
+                                className={"text-[0.8rem] w-1/2 text-center text-blue-400"}>Use GPS instead ?
                         </button>
                         <div className={"h-1/4 w-full grid place-items-center"}>
                             <button onClick={setInitialLocation} className={buttonStyles} type={"button"}>Next</button>
@@ -77,7 +77,7 @@ export default function Greeting () {
                     </div>
                     <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center "}>
                          <span
-                             className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-white w-1/3 h-full rounded-xl"}>
+                             className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-gray-500 w-full md:w-2/3 lg:w-1/3 h-full rounded-xl"}>
                         <p className={"text-4xl font-light w-4/6"}>Okay now tell me what should I call you :D</p>
                         <input ref={nameField} type={'text'} name={"name"} placeholder={"Enter your name here"}
                                className={"bg-black placeholder-white outline-0 border-2 border-black border-opacity-25 rounded-3xl p-2 text-center max-md:w-3/5 focus-within:max-md:w-4/5 w-2/5 focus-within:placeholder-opacity-45 focus-within:w-1/2 focus-within:bg-blue-400 focus-within:border-blue-400 duration-300"}/>
