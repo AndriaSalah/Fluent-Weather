@@ -11,7 +11,7 @@ import {redirect, useRouter} from "next/navigation";
 import Background from "@/app/UI/Background";
 
 
-const buttonStyles: string = "px-2 py-2 text-black rounded-3xl border border-black border-opacity-35 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
+const buttonStyles: string = "px-2 py-2 text-white rounded-3xl border border-white max-w-[10rem] border-opacity-35 hover:bg-blue-400 hover:text-white duration-300 w-1/2 md:w-1/4"
 
 export default function Greeting () {
     const gpsDialog = useRef<DialogHandles>(null)
@@ -33,12 +33,13 @@ export default function Greeting () {
             dispatch(setFirstTime(false))
             router.push("/")
         }
-        else displayError("Please enter a name shorter than 10 characters and less than 4 characters")
+        else displayError("Please enter a name shorter within the range of 10 characters.")
     }
 
     const setInitialLocation = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (locations.length !== 0) {
             setShowError(false)
+            setErrorMessage("")
             const {lat, lng} = locations[0].location
             dispatch(getWeather(lat,lng))
             dispatch(setInitialLocationState(true))
@@ -56,16 +57,16 @@ export default function Greeting () {
         <>
             <Background/>
             <main
-                className={"bg-white bg-opacity-20 text-white w-full h-full py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm overflow-clip"}>
+                className={"bg-white bg-opacity-20 text-white w-full h-full py-6 backdrop:bg-transparent backdrop:backdrop-blur-sm relative overflow-clip "}>
                 <UnderlinedText text={"Hello!"} header={true}/>
                 <div style={{transform: initialLocationState ? "translateX(-100%)" : ""}}
-                     className={"flex h-3/4 duration-700 "}>
+                     className={"flex h-[90%] md:h-3/4 duration-700  "}>
                     <div
-                        className={"flex flex-col gap-5 w-full h-full text-white text-center shrink-0 items-center justify-center "}>
+                        className={"flex flex-col gap-5 w-full text-white text-center shrink-0 items-center justify-center p-2 "}>
                         <span className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-gray-500 w-full md:w-2/3 lg:w-1/3 h-full rounded-xl"}>
                         <p className={"text-2xl md:text-3xl font-extralight"}>Welcome to <b className={"text-blue-400 font-bold"}>Fluent Weather</b></p>
                         <p className={"text-lg md:text-xl font-extralight"}>{"Let's start by adding a location using "}<b>Search</b> or <b>GPS</b></p>
-                        <AutoComplete dark={true}/>
+                        <AutoComplete/>
                         <button type={"button"} onClick={openGpsDialog}
                                 className={"text-[0.8rem] w-1/2 text-center text-blue-400"}>Use GPS instead ?
                         </button>
@@ -74,7 +75,7 @@ export default function Greeting () {
                         </div>
                             </span>
                     </div>
-                    <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center "}>
+                    <div className={"flex flex-col gap-5 w-full text-center shrink-0 items-center justify-center p-2"}>
                          <span
                              className={"flex backdrop-blur-2xl bg-opacity-45 flex-col gap-5 text-center shrink-0 items-center justify-center bg-gray-500 w-full md:w-2/3 lg:w-1/3 h-full rounded-xl"}>
                         <p className={"text-4xl font-light w-4/6"}>Okay now tell me what should I call you :D</p>
@@ -85,8 +86,8 @@ export default function Greeting () {
                     </span>
                          </div>
                 </div>
-                <div className={"flex justify-around items-center text-center "}>
-                    <p className={`${showError ? "visible" : "invisible"} text-xl text-red-400`}>{errorMsg}</p>
+                <div className={"flex justify-around items-center text-center absolute bottom-20 left-1/2 -translate-x-1/2 "}>
+                    <p className={`${showError ? "visible" : "invisible"} font-light text-lg md:text-xl text-red-400`}>{errorMsg}</p>
                 </div>
             </main>
             <GpsDialog ref={gpsDialog}/>
