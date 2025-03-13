@@ -14,7 +14,6 @@ export default function Home () {
        dispatch(hydrateFlags())
     },[dispatch]);
     useEffect(() => {
-        console.error("first time " , firstTime);
         if(firstTime !== null ) firstTime ? permanentRedirect("/greeting") : permanentRedirect("/main")
     },[firstTime]);
     return (

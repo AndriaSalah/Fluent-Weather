@@ -29,7 +29,6 @@ export default function Greeting () {
 
     const saveName = (name: string) => {
         if (name.length < 10 && name.length > 4) {
-            console.log("test")
             dispatch(setName(name))
             dispatch(setFirstTime(false))
             router.push("/")

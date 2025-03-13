@@ -63,7 +63,6 @@ export const getDailyWeather = (latitude : number , longitude : number ) => {
             }))
             dispatch(updateDailyWeather(formattedData))
         } catch (e) {
-            console.log(e)
             dispatch(toggleToast("error 204: " + e,"error"))
         }
     }

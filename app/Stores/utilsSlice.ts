@@ -38,7 +38,6 @@ const utilsSlice = createSlice({
     reducers: {
         toggleExpansion: (state: utils) => {
             state.expand = !state.expand;
-            console.log(state.expand)
         },
         changeSelectedOption: (state: utils, actions: PayloadAction<options>) => {
             state.selectedOption = actions.payload
